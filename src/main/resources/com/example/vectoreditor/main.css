@@ -1,0 +1,24 @@
+.main {
+
+
+}
+.button {
+
+    -fx-background-color:  #494850;
+    -fx-pref-width: 42px;
+    -fx-pref-height: 42px;
+}
+
+
+.button:hover {
+    -fx-background-color: #2D2D33;
+}
+
+.imageView:hover {
+    -fx-background-color: #2D2D33;
+    -fx-opacity: 0.6;
+    -fx-pref-width: 26px;
+    -fx-pref-height: 26px;
+    -fx-fit-width: 26px;
+    -fx-fit-height: 26px;
+}

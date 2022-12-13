@@ -1,4 +1,4 @@
-package com.example.vectoreditor;
+package com.example.vectoreditor.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
@@ -19,15 +19,15 @@ public class Figure {
 
     }
 
-    public void highlightCurrant(GraphicsContext graphicsContext) {
+    public void drawHitbox(GraphicsContext graphicsContext) {
 
     }
 
-    public void highlightCurrant(GraphicsContext graphicsContext, Point start, Point end) {
+    public void drawHitbox(GraphicsContext graphicsContext, Point start, Point end) {
 
     }
 
-    public boolean inHitBox(double x, double y) {
+    public boolean isClickedOn(double x, double y) {
         return false;
     }
 
@@ -53,5 +53,8 @@ public class Figure {
     }
     public void setEndPoint(double x, double y) {
 
+    }
+
+    public static class Select {
     }
 }

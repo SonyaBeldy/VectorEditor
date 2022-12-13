@@ -11,5 +11,8 @@ module com.example.vectoreditor {
     requires com.almasb.fxgl.all;
 
     opens com.example.vectoreditor to javafx.fxml;
-    exports com.example.vectoreditor;
+    exports com.example.vectoreditor.model;
+    opens com.example.vectoreditor.model to javafx.fxml;
+    exports com.example.vectoreditor.controller;
+    opens com.example.vectoreditor.controller to javafx.fxml;
 }
