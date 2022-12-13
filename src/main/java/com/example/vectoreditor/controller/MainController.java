@@ -21,20 +21,25 @@ public class MainController {
 
     private CanvasController canvasController;
 
+    private final String toolSelectedStyle = "/com/example/vectoreditor/activeTool.css";
+    private final String toolCasualStyle = "/com/example/vectoreditor/main.css";
+
 
     @FXML
     protected void onLineButtonClick(ActionEvent event) {
         currentTool = new LineTool(canvasController);
+        //lineButton.getStylesheets().add(getClass().getResource(toolSelectedStyle).toExternalForm());
+        //selectButton.getStylesheets().add(getClass().getResource(toolCasualStyle).toExternalForm());
+        lineButton.setDisable(true);
+        selectButton.setDisable(false);
+
     }
 
     @FXML
     protected void onSelectButtonClick(ActionEvent event) {
         currentTool = new SelectTool(canvasController);
-    }
-
-    @FXML
-    protected void onButtonMouseReleased(MouseEvent event) {
-
+        selectButton.setDisable(true);
+        lineButton.setDisable(false);
 
     }
 

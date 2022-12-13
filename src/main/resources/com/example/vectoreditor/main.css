@@ -9,9 +9,16 @@
     -fx-pref-height: 42px;
 }
 
-
 .button:hover {
     -fx-background-color: #2D2D33;
+}
+
+.button:disabled {
+
+    -fx-opacity: 1;
+    -fx-background-color:  #27272B;
+    -fx-pref-width: 42px;
+    -fx-pref-height: 42px;
 }
 
 .imageView:hover {
@@ -21,4 +28,9 @@
     -fx-pref-height: 26px;
     -fx-fit-width: 26px;
     -fx-fit-height: 26px;
+}
+
+.vbox {
+    -fx-background-color: #39393F;
+    -fx-border-color: #2D2D33;
 }

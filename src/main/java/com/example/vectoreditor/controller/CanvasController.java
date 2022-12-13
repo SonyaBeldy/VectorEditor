@@ -1,5 +1,6 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.Action;
 import com.example.vectoreditor.model.Figure;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -11,9 +12,12 @@ public class CanvasController {
     private Figure currentFigure;
     private final ArrayList<Figure> figures;
 
+    private final ArrayList<Action> actions;
+
     public CanvasController(Canvas drawCanvas) {
         this.drawCanvas = drawCanvas;
         figures = new ArrayList<>();
+        actions = new ArrayList<>();
     }
 
     public void redrawAllFigures() {

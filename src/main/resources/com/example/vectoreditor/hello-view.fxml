@@ -3,28 +3,33 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="494.0" prefWidth="911.0" style="-fx-background-color: #494850; -fx-background-image: back.jpg;" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.MainController">
+<AnchorPane prefHeight="494.0" prefWidth="911.0" style="-fx-background-color: #494850;" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.MainController">
    <children>
-      <TabPane layoutX="-2.0" layoutY="40.0" prefHeight="456.0" prefWidth="911.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
+      <TabPane layoutX="-2.0" layoutY="26.0" prefHeight="468.0" prefWidth="911.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
         <tabs>
           <Tab text="Untitled Tab 1" />
           <Tab text="Untitled Tab 2" />
         </tabs>
       </TabPane>
-      <VBox alignment="CENTER" prefHeight="494.0" prefWidth="58.0" spacing="4.0" AnchorPane.leftAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="494.0" prefWidth="58.0" spacing="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
           <padding>
               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
           </padding>
-         <Button fx:id="selectButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSelectButtonClick" onMouseEntered="#onButtonMouseReleased" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
+         <Button fx:id="selectButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSelectButtonClick" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
             <graphic>
                <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
                   <image>
@@ -48,20 +53,31 @@
                   </image>
                </ImageView>
             </graphic></Button>
-         <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="42.0">
-            <graphic>
-               <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
-                  <image>
-                     <Image url="@images/icons/1x/cursor_1.png" />
-                  </image>
-               </ImageView>
-            </graphic></Button>
       </VBox>
-      <ToolBar prefHeight="40.0" prefWidth="911.0" />
+      <ToolBar prefHeight="20.0" prefWidth="911.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <Label text="File">
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Unspecified Action">
+                           <graphic>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                           </graphic>
+                        </MenuItem>
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+               <tooltip>
+                  <Tooltip text="Empty Tooltip" />
+               </tooltip>
+            </Label>
+         </items></ToolBar>
       <Pane layoutX="156.0" layoutY="120.0" prefHeight="302.0" prefWidth="598.0" style="-fx-background-color: #fafafa;">
          <children>
             <Canvas fx:id="drawCanvas" height="302.0" onMouseDragged="#onCanvasDragged" onMousePressed="#onCanvasClick" onMouseReleased="#onCanvasReleased" width="598.0" />
          </children>
       </Pane>
+      <VBox layoutX="872.0" layoutY="55.0" prefHeight="441.0" prefWidth="100.0" AnchorPane.bottomAnchor="-0.0" AnchorPane.topAnchor="55.0" />
    </children>
 </AnchorPane>

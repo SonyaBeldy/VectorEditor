@@ -1,0 +1,10 @@
+.main {
+
+
+}
+.button {
+
+    -fx-background-color:  #27272B;
+    -fx-pref-width: 42px;
+    -fx-pref-height: 42px;
+}
