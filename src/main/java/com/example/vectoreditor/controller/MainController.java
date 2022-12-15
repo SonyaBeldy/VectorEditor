@@ -4,7 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 
 public class MainController {
 
@@ -17,30 +19,34 @@ public class MainController {
     @FXML
     private Canvas drawCanvas;
 
+    @FXML
+    private VBox vBoxProperties;
+
+    @FXML
+    private ColorPicker colorPicker;
+
     private ITool currentTool;
 
     private CanvasController canvasController;
 
-    private final String toolSelectedStyle = "/com/example/vectoreditor/activeTool.css";
-    private final String toolCasualStyle = "/com/example/vectoreditor/main.css";
-
-
     @FXML
     protected void onLineButtonClick(ActionEvent event) {
+        canvasController.setFillColor(colorPicker.getValue());
         currentTool = new LineTool(canvasController);
-        //lineButton.getStylesheets().add(getClass().getResource(toolSelectedStyle).toExternalForm());
-        //selectButton.getStylesheets().add(getClass().getResource(toolCasualStyle).toExternalForm());
+        unDisabledAllButtons();
         lineButton.setDisable(true);
-        selectButton.setDisable(false);
-
     }
 
     @FXML
     protected void onSelectButtonClick(ActionEvent event) {
         currentTool = new SelectTool(canvasController);
+        unDisabledAllButtons();
         selectButton.setDisable(true);
-        lineButton.setDisable(false);
+    }
 
+    @FXML
+    protected void chooseColor() {
+        canvasController.setFillColor(colorPicker.getValue());
     }
 
     @FXML
@@ -62,6 +68,13 @@ public class MainController {
     void initialize() {
         canvasController = new CanvasController(drawCanvas);
         currentTool = new SelectTool(canvasController);
+
+    }
+
+
+    void unDisabledAllButtons(){
+        lineButton.setDisable(false);
+        selectButton.setDisable(false);
 
     }
 

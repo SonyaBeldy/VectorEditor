@@ -15,7 +15,7 @@ public class LineTool extends Tool implements ITool{
         double x = event.getX();
         double y = event.getY();
 
-        currentFigure = new Line(x,y, x, y);
+        currentFigure = new Line(x,y, x, y, canvasController.getFillColor());
         currentFigure.draw(drawCanvas.getGraphicsContext2D());
     }
 

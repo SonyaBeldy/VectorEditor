@@ -4,6 +4,7 @@ import com.example.vectoreditor.model.Action;
 import com.example.vectoreditor.model.Figure;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -12,12 +13,15 @@ public class CanvasController {
     private Figure currentFigure;
     private final ArrayList<Figure> figures;
 
+    private Color fillColor;
+
     private final ArrayList<Action> actions;
 
     public CanvasController(Canvas drawCanvas) {
         this.drawCanvas = drawCanvas;
         figures = new ArrayList<>();
         actions = new ArrayList<>();
+        fillColor = Color.BLACK;
     }
 
     public void redrawAllFigures() {
@@ -67,4 +71,11 @@ public class CanvasController {
         figures.add(figure);
     }
 
+    public Color getFillColor() {
+        return fillColor;
+    }
+
+    public void setFillColor(Color fillColor) {
+        this.fillColor = fillColor;
+    }
 }

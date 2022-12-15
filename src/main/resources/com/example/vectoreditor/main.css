@@ -2,14 +2,14 @@
 
 
 }
-.button {
+#toolButton {
 
     -fx-background-color:  #494850;
     -fx-pref-width: 42px;
     -fx-pref-height: 42px;
 }
 
-.button:hover {
+#toolButton:hover {
     -fx-background-color: #2D2D33;
 }
 
@@ -33,4 +33,80 @@
 .vbox {
     -fx-background-color: #39393F;
     -fx-border-color: #2D2D33;
+    -fx-border-width: 1px 1px 1px 1px;
+}
+
+.titledPane {
+
+}
+
+.textField {
+    -fx-max-height: 4px;
+    -fx-font-size: 10px;
+    -fx-text-fill: #C4C0C4;
+    -fx-background-color: #2D2D33;
+    -fx-alignment: center-right;
+
+
+}
+
+#propertiesText {
+    -fx-font-size: 12px;
+    -fx-alignment: center;
+    -fx-text-fill: #C4C0C4;
+
+}
+
+.hBox {
+
+}
+
+.separator:horizontal .line {
+    -fx-border-insets: 0;
+    -fx-border-color: #2D2D33;
+}
+
+#optionsTitle {
+    -fx-padding: 0px 0px 0px 12px;
+    -fx-text-fill: #C4C0C4;
+}
+
+.toolBar {
+    -fx-background-color: #39393F;
+    -fx-border-color: #2D2D33;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-text-fill: #C4C0C4;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: #39393F;
+    -fx-border-color: #2D2D33;
+    -fx-border-width: 1px 1px 1px 1px;
+}
+.scroll-bar:horizontal.track {
+    -fx-background-color: #39393F;
+}
+.scroll-bar:vertical {
+    -fx-background-color: #39393F;
+    -fx-border-color: #2D2D33;
+    -fx-border-width: 1px 1px 1px 1px;
+}
+
+.pane {
+}
+
+#canvasPane{
+    -fx-alignment: center;
+}
+
+.color-picker {
+    -fx-background-color: #494850;
+}
+
+.color-picker: hover {
+    -fx-background-color: #2D2D33;
+}
+
+.color-picker .color-picker-label .text {
+    -fx-fill: #C4C0C4;                                                      //text color
 }

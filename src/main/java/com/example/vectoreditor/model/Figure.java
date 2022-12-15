@@ -1,8 +1,13 @@
 package com.example.vectoreditor.model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 public class Figure {
+
+    ArrayList<Point> points;
 
     Point startPoint;
     Point endPoint;
@@ -13,6 +18,7 @@ public class Figure {
 
 
     public void draw(GraphicsContext graphicsContext) {
+
     }
 
     public void draw(GraphicsContext graphicsContext, Point start, Point end) {
@@ -31,6 +37,13 @@ public class Figure {
         return false;
     }
 
+    public ArrayList<Point> getPoints() {
+        return points;
+    }
+
+    public void addPoint(Point point) {
+        points.add(point);
+    }
 
     public Point getStartPoint() {
         return startPoint;

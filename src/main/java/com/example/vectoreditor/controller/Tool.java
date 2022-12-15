@@ -8,6 +8,7 @@ public class Tool {
     protected final Canvas drawCanvas;
     protected Figure currentFigure;
 
+
     public Tool(CanvasController canvasController) {
         this.canvasController = canvasController;
         drawCanvas = canvasController.getDrawCanvas();

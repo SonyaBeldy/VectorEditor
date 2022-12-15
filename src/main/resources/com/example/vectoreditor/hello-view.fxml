@@ -2,82 +2,188 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="494.0" prefWidth="911.0" style="-fx-background-color: #494850;" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.MainController">
+<AnchorPane prefHeight="494.0" prefWidth="894.0" style="-fx-background-color: #494850;" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.MainController">
    <children>
-      <TabPane layoutX="-2.0" layoutY="26.0" prefHeight="468.0" prefWidth="911.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
-        <tabs>
-          <Tab text="Untitled Tab 1" />
-          <Tab text="Untitled Tab 2" />
-        </tabs>
-      </TabPane>
-      <VBox alignment="CENTER" prefHeight="494.0" prefWidth="58.0" spacing="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-          <padding>
-              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-          </padding>
-         <Button fx:id="selectButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSelectButtonClick" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
-            <graphic>
-               <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
-                  <image>
-                     <Image url="@images/icons/1x/cursor_1.png" />
-                  </image>
-               </ImageView>
-            </graphic></Button>
-         <Button fx:id="lineButton" mnemonicParsing="false" onAction="#onLineButtonClick" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
-            <graphic>
-               <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
-                  <image>
-                     <Image url="@images/icons/1x/line.png" />
-                  </image>
-               </ImageView>
-            </graphic></Button>
-         <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
-            <graphic>
-               <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
-                  <image>
-                     <Image url="@images/icons/1x/polyline.png" />
-                  </image>
-               </ImageView>
-            </graphic></Button>
-      </VBox>
-      <ToolBar prefHeight="20.0" prefWidth="911.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <items>
-            <Label text="File">
-               <contextMenu>
-                  <ContextMenu>
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Unspecified Action">
-                           <graphic>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                           </graphic>
-                        </MenuItem>
-                    </items>
-                  </ContextMenu>
-               </contextMenu>
-               <tooltip>
-                  <Tooltip text="Empty Tooltip" />
-               </tooltip>
-            </Label>
-         </items></ToolBar>
-      <Pane layoutX="156.0" layoutY="120.0" prefHeight="302.0" prefWidth="598.0" style="-fx-background-color: #fafafa;">
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Canvas fx:id="drawCanvas" height="302.0" onMouseDragged="#onCanvasDragged" onMousePressed="#onCanvasClick" onMouseReleased="#onCanvasReleased" width="598.0" />
+            <MenuBar prefHeight="1.0" prefWidth="132.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <ToolBar prefHeight="20.0" prefWidth="911.0" styleClass="toolBar" stylesheets="@main.css">
+               <items>
+                  <Label id="optionsTitle" text="File">
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Unspecified Action">
+                                 <graphic>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                 </graphic>
+                              </MenuItem>
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </Label>
+               </items>
+            </ToolBar>
+            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="494.0" prefWidth="974.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="494.0" prefWidth="58.0" spacing="4.0" styleClass="vbox" stylesheets="@main.css">
+                      <padding>
+                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                      </padding>
+                     <Button fx:id="selectButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSelectButtonClick" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
+                        <graphic>
+                           <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
+                              <image>
+                                 <Image url="@images/icons/1x/cursor_1.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </Button>
+                     <Button fx:id="lineButton" mnemonicParsing="false" onAction="#onLineButtonClick" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
+                        <graphic>
+                           <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
+                              <image>
+                                 <Image url="@images/icons/1x/line.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </Button>
+                     <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
+                        <graphic>
+                           <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
+                              <image>
+                                 <Image url="@images/icons/1x/polyline.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
+                     </Button>
+                  </VBox>
+                  <VBox prefHeight="494.0" prefWidth="731.0">
+                     <children>
+                        <AnchorPane id="canvasPane" prefHeight="494.0" prefWidth="717.0" stylesheets="@main.css">
+                           <children>
+                              <AnchorPane cache="true" layoutX="66.0" layoutY="88.0" style="-fx-background-color: fafafa;" AnchorPane.topAnchor="88.0">
+                                 <children>
+                                    <Canvas fx:id="drawCanvas" height="302.0" onMouseDragged="#onCanvasDragged" onMousePressed="#onCanvasClick" onMouseReleased="#onCanvasReleased" width="598.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <ScrollBar stylesheets="@main.css" />
+                     </children>
+                  </VBox>
+                  <ScrollBar maxHeight="-Infinity" orientation="VERTICAL" prefHeight="480.0" prefWidth="16.0">
+                     <HBox.margin>
+                        <Insets bottom="15.0" />
+                     </HBox.margin>
+                  </ScrollBar>
+                  <VBox fx:id="vBoxProperties" prefHeight="428.0" prefWidth="173.0" spacing="10.0" styleClass="vbox" stylesheets="@main.css">
+                     <children>
+                        <Label id="optionsTitle" stylesheets="@main.css" text="Properties" textFill="#c4c0c4">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Trebuchet MS Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" stylesheets="@main.css" />
+                        <Label id="optionsTitle" stylesheets="@main.css" text="Properties" textFill="#c4c0c4">
+                           <font>
+                              <Font name="Trebuchet MS Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Separator layoutX="11.0" layoutY="46.0" prefWidth="200.0" stylesheets="@main.css" />
+                        <VBox prefHeight="79.0" prefWidth="171.0" spacing="2.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="142.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
+                                 <children>
+                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="X:" />
+                                    <TextField maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="W:" />
+                                    <TextField maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="12.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="142.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
+                                 <children>
+                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="Y:" />
+                                    <TextField maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="H:" />
+                                    <TextField maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="12.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="171.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
+                                 <children>
+                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="R:" />
+                                    <TextField maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="12.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Separator layoutX="11.0" layoutY="46.0" prefWidth="200.0" stylesheets="@main.css" />
+                        <Label id="optionsTitle" layoutX="23.0" layoutY="21.0" text="Properties" textFill="#c4c0c4">
+                           <padding>
+                              <Insets left="12.0" />
+                           </padding>
+                        </Label>
+                        <Accordion />
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
-      </Pane>
-      <VBox layoutX="872.0" layoutY="55.0" prefHeight="441.0" prefWidth="100.0" AnchorPane.bottomAnchor="-0.0" AnchorPane.topAnchor="55.0" />
+      </VBox>
    </children>
 </AnchorPane>
