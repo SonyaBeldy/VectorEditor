@@ -25,6 +25,10 @@ public class Figure {
 
     }
 
+    public void highlight(GraphicsContext graphicsContext){
+
+    }
+
     public boolean isClickedOn(double x, double y) {
         return false;
     }

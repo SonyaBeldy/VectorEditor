@@ -26,17 +26,12 @@ public class CanvasController {
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
+        if (currentFigure != null) {
+            System.out.println("null");
+            currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
+        }
         for (Figure figure : figures) {
             figure.draw(drawCanvas.getGraphicsContext2D());
-        }
-    }
-    public void redrawFiguresWithoutCurrant() {
-        drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
-        for (Figure figure : figures) {
-            if (figure != currentFigure) {
-                figure.draw(drawCanvas.getGraphicsContext2D());
-            }
-
         }
     }
 

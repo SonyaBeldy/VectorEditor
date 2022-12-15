@@ -4,8 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-import java.util.ArrayList;
-
 public class Line extends Figure {
 
     private Color fillColor;
@@ -29,12 +27,15 @@ public class Line extends Figure {
     }
 
     public void draw(GraphicsContext graphicsContext) {
-        graphicsContext.setStroke(Paint.valueOf(String.valueOf(fillColor)));
+        draw(graphicsContext, fillColor);
+    }
+
+    public void draw(GraphicsContext graphicsContext, Color color) {
+        graphicsContext.setStroke(color);
         graphicsContext.getCanvas().getGraphicsContext2D().strokeLine(startPoint.getX(), startPoint.getY(), endPoint.getX(),  endPoint.getY());
     }
 
     public void drawHitbox(GraphicsContext graphicsContext) {
-
         calculateHitBoxPoints();
         graphicsContext.setStroke(Paint.valueOf("#ff3de8"));
 
@@ -43,6 +44,10 @@ public class Line extends Figure {
         }
         graphicsContext.strokeLine(hitBoxEdgePoints[0].getX(), hitBoxEdgePoints[0].getY(), hitBoxEdgePoints[3].getX(), hitBoxEdgePoints[3].getY());
 
+    }
+
+    public void highlight(GraphicsContext graphicsContext) {
+        draw(graphicsContext, Color.LIGHTBLUE);
     }
 
     public boolean isClickedOn(double x, double y) {
