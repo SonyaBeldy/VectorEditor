@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class MainController {
 
@@ -71,6 +72,7 @@ public class MainController {
         canvasController = new CanvasController(drawCanvas);
         currentTool = new SelectTool(canvasController);
         selectButton.setDisable(true);
+        colorPicker.setValue(Color.BLACK);
     }
 
 
