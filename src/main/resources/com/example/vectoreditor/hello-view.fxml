@@ -80,7 +80,7 @@
                         <graphic>
                            <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
                               <image>
-                                 <Image url="@images/icons/1x/line.png" />
+                                 <Image url="@images/icons/line.png" />
                               </image>
                            </ImageView>
                         </graphic>
@@ -89,7 +89,7 @@
                         <graphic>
                            <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
                               <image>
-                                 <Image url="@images/icons/1x/polyline.png" />
+                                 <Image url="@images/icons/polyline.png" />
                               </image>
                            </ImageView>
                         </graphic>
