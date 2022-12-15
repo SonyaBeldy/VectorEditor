@@ -3,8 +3,6 @@ package com.example.vectoreditor.model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-
 public class Figure {
 
     Point startPoint;
@@ -16,6 +14,10 @@ public class Figure {
 
 
     public void draw(GraphicsContext graphicsContext) {
+
+    }
+
+    public void calculateHitBoxPoints() {
 
     }
 

@@ -49,7 +49,6 @@ public class SelectTool extends Tool implements ITool{
         currentFigure.setEndPoint(e);
 
         canvasController.redrawFiguresWithoutCurrant();
-        currentFigure.draw(drawCanvas.getGraphicsContext2D());
         currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
     }
 
@@ -67,7 +66,6 @@ public class SelectTool extends Tool implements ITool{
         currentFigure.setStartPoint(s);
         currentFigure.setEndPoint(e);
         canvasController.redrawAllFigures();
-        currentFigure.draw(drawCanvas.getGraphicsContext2D());
         currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
     }
 
@@ -79,8 +77,6 @@ public class SelectTool extends Tool implements ITool{
         Figure enteredFigure = canvasController.whatWasClickedOn(event);
         if(enteredFigure == null) {
             return;
-        } else {
-            System.out.println("object");
         }
         canvasController.redrawAllFigures();
         enteredFigure.drawHitbox(drawCanvas.getGraphicsContext2D());

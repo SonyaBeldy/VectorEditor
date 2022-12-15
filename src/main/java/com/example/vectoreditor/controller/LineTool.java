@@ -1,8 +1,6 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Figure;
 import com.example.vectoreditor.model.Line;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 
 public class LineTool extends Tool implements ITool{
@@ -37,6 +35,8 @@ public class LineTool extends Tool implements ITool{
         canvasController.redrawAllFigures();
         currentFigure.setEndPoint(x, y);
         currentFigure.draw(drawCanvas.getGraphicsContext2D());
+
+        currentFigure.calculateHitBoxPoints();
         currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
 
         canvasController.addFigure(currentFigure);
