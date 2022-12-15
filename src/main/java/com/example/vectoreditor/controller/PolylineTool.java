@@ -16,7 +16,8 @@ public class PolylineTool extends Tool implements ITool{
         double x = event.getX();
         double y = event.getY();
 
-        currentFigure = new Polyline(x,y, x, y, Color.BLACK);
+        Line line = new Line(x, y, x, y, Color.BLACK);
+        currentFigure = new Polyline(line, Color.BLACK);
         currentFigure.draw(drawCanvas.getGraphicsContext2D());
     }
 
@@ -27,6 +28,11 @@ public class PolylineTool extends Tool implements ITool{
 
     @Override
     public void mouseReleased(MouseEvent event) {
+
+    }
+
+    @Override
+    public void mouseEntered() {
 
     }
 }

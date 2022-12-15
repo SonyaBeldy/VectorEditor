@@ -42,4 +42,9 @@ public class LineTool extends Tool implements ITool{
         canvasController.addFigure(currentFigure);
     }
 
+    @Override
+    public void mouseEntered() {
+
+    }
+
 }

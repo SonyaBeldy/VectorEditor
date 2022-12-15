@@ -2,16 +2,18 @@ package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Figure;
 import com.example.vectoreditor.model.Point;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 
 public class SelectTool extends Tool implements ITool{
 
     private final Point clickPoint;
 
+    private Figure beforeDragFigure;
+
     public SelectTool(CanvasController canvasController){
         super(canvasController);
         clickPoint = new Point(0,0);
+        beforeDragFigure = new Figure();
     }
 
     @Override
@@ -21,6 +23,10 @@ public class SelectTool extends Tool implements ITool{
         if (currentFigure == null) {
             return;
         }
+        Point pStart = currentFigure.getStartPoint();
+        Point pEnd = currentFigure.getEndPoint();
+        beforeDragFigure.setStartPoint(pStart);
+        beforeDragFigure.setEndPoint(pEnd);
 
         canvasController.redrawAllFigures();
         currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
@@ -36,12 +42,15 @@ public class SelectTool extends Tool implements ITool{
         double differenceX = event.getX() - clickPoint.getX();
         double differenceY = event.getY() - clickPoint.getY();
 
-        Point s = new Point(currentFigure.getStartPoint().getX() + differenceX, currentFigure.getStartPoint().getY() + differenceY);
-        Point e = new Point(currentFigure.getEndPoint().getX() + differenceX, currentFigure.getEndPoint().getY() + differenceY);
+        Point s = new Point(beforeDragFigure.getStartPoint().getX() + differenceX, beforeDragFigure.getStartPoint().getY() + differenceY);
+        Point e = new Point(beforeDragFigure.getEndPoint().getX() + differenceX, beforeDragFigure.getEndPoint().getY() + differenceY);
+
+        currentFigure.setStartPoint(s);
+        currentFigure.setEndPoint(e);
 
         canvasController.redrawFiguresWithoutCurrant();
-        currentFigure.draw(drawCanvas.getGraphicsContext2D(), s, e);
-        currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D(), s, e);
+        currentFigure.draw(drawCanvas.getGraphicsContext2D());
+        currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
     }
 
     @Override
@@ -52,13 +61,18 @@ public class SelectTool extends Tool implements ITool{
         double differenceX = event.getX() - clickPoint.getX();
         double differenceY = event.getY() - clickPoint.getY();
 
-        Point s = new Point(currentFigure.getStartPoint().getX() + differenceX, currentFigure.getStartPoint().getY() + differenceY);
-        Point e = new Point(currentFigure.getEndPoint().getX() + differenceX, currentFigure.getEndPoint().getY() + differenceY);
+        Point s = new Point(beforeDragFigure.getStartPoint().getX() + differenceX, beforeDragFigure.getStartPoint().getY() + differenceY);
+        Point e = new Point(beforeDragFigure.getEndPoint().getX() + differenceX, beforeDragFigure.getEndPoint().getY() + differenceY);
 
         currentFigure.setStartPoint(s);
         currentFigure.setEndPoint(e);
         canvasController.redrawAllFigures();
         currentFigure.draw(drawCanvas.getGraphicsContext2D());
         currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
+    }
+
+    @Override
+    public void mouseEntered() {
+
     }
 }

@@ -33,14 +33,14 @@ public class MainController {
     protected void onLineButtonClick(ActionEvent event) {
         canvasController.setFillColor(colorPicker.getValue());
         currentTool = new LineTool(canvasController);
-        unDisabledAllButtons();
+        enabledAllButtons();
         lineButton.setDisable(true);
     }
 
     @FXML
     protected void onSelectButtonClick(ActionEvent event) {
         currentTool = new SelectTool(canvasController);
-        unDisabledAllButtons();
+        enabledAllButtons();
         selectButton.setDisable(true);
     }
 
@@ -68,14 +68,12 @@ public class MainController {
     void initialize() {
         canvasController = new CanvasController(drawCanvas);
         currentTool = new SelectTool(canvasController);
-
     }
 
 
-    void unDisabledAllButtons(){
+    void enabledAllButtons(){
         lineButton.setDisable(false);
         selectButton.setDisable(false);
-
     }
 
 }

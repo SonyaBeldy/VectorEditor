@@ -7,12 +7,10 @@ import java.util.ArrayList;
 
 public class Figure {
 
-    ArrayList<Point> points;
-
     Point startPoint;
     Point endPoint;
 
-    Figure () {
+    public Figure() {
 
     }
 
@@ -37,12 +35,8 @@ public class Figure {
         return false;
     }
 
-    public ArrayList<Point> getPoints() {
-        return points;
-    }
 
-    public void addPoint(Point point) {
-        points.add(point);
+    public void setFigureColor(Color figureColor) {
     }
 
     public Point getStartPoint() {
