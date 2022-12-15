@@ -7,5 +7,5 @@ public interface ITool {
     void mouseDragged(MouseEvent event);
     void mouseReleased(MouseEvent event);
 
-    void mouseEntered();
+    void mouseEntered(MouseEvent event);
 }

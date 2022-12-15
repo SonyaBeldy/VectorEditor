@@ -62,12 +62,15 @@ public class MainController {
         currentTool.mouseReleased(event);
     }
 
+    @FXML
+    void onCanvasEntered(MouseEvent event) { currentTool.mouseEntered(event); }
 
 
     @FXML
     void initialize() {
         canvasController = new CanvasController(drawCanvas);
         currentTool = new SelectTool(canvasController);
+        selectButton.setDisable(true);
     }
 
 

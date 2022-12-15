@@ -32,7 +32,7 @@ public class PolylineTool extends Tool implements ITool{
     }
 
     @Override
-    public void mouseEntered() {
+    public void mouseEntered(MouseEvent event) {
 
     }
 }

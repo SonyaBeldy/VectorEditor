@@ -72,7 +72,17 @@ public class SelectTool extends Tool implements ITool{
     }
 
     @Override
-    public void mouseEntered() {
-
+    public void mouseEntered(MouseEvent event) {
+        if(canvasController.getFigures().size() == 0) {
+            return;
+        }
+        Figure enteredFigure = canvasController.whatWasClickedOn(event);
+        if(enteredFigure == null) {
+            return;
+        } else {
+            System.out.println("object");
+        }
+        canvasController.redrawAllFigures();
+        enteredFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
     }
 }

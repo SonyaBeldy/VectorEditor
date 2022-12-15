@@ -19,15 +19,7 @@ public class Figure {
 
     }
 
-    public void draw(GraphicsContext graphicsContext, Point start, Point end) {
-
-    }
-
     public void drawHitbox(GraphicsContext graphicsContext) {
-
-    }
-
-    public void drawHitbox(GraphicsContext graphicsContext, Point start, Point end) {
 
     }
 
