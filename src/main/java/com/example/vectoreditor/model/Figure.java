@@ -1,5 +1,6 @@
 package com.example.vectoreditor.model;
 
+import com.example.vectoreditor.controller.ITool;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -11,7 +12,6 @@ public class Figure {
     public Figure() {
 
     }
-
 
     public void draw(GraphicsContext graphicsContext) {
 

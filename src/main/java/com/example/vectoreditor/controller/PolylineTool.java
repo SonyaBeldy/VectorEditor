@@ -12,49 +12,34 @@ public class PolylineTool extends Tool implements ITool{
     private boolean isDrawing;
     private Polyline polyline;
 
-    private Line line;
-
     public PolylineTool(CanvasController canvasController) {
         super(canvasController);
         isDrawing = false;
-        line = new Line(0,0,0,0, Color.BLACK);
         polyline = new Polyline(Color.BLACK);
     }
 
     @Override
     public void mousePressed(MouseEvent event) {
         if (event.isPrimaryButtonDown()) {
-            double x = event.getX();
-            double y = event.getY();
-
-            if (isDrawing) {
-                line = new Line(line.getEndPoint().getX(), line.getEndPoint().getY(), x, y, canvasController.getFillColor());
-                line.draw(drawCanvas.getGraphicsContext2D());
-
-                polyline.draw(drawCanvas.getGraphicsContext2D());
-
-            } else {
+            if (!isDrawing) {
                 isDrawing = true;
                 polyline = new Polyline(Color.BLACK);
-                line = new Line(x, y, x, y, canvasController.getFillColor());
-                line.draw(drawCanvas.getGraphicsContext2D());
+                polyline.addPoint(new Point(event.getX(), event.getY()));
 
             }
-            currentFigure = line;
-            polyline.addLine(line);
-
+            polyline.addPoint(new Point(event.getX(), event.getY()));
         }
 
         if (event.isSecondaryButtonDown()) {
             isDrawing = false;
-            if (!polyline.getLines().isEmpty()){
-                //polyline.getLines().remove(polyline.getLines().size() - 1);
+            if (!polyline.getPoints().isEmpty()){
+                polyline.getPoints().remove(polyline.getPoints().size() - 1);
                 currentFigure = polyline;
                 canvasController.addFigure(currentFigure);
-                canvasController.redrawAllFigures();
             }
-
         }
+        canvasController.redrawAllFigures();
+        polyline.draw(drawCanvas.getGraphicsContext2D());
     }
 
     @Override
@@ -62,14 +47,11 @@ public class PolylineTool extends Tool implements ITool{
         if (!isDrawing) {
             return;
         }
-        double x = event.getX();
-        double y = event.getY();
+        getLastPoint().setX(event.getX());
+        getLastPoint().setY(event.getY());
 
-        line.setEndPoint(x, y);
         canvasController.redrawAllFigures();
         polyline.draw(drawCanvas.getGraphicsContext2D());
-
-        line.draw(drawCanvas.getGraphicsContext2D());
     }
 
     @Override
@@ -77,27 +59,26 @@ public class PolylineTool extends Tool implements ITool{
         if (!isDrawing) {
             return;
         }
-        double x = event.getX();
-        double y = event.getY();
+        getLastPoint().setX(event.getX());
+        getLastPoint().setY(event.getY());
+
         canvasController.redrawAllFigures();
-        line.setEndPoint(x, y);
-        line.draw(drawCanvas.getGraphicsContext2D());
         polyline.draw(drawCanvas.getGraphicsContext2D());
-
-
     }
 
     @Override
     public void mouseEntered(MouseEvent event) {
         if (isDrawing) {
-            double x = event.getX();
-            double y = event.getY();
+            getLastPoint().setX(event.getX());
+            getLastPoint().setY(event.getY());
 
-            line.setEndPoint(x, y);
             canvasController.redrawAllFigures();
             polyline.draw(drawCanvas.getGraphicsContext2D());
-
-            line.draw(drawCanvas.getGraphicsContext2D());
         }
     }
+
+        private Point getLastPoint() {
+            return polyline.getPoints().get(polyline.getPoints().size() - 1);
+        }
+
 }
