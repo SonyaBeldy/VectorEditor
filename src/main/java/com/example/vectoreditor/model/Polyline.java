@@ -12,16 +12,25 @@ public class Polyline extends Figure{
 
     Color fillColor;
 
-    public Polyline(Line line, Color fillColor) {
+    public Polyline(Color fillColor) {
         this.fillColor = fillColor;
+        lines = new ArrayList<>();
 
-        lines.add(line);
     }
 
     public void draw(GraphicsContext graphicsContext) {
+
         graphicsContext.setStroke(Paint.valueOf(String.valueOf(fillColor)));
-        graphicsContext.getCanvas().getGraphicsContext2D().strokeLine(startPoint.getX(), startPoint.getY(), endPoint.getX(),  endPoint.getY());
+        for (int i = 0; i < lines.size() - 1; i++) {
+            lines.get(i).draw(graphicsContext);
+        }
     }
 
+    public ArrayList<Line> getLines() {
+        return lines;
+    }
 
+    public void addLine(Line line) {
+        lines.add(line);
+    }
 }

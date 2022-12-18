@@ -101,7 +101,7 @@
                            <children>
                               <AnchorPane cache="true" layoutX="66.0" layoutY="88.0" style="-fx-background-color: fafafa;" AnchorPane.topAnchor="88.0">
                                  <children>
-                                    <Canvas fx:id="drawCanvas" height="302.0" onMouseDragged="#onCanvasDragged" onMousePressed="#onCanvasClick" onMouseReleased="#onCanvasReleased" width="598.0" />
+                                    <Canvas fx:id="drawCanvas" height="302.0" onMouseDragged="#onCanvasDragged" onMousePressed="#onCanvasPressed" onMouseReleased="#onCanvasReleased" width="598.0" />
                                  </children>
                               </AnchorPane>
                            </children>

@@ -6,14 +6,14 @@ import javafx.scene.paint.Paint;
 
 public class Line extends Figure {
 
-    private Color fillColor;
+    private Color strokeColor;
 
     Point[] hitBoxEdgePoints;
 
-    public Line(double startX, double startY, double endX, double endY, Color fillColor) {
+    public Line(double startX, double startY, double endX, double endY, Color strokeColor) {
         startPoint = new Point(startX, startY);
         endPoint = new Point(endX, endY);
-        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
         hitBoxEdgePoints = new Point[4];
     }
 
@@ -27,7 +27,7 @@ public class Line extends Figure {
     }
 
     public void draw(GraphicsContext graphicsContext) {
-        draw(graphicsContext, fillColor);
+        draw(graphicsContext, strokeColor);
     }
 
     public void draw(GraphicsContext graphicsContext, Color color) {
@@ -70,8 +70,12 @@ public class Line extends Figure {
         return Math.max(startPoint.getY(), endPoint.getY());
     }
 
-    public void setFigureColor(Color figureColor) {
-        this.fillColor = figureColor;
+    public void setStrokeColor(Color figureColor) {
+        this.strokeColor = figureColor;
+    }
+
+    public Color getStrokeColor() {
+        return strokeColor;
     }
 
     public Point getStartPoint() {

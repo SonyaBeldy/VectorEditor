@@ -11,11 +11,14 @@ import javafx.scene.paint.Color;
 
 public class MainController {
 
+
+    @FXML
+    private Button selectButton;
     @FXML
     private Button lineButton;
 
     @FXML
-    private Button selectButton;
+    private Button polylineButton;
 
     @FXML
     private Canvas drawCanvas;
@@ -31,6 +34,13 @@ public class MainController {
     private CanvasController canvasController;
 
     @FXML
+    protected void onSelectButtonClick(ActionEvent event) {
+        currentTool = new SelectTool(canvasController);
+        enabledAllButtons();
+        selectButton.setDisable(true);
+    }
+
+    @FXML
     protected void onLineButtonClick(ActionEvent event) {
         canvasController.setFillColor(colorPicker.getValue());
         currentTool = new LineTool(canvasController);
@@ -39,11 +49,14 @@ public class MainController {
     }
 
     @FXML
-    protected void onSelectButtonClick(ActionEvent event) {
-        currentTool = new SelectTool(canvasController);
+    protected void onPolylineButtonClick(ActionEvent event) {
+        canvasController.setFillColor(colorPicker.getValue());
+        currentTool = new PolylineTool(canvasController);
         enabledAllButtons();
-        selectButton.setDisable(true);
+        polylineButton.setDisable(true);
     }
+
+
 
     @FXML
     protected void chooseColor() {
@@ -51,7 +64,7 @@ public class MainController {
     }
 
     @FXML
-    void onCanvasClick(MouseEvent event){
+    void onCanvasPressed(MouseEvent event){
         currentTool.mousePressed(event);
     }
     @FXML
@@ -77,8 +90,9 @@ public class MainController {
 
 
     void enabledAllButtons(){
-        lineButton.setDisable(false);
         selectButton.setDisable(false);
+        lineButton.setDisable(false);
+        polylineButton.setDisable(false);
     }
 
 }

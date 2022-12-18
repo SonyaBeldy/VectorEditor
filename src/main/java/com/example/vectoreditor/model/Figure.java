@@ -34,7 +34,7 @@ public class Figure {
     }
 
 
-    public void setFigureColor(Color figureColor) {
+    public void setStrokeColor(Color figureColor) {
     }
 
     public Point getStartPoint() {
