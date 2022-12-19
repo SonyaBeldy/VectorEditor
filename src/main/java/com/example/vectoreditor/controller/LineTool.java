@@ -13,8 +13,8 @@ public class LineTool extends Tool implements ITool{
         double x = event.getX();
         double y = event.getY();
 
-        currentFigure = new Line(x,y, x, y, canvasController.getStrokeColor());
-        currentFigure.draw(drawCanvas.getGraphicsContext2D());
+        //currentFigure = new Line(x,y, x, y, canvasController.getStrokeColor());
+        //currentFigure.draw(drawCanvas.getGraphicsContext2D());
     }
 
     @Override
@@ -22,10 +22,10 @@ public class LineTool extends Tool implements ITool{
         double x = event.getX();
         double y = event.getY();
 
-        currentFigure.setEndPoint(x, y);
+        //currentFigure.setEndPoint(x, y);
         canvasController.redrawAllFigures();
 
-        currentFigure.draw(drawCanvas.getGraphicsContext2D());
+        //currentFigure.draw(drawCanvas.getGraphicsContext2D());
     }
 
     @Override
@@ -33,13 +33,13 @@ public class LineTool extends Tool implements ITool{
         double x = event.getX();
         double y = event.getY();
         canvasController.redrawAllFigures();
-        currentFigure.setEndPoint(x, y);
-        currentFigure.draw(drawCanvas.getGraphicsContext2D());
+        //currentFigure.setEndPoint(x, y);
+        //currentFigure.draw(drawCanvas.getGraphicsContext2D());
 
-        currentFigure.calcBoardsPoints();
-        currentFigure.drawBorders(drawCanvas.getGraphicsContext2D());
+        //currentFigure.calcBoardsPoints();
+        //currentFigure.drawBorders(drawCanvas.getGraphicsContext2D());
 
-        canvasController.addFigure(currentFigure);
+        //canvasController.addFigure(currentFigure);
     }
 
     @Override

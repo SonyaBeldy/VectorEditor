@@ -1,7 +1,6 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -38,8 +37,8 @@ public class PolylineTool extends Tool implements ITool{
                 polyline.calcBoardsPoints();
                 polyline.drawBorders(drawCanvas.getGraphicsContext2D());
 
-                currentFigure = polyline;
-                canvasController.addFigure(currentFigure);
+                canvasController.addFigure(polyline);
+                canvasController.setCurrentFigure(polyline);
             } else {
                 canvasController.getFigures().remove(canvasController.getFigures().size() - 1);
                 canvasController.redrawAllFigures();

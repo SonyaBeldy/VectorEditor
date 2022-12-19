@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public class PolylineDrawer implements Drawer{
+public class PolylineDrawer implements IDrawer {
 
     private final ArrayList<Point> points;
 
@@ -16,8 +16,8 @@ public class PolylineDrawer implements Drawer{
     @Override
     public void draw(GraphicsContext graphicsContext, Color color) {
         for (int i = 0; i < points.size() - 1; i++) {
-            Line line = new Line(points.get(i).getX(), points.get(i).getY(), points.get(i + 1).getX(), points.get(i + 1).getY(), color);
-            line.draw(graphicsContext);
+            graphicsContext.setStroke(color);
+            graphicsContext.strokeLine(points.get(i).getX(), points.get(i).getY(), points.get(i + 1).getX(), points.get(i + 1).getY());
         }
     }
 

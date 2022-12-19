@@ -9,7 +9,10 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 public class CanvasController {
+
     private final Canvas drawCanvas;
+
+    private ITool currentTool;
     private Figure currentFigure;
     private final ArrayList<Figure> figures;
 
@@ -64,6 +67,15 @@ public class CanvasController {
     }
     public void addFigure(Figure figure) {
         figures.add(figure);
+    }
+
+    public ITool getCurrentTool() {
+        return currentTool;
+    }
+
+    public void setCurrentTool(ITool currentTool) {
+        this.currentTool = currentTool;
+        System.out.println("current tool" + currentTool.toString());
     }
 
     public Color getStrokeColor() {

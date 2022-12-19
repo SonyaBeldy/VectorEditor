@@ -1,8 +1,10 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.IDrawer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
@@ -29,29 +31,24 @@ public class MainController {
     @FXML
     private ColorPicker colorPicker;
 
-    private ITool currentTool;
-
     private CanvasController canvasController;
 
     @FXML
     protected void onSelectButtonClick(ActionEvent event) {
-        currentTool = new SelectTool(canvasController);
+        canvasController.setCurrentTool(new SelectTool(canvasController));
         enabledAllButtons();
         selectButton.setDisable(true);
     }
 
     @FXML
     protected void onLineButtonClick(ActionEvent event) {
-        canvasController.setStrokeColor(colorPicker.getValue());
-        currentTool = new LineTool(canvasController);
-        enabledAllButtons();
-        lineButton.setDisable(true);
+
     }
 
     @FXML
     protected void onPolylineButtonClick(ActionEvent event) {
         canvasController.setStrokeColor(colorPicker.getValue());
-        currentTool = new PolylineTool(canvasController);
+        canvasController.setCurrentTool(new PolylineTool(canvasController));
         enabledAllButtons();
         polylineButton.setDisable(true);
     }
@@ -65,25 +62,25 @@ public class MainController {
 
     @FXML
     void onCanvasPressed(MouseEvent event){
-        currentTool.mousePressed(event);
+        canvasController.getCurrentTool().mousePressed(event);
     }
     @FXML
     void onCanvasDragged(MouseEvent event) {
-        currentTool.mouseDragged(event);
+        canvasController.getCurrentTool().mouseDragged(event);
     }
     @FXML
     void onCanvasReleased(MouseEvent event){
-        currentTool.mouseReleased(event);
+        canvasController.getCurrentTool().mouseReleased(event);
     }
 
     @FXML
-    void onCanvasEntered(MouseEvent event) { currentTool.mouseEntered(event); }
+    void onCanvasEntered(MouseEvent event) { canvasController.getCurrentTool().mouseEntered(event); }
 
 
     @FXML
     void initialize() {
         canvasController = new CanvasController(drawCanvas);
-        currentTool = new SelectTool(canvasController);
+        canvasController.setCurrentTool(new SelectTool(canvasController));
         selectButton.setDisable(true);
         colorPicker.setValue(Color.BLACK);
     }

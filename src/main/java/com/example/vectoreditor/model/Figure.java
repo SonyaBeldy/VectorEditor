@@ -5,12 +5,10 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public class Figure {
+public class Figure implements Cloneable<Figure>{
 
-    Point startPoint;
-    Point endPoint;
-
-    Drawer drawer;
+    ArrayList<Point> points;
+    IDrawer drawer;
     BordersPainter bordersPainter;
 
     public Figure() {
@@ -42,24 +40,18 @@ public class Figure {
     public void setStrokeColor(Color figureColor) {
     }
 
+    public ArrayList<Point> getPoints() { return points; }
+
     public Color getStrokeColor() {
         return null;
     }
-    public Point getStartPoint() {
-        return startPoint;
-    }
-    public void setStartPoint(Point startPoint) {
-        this.startPoint = startPoint;
-    }
 
-    public Point getEndPoint() {
-        return endPoint;
-    }
-
-    public void setEndPoint(Point endPoint) {
-        this.endPoint = endPoint;
-    }
     public void setEndPoint(double x, double y) {
 
+    }
+
+    @Override
+    public Figure clone() {
+        return null;
     }
 }

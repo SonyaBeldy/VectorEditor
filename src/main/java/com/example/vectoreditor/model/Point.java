@@ -1,6 +1,6 @@
 package com.example.vectoreditor.model;
 
-public class Point {
+public class Point implements Cloneable<Point>{
     private double x;
     private double y;
     public Point (double x, double y) {
@@ -22,5 +22,9 @@ public class Point {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public Point clone() {
+        return new Point(x, y);
     }
 }

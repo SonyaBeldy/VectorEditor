@@ -15,7 +15,6 @@ public class BordersPainter {
     }
 
     public void drawBoards(GraphicsContext graphicsContext) {
-        System.out.println("DRAW BORDERS");
 
         ArrayList<Point> points = figure.getBoardsPoints();
         for (int i = 0; i < points.size() - 1; i++) {

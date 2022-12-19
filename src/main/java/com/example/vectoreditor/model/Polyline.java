@@ -6,7 +6,7 @@ import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 
-public class Polyline extends Figure{
+public class Polyline extends Figure implements Cloneable<Figure>{
 
     private final ArrayList<Point> points;
     private final ArrayList<Point> boardsPoints;
@@ -33,8 +33,8 @@ public class Polyline extends Figure{
     public void drawBorders(GraphicsContext graphicsContext) {
         bordersPainter.drawBoards(graphicsContext);
     }
+
     public void calcBoardsPoints() {
-        System.out.println("calc");
         boardsPoints.clear();
         double minX = points.get(0).getX();
         double minY = points.get(0).getY();
@@ -54,8 +54,6 @@ public class Polyline extends Figure{
                 maxY = point.getY();
             }
         }
-        System.out.println("min x " + minX + ", min y " + minY);
-        System.out.println("max x " + maxX + ", max y " + maxY);
         boardsPoints.add(new Point(minX, minY));
         boardsPoints.add(new Point(maxX, minY));
         boardsPoints.add(new Point(maxX, maxY));
@@ -69,9 +67,15 @@ public class Polyline extends Figure{
     public void calcHitboxPoints() {
     }
     public boolean isClickedOn(double x, double y) {
-        //double hitDistance = 10;
         return  (x < getBoardsPoints().get(2).getX()) && (x > getBoardsPoints().get(0).getX()) && (y < getBoardsPoints().get(2).getY()) && (y > getBoardsPoints().get(0).getY());
-            //return (x > getBoardsPoints().get(0).getX()) && (x < getBoardsPoints().get(2).getX()) && (y > getBoardsPoints().get(0).getY()) && (y < getBoardsPoints().get(2).getY());
+    }
+
+    public Polyline clone() {
+        Polyline newPolyline = new Polyline(getStrokeColor());
+        for (int i = 0; i < getPoints().size(); i++) {
+            newPolyline.addPoint(getPoints().get(i).clone());
+        }
+        return newPolyline;
     }
 
     public void addPoint(Point point) {
@@ -81,10 +85,10 @@ public class Polyline extends Figure{
     public ArrayList<Point> getPoints() {
         return points;
     }
-
     public Color getStrokeColor() {
         return strokeColor;
     }
+
     public void setStrokeColor(Color figureColor) {
     }
 }
