@@ -13,7 +13,7 @@ public class LineTool extends Tool implements ITool{
         double x = event.getX();
         double y = event.getY();
 
-        currentFigure = new Line(x,y, x, y, canvasController.getFillColor());
+        currentFigure = new Line(x,y, x, y, canvasController.getStrokeColor());
         currentFigure.draw(drawCanvas.getGraphicsContext2D());
     }
 
@@ -36,8 +36,8 @@ public class LineTool extends Tool implements ITool{
         currentFigure.setEndPoint(x, y);
         currentFigure.draw(drawCanvas.getGraphicsContext2D());
 
-        currentFigure.calculateHitBoxPoints();
-        currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
+        currentFigure.calcBoardsPoints();
+        currentFigure.drawBorders(drawCanvas.getGraphicsContext2D());
 
         canvasController.addFigure(currentFigure);
     }

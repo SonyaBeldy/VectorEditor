@@ -1,13 +1,17 @@
 package com.example.vectoreditor.model;
 
-import com.example.vectoreditor.controller.ITool;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 public class Figure {
 
     Point startPoint;
     Point endPoint;
+
+    Drawer drawer;
+    BordersPainter bordersPainter;
 
     public Figure() {
 
@@ -17,16 +21,17 @@ public class Figure {
 
     }
 
-    public void calculateHitBoxPoints() {
+    public void drawBorders(GraphicsContext graphicsContext) {
 
     }
 
-    public void drawHitbox(GraphicsContext graphicsContext) {
+    public void highlight(GraphicsContext graphicsContext) {
 
     }
-
-    public void highlight(GraphicsContext graphicsContext){
-
+    public void calcBoardsPoints() {
+    }
+    public ArrayList<Point> getBoardsPoints() {
+        return null;
     }
 
     public boolean isClickedOn(double x, double y) {
@@ -37,16 +42,14 @@ public class Figure {
     public void setStrokeColor(Color figureColor) {
     }
 
+    public Color getStrokeColor() {
+        return null;
+    }
     public Point getStartPoint() {
         return startPoint;
     }
-
     public void setStartPoint(Point startPoint) {
         this.startPoint = startPoint;
-    }
-
-    public void setStartPoint(double x, double y) {
-
     }
 
     public Point getEndPoint() {
@@ -58,8 +61,5 @@ public class Figure {
     }
     public void setEndPoint(double x, double y) {
 
-    }
-
-    public static class Select {
     }
 }

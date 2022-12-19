@@ -1,8 +1,6 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Line;
-import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.Polyline;
+import com.example.vectoreditor.model.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -26,20 +24,27 @@ public class PolylineTool extends Tool implements ITool{
                 polyline = new Polyline(Color.BLACK);
                 polyline.addPoint(new Point(event.getX(), event.getY()));
 
+                canvasController.getFigures().add(polyline);
             }
             polyline.addPoint(new Point(event.getX(), event.getY()));
         }
 
         if (event.isSecondaryButtonDown()) {
             isDrawing = false;
-            if (!polyline.getPoints().isEmpty()){
+            if (polyline.getPoints().size() > 2){
                 polyline.getPoints().remove(polyline.getPoints().size() - 1);
+
+                canvasController.redrawAllFigures();
+                polyline.calcBoardsPoints();
+                polyline.drawBorders(drawCanvas.getGraphicsContext2D());
+
                 currentFigure = polyline;
                 canvasController.addFigure(currentFigure);
+            } else {
+                canvasController.getFigures().remove(canvasController.getFigures().size() - 1);
+                canvasController.redrawAllFigures();
             }
         }
-        canvasController.redrawAllFigures();
-        polyline.draw(drawCanvas.getGraphicsContext2D());
     }
 
     @Override
@@ -51,7 +56,6 @@ public class PolylineTool extends Tool implements ITool{
         getLastPoint().setY(event.getY());
 
         canvasController.redrawAllFigures();
-        polyline.draw(drawCanvas.getGraphicsContext2D());
     }
 
     @Override
@@ -62,8 +66,8 @@ public class PolylineTool extends Tool implements ITool{
         getLastPoint().setX(event.getX());
         getLastPoint().setY(event.getY());
 
+        polyline.calcBoardsPoints();
         canvasController.redrawAllFigures();
-        polyline.draw(drawCanvas.getGraphicsContext2D());
     }
 
     @Override
@@ -73,7 +77,6 @@ public class PolylineTool extends Tool implements ITool{
             getLastPoint().setY(event.getY());
 
             canvasController.redrawAllFigures();
-            polyline.draw(drawCanvas.getGraphicsContext2D());
         }
     }
 

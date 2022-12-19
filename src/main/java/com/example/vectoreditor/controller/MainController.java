@@ -42,7 +42,7 @@ public class MainController {
 
     @FXML
     protected void onLineButtonClick(ActionEvent event) {
-        canvasController.setFillColor(colorPicker.getValue());
+        canvasController.setStrokeColor(colorPicker.getValue());
         currentTool = new LineTool(canvasController);
         enabledAllButtons();
         lineButton.setDisable(true);
@@ -50,7 +50,7 @@ public class MainController {
 
     @FXML
     protected void onPolylineButtonClick(ActionEvent event) {
-        canvasController.setFillColor(colorPicker.getValue());
+        canvasController.setStrokeColor(colorPicker.getValue());
         currentTool = new PolylineTool(canvasController);
         enabledAllButtons();
         polylineButton.setDisable(true);
@@ -60,7 +60,7 @@ public class MainController {
 
     @FXML
     protected void chooseColor() {
-        canvasController.setFillColor(colorPicker.getValue());
+        canvasController.setStrokeColor(colorPicker.getValue());
     }
 
     @FXML

@@ -13,7 +13,7 @@ public class CanvasController {
     private Figure currentFigure;
     private final ArrayList<Figure> figures;
 
-    private Color fillColor;
+    private Color strokeColor;
 
     private final ArrayList<Action> actions;
 
@@ -21,14 +21,14 @@ public class CanvasController {
         this.drawCanvas = drawCanvas;
         figures = new ArrayList<>();
         actions = new ArrayList<>();
-        fillColor = Color.BLACK;
+        strokeColor = Color.BLACK;
     }
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
         if (currentFigure != null) {
             System.out.println("null");
-            currentFigure.drawHitbox(drawCanvas.getGraphicsContext2D());
+            currentFigure.drawBorders(drawCanvas.getGraphicsContext2D());
         }
         for (Figure figure : figures) {
             figure.draw(drawCanvas.getGraphicsContext2D());
@@ -66,11 +66,11 @@ public class CanvasController {
         figures.add(figure);
     }
 
-    public Color getFillColor() {
-        return fillColor;
+    public Color getStrokeColor() {
+        return strokeColor;
     }
 
-    public void setFillColor(Color fillColor) {
-        this.fillColor = fillColor;
+    public void setStrokeColor(Color strokeColor) {
+        this.strokeColor = strokeColor;
     }
 }
