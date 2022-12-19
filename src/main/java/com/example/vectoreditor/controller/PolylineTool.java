@@ -35,7 +35,7 @@ public class PolylineTool extends Tool implements ITool{
 
                 canvasController.redrawAllFigures();
                 polyline.calcBoardsPoints();
-                polyline.drawBorders(drawCanvas.getGraphicsContext2D());
+                //polyline.drawBorders(drawCanvas.getGraphicsContext2D());
 
                 canvasController.addFigure(polyline);
                 canvasController.setCurrentFigure(polyline);

@@ -6,7 +6,7 @@ import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 
-public class Polyline extends Figure implements Cloneable<Figure>{
+public class Polyline extends Figure implements Cloneable<Figure> {
 
     private final ArrayList<Point> points;
     private final ArrayList<Point> boardsPoints;
@@ -17,7 +17,6 @@ public class Polyline extends Figure implements Cloneable<Figure>{
         this.strokeColor = strokeColor;
         points = new ArrayList<>();
         drawer = new PolylineDrawer(points);
-        bordersPainter = new BordersPainter(this);
         boardsPoints = new ArrayList<>();
         hitboxPoints = new ArrayList<>();
     }
@@ -28,10 +27,6 @@ public class Polyline extends Figure implements Cloneable<Figure>{
 
     public void highlight(GraphicsContext graphicsContext) {
         drawer.draw(graphicsContext, Color.LIGHTBLUE);
-    }
-
-    public void drawBorders(GraphicsContext graphicsContext) {
-        bordersPainter.drawBoards(graphicsContext);
     }
 
     public void calcBoardsPoints() {

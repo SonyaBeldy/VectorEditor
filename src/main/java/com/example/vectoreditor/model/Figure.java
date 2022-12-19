@@ -19,10 +19,6 @@ public class Figure implements Cloneable<Figure>{
 
     }
 
-    public void drawBorders(GraphicsContext graphicsContext) {
-
-    }
-
     public void highlight(GraphicsContext graphicsContext) {
 
     }

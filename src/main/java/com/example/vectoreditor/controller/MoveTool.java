@@ -1,5 +1,6 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.BordersPainter;
 import com.example.vectoreditor.model.Figure;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.Polyline;
@@ -9,21 +10,21 @@ import java.util.ArrayList;
 
 public class MoveTool extends Tool implements ITool{
 
-    private final Figure currentFigure;
-    private final ArrayList<Point> beforeMovePoints;
+    BordersPainter bordersPainter;
 
+
+    private final ArrayList<Point> beforeMovePoints;
     private final Point pressPoint;
 
     public MoveTool(CanvasController canvasController) {
         super(canvasController);
-        currentFigure = canvasController.getCurrentFigure();
         beforeMovePoints = canvasController.getCurrentFigure().clone().getPoints();
         pressPoint = new Point(0,0);
+        bordersPainter = new BordersPainter(canvasController.getDrawCanvas().getGraphicsContext2D());
     }
 
     public MoveTool(CanvasController canvasController, Point pressPoint) {
         super(canvasController);
-        currentFigure = canvasController.getCurrentFigure();
         beforeMovePoints = canvasController.getCurrentFigure().clone().getPoints();
         this.pressPoint = pressPoint;
     }
@@ -37,24 +38,26 @@ public class MoveTool extends Tool implements ITool{
     public void mouseDragged(MouseEvent event) {
         double differenceX =  event.getX() - pressPoint.getX();
         double differenceY =  event.getY() - pressPoint.getY();
-        for (int i = 0; i < currentFigure.getPoints().size(); i++) {
+        for (int i = 0; i < canvasController.getCurrentFigure().getPoints().size(); i++) {
             double beforeMoveX = beforeMovePoints.get(i).getX();
             double beforeMoveY = beforeMovePoints.get(i).getY();
 
-            currentFigure.getPoints().get(i).setX(beforeMoveX + differenceX);
-            currentFigure.getPoints().get(i).setY(beforeMoveY + differenceY);
+            canvasController.getCurrentFigure().getPoints().get(i).setX(beforeMoveX + differenceX);
+            canvasController.getCurrentFigure().getPoints().get(i).setY(beforeMoveY + differenceY);
         }
         canvasController.redrawAllFigures();
         canvasController.getCurrentFigure().calcBoardsPoints();
-        currentFigure.drawBorders(drawCanvas.getGraphicsContext2D());
+
+        bordersPainter.drawBoards(canvasController.getCurrentFigure());
+
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
         canvasController.redrawAllFigures();
-        currentFigure.drawBorders(drawCanvas.getGraphicsContext2D());
-        canvasController.setCurrentTool(new SelectTool(canvasController));
+        bordersPainter.drawBoards(canvasController.getCurrentFigure());
 
+        canvasController.setCurrentTool(new SelectTool(canvasController));
     }
 
     @Override

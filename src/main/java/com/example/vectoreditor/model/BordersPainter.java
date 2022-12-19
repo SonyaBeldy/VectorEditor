@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class BordersPainter {
 
-    Figure figure;
+    GraphicsContext graphicsContext;
 
-    public BordersPainter(Figure figure) {
-        this.figure = figure;
+    public BordersPainter(GraphicsContext graphicsContext) {
+        this.graphicsContext = graphicsContext;
     }
 
-    public void drawBoards(GraphicsContext graphicsContext) {
+    public void drawBoards(Figure figure) {
 
         ArrayList<Point> points = figure.getBoardsPoints();
         for (int i = 0; i < points.size() - 1; i++) {

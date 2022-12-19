@@ -1,15 +1,17 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.BordersPainter;
 import com.example.vectoreditor.model.Figure;
 import com.example.vectoreditor.model.Point;
 import javafx.scene.input.MouseEvent;
 
 public class SelectTool extends Tool implements ITool{
 
-    Figure currentFigure;
+    BordersPainter bordersPainter;
+
     public SelectTool(CanvasController canvasController){
         super(canvasController);
-        currentFigure = canvasController.getCurrentFigure();
+        bordersPainter = new BordersPainter(canvasController.getDrawCanvas().getGraphicsContext2D());
     }
 
     @Override
@@ -20,7 +22,7 @@ public class SelectTool extends Tool implements ITool{
             return;
         }
         canvasController.redrawAllFigures();
-        currentFigure.drawBorders(drawCanvas.getGraphicsContext2D());
+        bordersPainter.drawBoards(canvasController.getCurrentFigure());
         canvasController.setCurrentTool(new MoveTool(canvasController, new Point(event.getX(), event.getY())));
     }
 
@@ -31,11 +33,13 @@ public class SelectTool extends Tool implements ITool{
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        if (currentFigure == null) {
+        if (canvasController.getCurrentFigure() == null) {
             return;
         }
         canvasController.redrawAllFigures();
-        canvasController.getCurrentFigure().drawBorders(drawCanvas.getGraphicsContext2D());
+        bordersPainter.drawBoards(canvasController.getCurrentFigure());
+
+        //canvasController.getCurrentFigure().drawBorders(drawCanvas.getGraphicsContext2D());
     }
 
     @Override
@@ -48,8 +52,10 @@ public class SelectTool extends Tool implements ITool{
         if (enteredFigure != null) {
             enteredFigure.highlight(drawCanvas.getGraphicsContext2D());
         }
-        if (currentFigure != null) {
-            currentFigure.drawBorders(drawCanvas.getGraphicsContext2D());
+        if (canvasController.getCurrentFigure() != null) {
+
+            bordersPainter.drawBoards(canvasController.getCurrentFigure());
+            //canvasController.getCurrentFigure().drawBorders(drawCanvas.getGraphicsContext2D());
         }
     }
 }

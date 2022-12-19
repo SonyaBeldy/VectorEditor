@@ -1,6 +1,7 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Action;
+import com.example.vectoreditor.model.BordersPainter;
 import com.example.vectoreditor.model.Figure;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -20,18 +21,21 @@ public class CanvasController {
 
     private final ArrayList<Action> actions;
 
+    private final BordersPainter bordersPainter;
+
     public CanvasController(Canvas drawCanvas) {
         this.drawCanvas = drawCanvas;
         figures = new ArrayList<>();
         actions = new ArrayList<>();
         strokeColor = Color.BLACK;
+        bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
     }
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
         if (currentFigure != null) {
-            System.out.println("null");
-            currentFigure.drawBorders(drawCanvas.getGraphicsContext2D());
+
+            bordersPainter.drawBoards(currentFigure);
         }
         for (Figure figure : figures) {
             figure.draw(drawCanvas.getGraphicsContext2D());
@@ -75,7 +79,6 @@ public class CanvasController {
 
     public void setCurrentTool(ITool currentTool) {
         this.currentTool = currentTool;
-        System.out.println("current tool" + currentTool.toString());
     }
 
     public Color getStrokeColor() {
