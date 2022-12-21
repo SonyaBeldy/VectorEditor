@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Figure implements Cloneable<Figure>{
 
     ArrayList<Point> points;
+
     IDrawer drawer;
-    BordersPainter bordersPainter;
 
     public Figure() {
 
@@ -27,7 +27,12 @@ public class Figure implements Cloneable<Figure>{
     public ArrayList<Point> getBoardsPoints() {
         return null;
     }
-
+    public ArrayList<Point> getRotatePoints() {
+        return null;
+    }
+    public ArrayList<Point> getResizePoints() {
+        return null;
+    }
     public boolean isClickedOn(double x, double y) {
         return false;
     }

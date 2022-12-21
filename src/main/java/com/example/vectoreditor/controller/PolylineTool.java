@@ -17,13 +17,15 @@ public class PolylineTool extends Tool implements ITool{
 
     @Override
     public void mousePressed(MouseEvent event) {
+
         if (event.isPrimaryButtonDown()) {
             if (!isDrawing) {
                 isDrawing = true;
-                polyline = new Polyline(Color.BLACK);
+                polyline = new Polyline(canvasController.getStrokeColor());
                 polyline.addPoint(new Point(event.getX(), event.getY()));
 
                 canvasController.getFigures().add(polyline);
+                canvasController.setCurrentFigure(null);
             }
             polyline.addPoint(new Point(event.getX(), event.getY()));
         }
@@ -35,9 +37,6 @@ public class PolylineTool extends Tool implements ITool{
 
                 canvasController.redrawAllFigures();
                 polyline.calcBoardsPoints();
-                //polyline.drawBorders(drawCanvas.getGraphicsContext2D());
-
-                canvasController.addFigure(polyline);
                 canvasController.setCurrentFigure(polyline);
             } else {
                 canvasController.getFigures().remove(canvasController.getFigures().size() - 1);

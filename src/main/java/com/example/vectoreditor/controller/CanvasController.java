@@ -60,6 +60,11 @@ public class CanvasController {
 
     public void setCurrentFigure(Figure currentFigure) {
         this.currentFigure = currentFigure;
+        if (currentFigure == null) {
+            return;
+        }
+        redrawAllFigures();
+        bordersPainter.drawBoards(currentFigure);
     }
 
     public Canvas getDrawCanvas() {

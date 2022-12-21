@@ -20,13 +20,14 @@ public class MoveTool extends Tool implements ITool{
         super(canvasController);
         beforeMovePoints = canvasController.getCurrentFigure().clone().getPoints();
         pressPoint = new Point(0,0);
-        bordersPainter = new BordersPainter(canvasController.getDrawCanvas().getGraphicsContext2D());
+
     }
 
     public MoveTool(CanvasController canvasController, Point pressPoint) {
         super(canvasController);
         beforeMovePoints = canvasController.getCurrentFigure().clone().getPoints();
         this.pressPoint = pressPoint;
+        bordersPainter = new BordersPainter(canvasController.getDrawCanvas().getGraphicsContext2D());
     }
 
     @Override
@@ -47,8 +48,6 @@ public class MoveTool extends Tool implements ITool{
         }
         canvasController.redrawAllFigures();
         canvasController.getCurrentFigure().calcBoardsPoints();
-
-        bordersPainter.drawBoards(canvasController.getCurrentFigure());
 
     }
 
