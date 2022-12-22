@@ -1,17 +1,11 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.BordersPainter;
 import com.example.vectoreditor.model.Figure;
 import com.example.vectoreditor.model.Point;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-
-import java.io.FileInputStream;
-import java.net.URL;
-import java.util.Objects;
 
 public class SelectTool extends Tool implements ITool {
 
@@ -72,7 +66,7 @@ public class SelectTool extends Tool implements ITool {
                     default -> Cursor.DEFAULT;
                 };
                 canvasController.getDrawCanvas().getScene().setCursor(cursor);
-                canvasController.setCurrentTool(new ResizeTool(canvasController));
+                canvasController.setCurrentTool(new ResizeCornerTool(canvasController));
                 return boardCorner;
             }
         }
@@ -117,9 +111,11 @@ public class SelectTool extends Tool implements ITool {
                         canvasController.getDrawCanvas().getScene().setCursor(cursor);
                     }
                 }
+                canvasController.setCurrentTool(new RotateTool(canvasController));
                 return rotatePoint;
             }
         }
+        canvasController.setCurrentTool(new SelectTool(canvasController));
         canvasController.getDrawCanvas().getScene().setCursor(Cursor.DEFAULT);
 
         return null;

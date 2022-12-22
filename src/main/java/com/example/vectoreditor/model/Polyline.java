@@ -35,24 +35,12 @@ public class Polyline extends Figure implements Cloneable<Figure> {
 
     public void calcBoardsPoints() {
         boardsPoints.clear();
-        double minX = points.get(0).getX();
-        double minY = points.get(0).getY();
-        double maxX = points.get(0).getX();
-        double maxY = points.get(0).getY();
-        for (Point point : points) {
-            if (point.getX() <= minX) {
-                minX = point.getX();
-            }
-            if (point.getY() <= minY) {
-                minY = point.getY();
-            }
-            if (point.getX() > maxX) {
-                maxX = point.getX();
-            }
-            if (point.getY() > maxY) {
-                maxY = point.getY();
-            }
-        }
+
+        double minX = ListUtils.getMinX(points);
+        double minY = ListUtils.getMinY(points);
+        double maxX = ListUtils.getMaxX(points);
+        double maxY = ListUtils.getMaxY(points);
+
         boardsPoints.add(new Point(minX, minY));
         boardsPoints.add(new Point(maxX, minY));
         boardsPoints.add(new Point(maxX, maxY));
@@ -79,6 +67,12 @@ public class Polyline extends Figure implements Cloneable<Figure> {
         resizePoints.add(new Point((boardsPoints.get(2).getX() - boardsPoints.get(3).getX())/2 + boardsPoints.get(3).getX(), boardsPoints.get(2).getY()));
         resizePoints.add(new Point(boardsPoints.get(3).getX(), (boardsPoints.get(0).getY() - boardsPoints.get(3).getY())/2 + boardsPoints.get(3).getY()));
     }
+
+//    public Point getCenter() {
+//        return ();
+//    }
+
+
 
     public ArrayList<Point> getBoardsPoints() {
         return boardsPoints;
