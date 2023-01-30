@@ -1,5 +1,6 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.CursorImage;
 import com.example.vectoreditor.model.Figure;
 import com.example.vectoreditor.model.Point;
 import javafx.scene.Cursor;
@@ -39,7 +40,6 @@ public class SelectTool extends Tool implements ITool {
 
     @Override
     public void mouseEntered(MouseEvent event) {
-        System.out.println(event.getX() + " " + event.getY());
         if (canvasController.getFigures().isEmpty()) {
             return;
         }
@@ -87,29 +87,11 @@ public class SelectTool extends Tool implements ITool {
             Point rotatePoint = currentFigure.getRotatePoints().get(i);
 
             if (Math.pow(rotatePoint.getX() - point.getX(), 2) + Math.pow(rotatePoint.getY() - point.getY(), 2) <= 80) {
-                Image image;
-                ImageCursor cursor;
                 switch (i) {
-                    case 0 -> {
-                        image = new Image(String.valueOf(this.getClass().getResource("/com/example/vectoreditor/images/icons/NE3.png")));
-                        cursor = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-                        canvasController.getDrawCanvas().getScene().setCursor(cursor);
-                    }
-                    case 1 -> {
-                        image = new Image(String.valueOf(this.getClass().getResource("/com/example/vectoreditor/images/icons/NW3.png")));
-                        cursor = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-                        canvasController.getDrawCanvas().getScene().setCursor(cursor);
-                    }
-                    case 2 -> {
-                        image = new Image(String.valueOf(this.getClass().getResource("/com/example/vectoreditor/images/icons/SE3.png")));
-                        cursor = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-                        canvasController.getDrawCanvas().getScene().setCursor(cursor);
-                    }
-                    case 3 -> {
-                        image = new Image(String.valueOf(this.getClass().getResource("/com/example/vectoreditor/images/icons/WE3.png")));
-                        cursor = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-                        canvasController.getDrawCanvas().getScene().setCursor(cursor);
-                    }
+                    case 0 -> canvasController.getDrawCanvas().getScene().setCursor(CursorImage.rotateCursor(7, canvasController.getCurrentFigure().getAngle()));
+                    case 1 -> canvasController.getDrawCanvas().getScene().setCursor(CursorImage.rotateCursor(1, canvasController.getCurrentFigure().getAngle()));
+                    case 2 -> canvasController.getDrawCanvas().getScene().setCursor(CursorImage.rotateCursor(3, canvasController.getCurrentFigure().getAngle()));
+                    case 3 -> canvasController.getDrawCanvas().getScene().setCursor(CursorImage.rotateCursor(5, canvasController.getCurrentFigure().getAngle()));
                 }
                 canvasController.setCurrentTool(new RotateTool(canvasController));
                 return rotatePoint;

@@ -95,7 +95,7 @@
                            </ImageView>
                         </graphic>
                      </Button>
-                     <Button id="toolButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
+                     <Button id="toolButton" fx:id="rectButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="56.0" stylesheets="@main.css">
                         <graphic>
                            <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView">
                               <image>
@@ -160,7 +160,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="171.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
                                  <children>
                                     <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="R:" />
-                                    <TextField maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+                                    <TextField fx:id="rotateField" maxHeight="21.0" maxWidth="-Infinity" onAction="#setAngle" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
                                  </children>
                                  <padding>
                                     <Insets left="12.0" />

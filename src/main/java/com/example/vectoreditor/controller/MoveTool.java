@@ -11,22 +11,19 @@ import java.util.ArrayList;
 public class MoveTool extends Tool implements ITool{
 
     BordersPainter bordersPainter;
-
-
-    private final ArrayList<Point> beforeMovePoints;
     private final Point pressPoint;
+    Figure beforeMoveFigure;
 
     public MoveTool(CanvasController canvasController) {
         super(canvasController);
-        beforeMovePoints = canvasController.getCurrentFigure().clone().getPoints();
         pressPoint = new Point(0,0);
 
     }
 
     public MoveTool(CanvasController canvasController, Point pressPoint) {
         super(canvasController);
-        beforeMovePoints = canvasController.getCurrentFigure().clone().getPoints();
         this.pressPoint = pressPoint;
+        beforeMoveFigure = canvasController.getCurrentFigure().clone();
         bordersPainter = new BordersPainter(canvasController.getDrawCanvas().getGraphicsContext2D());
     }
 
@@ -39,16 +36,9 @@ public class MoveTool extends Tool implements ITool{
     public void mouseDragged(MouseEvent event) {
         double differenceX =  event.getX() - pressPoint.getX();
         double differenceY =  event.getY() - pressPoint.getY();
-        for (int i = 0; i < canvasController.getCurrentFigure().getPoints().size(); i++) {
-            double beforeMoveX = beforeMovePoints.get(i).getX();
-            double beforeMoveY = beforeMovePoints.get(i).getY();
 
-            canvasController.getCurrentFigure().getPoints().get(i).setX(beforeMoveX + differenceX);
-            canvasController.getCurrentFigure().getPoints().get(i).setY(beforeMoveY + differenceY);
-        }
+        canvasController.getCurrentFigure().move(beforeMoveFigure, new Point(differenceX, differenceY));
         canvasController.redrawAllFigures();
-        canvasController.getCurrentFigure().calcBoardsPoints();
-
     }
 
     @Override
@@ -63,4 +53,5 @@ public class MoveTool extends Tool implements ITool{
     public void mouseEntered(MouseEvent event) {
 
     }
+
 }

@@ -4,41 +4,49 @@ import java.util.ArrayList;
 
 public class ListUtils {
 
-    static double getMinX(ArrayList<Point> points) {
+    public static Point getCenter(ArrayList<Point> points) {
+        double centerX = (getMaxX(points) - getMinX(points))/2 + getMinX(points);
+        double centerY = (getMaxY(points) - getMinY(points))/2 + getMinY(points);
+        centerY = Math.floor(centerY);
+        centerX = Math.floor(centerX);
+        return new Point(centerX, centerY);
+    }
+
+    public static double getMinX(ArrayList<Point> points) {
         double minX = points.get(0).getX();
-        for (int i = 0; i < points.size(); i++) {
-            if (points.get(i).getX() < minX){
-                minX = points.get(i).getX();
+        for (Point point : points) {
+            if (point.getX() < minX) {
+                minX = point.getX();
             }
         }
         return minX;
     }
 
-    static double getMinY(ArrayList<Point> points) {
+    public static double getMinY(ArrayList<Point> points) {
         double minY = points.get(0).getY();
-        for (int i = 0; i < points.size(); i++) {
-            if (points.get(i).getY() < minY){
-                minY = points.get(i).getY();
+        for (Point point : points) {
+            if (point.getY() < minY) {
+                minY = point.getY();
             }
         }
         return minY;
     }
 
-    static double getMaxX(ArrayList<Point> points) {
+    public static double getMaxX(ArrayList<Point> points) {
         double maxX = points.get(0).getX();
-        for (int i = 0; i < points.size(); i++) {
-            if (points.get(i).getX() > maxX){
-                maxX = points.get(i).getX();
+        for (Point point : points) {
+            if (point.getX() > maxX) {
+                maxX = point.getX();
             }
         }
         return maxX;
     }
 
-    static double getMaxY(ArrayList<Point> points) {
+    public static double getMaxY(ArrayList<Point> points) {
         double maxY = points.get(0).getY();
-        for (int i = 0; i < points.size(); i++) {
-            if (points.get(i).getY() > maxY){
-                maxY = points.get(i).getY();
+        for (Point point : points) {
+            if (point.getY() > maxY) {
+                maxY = point.getY();
             }
         }
         return maxY;

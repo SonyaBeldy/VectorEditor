@@ -5,54 +5,146 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public class Figure implements Cloneable<Figure>{
+public abstract class Figure implements Cloneable<Figure>{
 
     ArrayList<Point> points;
+    protected final ArrayList<Point> boardsPoints;
+    protected final ArrayList<Point> rotatePoints;
+    protected final ArrayList<Point> resizePoints;
+    protected final ArrayList<Point> hitboxPoints;
+    protected double angle;
+    protected Color strokeColor;
 
     IDrawer drawer;
 
-    public Figure() {
-
+    public Figure(Color strokeColor) {
+        this.strokeColor = strokeColor;
+        points = new ArrayList<>();
+        boardsPoints = new ArrayList<>();
+        hitboxPoints = new ArrayList<>();
+        rotatePoints = new ArrayList<>();
+        resizePoints = new ArrayList<>();
     }
 
     public void draw(GraphicsContext graphicsContext) {
-
+        drawer.draw(graphicsContext, strokeColor);
     }
 
     public void highlight(GraphicsContext graphicsContext) {
-
+        drawer.draw(graphicsContext, Color.MEDIUMSLATEBLUE);
     }
+
+    public void rotate(Figure beforeRotateFigure, Point center, double angle) {
+        rotate(getPoints(), beforeRotateFigure.getPoints(), center, angle);
+        rotate(getBoardsPoints(), beforeRotateFigure.getBoardsPoints(), center, angle);
+        rotate(getRotatePoints(), beforeRotateFigure.getRotatePoints(), center, angle);
+        rotate(getResizePoints(), beforeRotateFigure.getResizePoints(), center, angle);
+    }
+    private void rotate(ArrayList<Point> points, ArrayList<Point> beforeRotatePoints, Point center, double angle) {
+        for (int i = 0; i < points.size(); i++) {
+            Point rotatedPoint = beforeRotatePoints.get(i).clone();
+            rotatedPoint.rotate(center, angle);
+            points.set(i, rotatedPoint);
+        }
+    }
+
     public void calcBoardsPoints() {
+        boardsPoints.clear();
+
+        double minX = ListUtils.getMinX(points);
+        double minY = ListUtils.getMinY(points);
+        double maxX = ListUtils.getMaxX(points);
+        double maxY = ListUtils.getMaxY(points);
+
+        boardsPoints.add(new Point(minX, minY));
+        boardsPoints.add(new Point(maxX, minY));
+        boardsPoints.add(new Point(maxX, maxY));
+        boardsPoints.add(new Point(minX, maxY));
+
+        calcResizePoints();
+        calcRotatePoints();
+    }
+
+    public void move(Figure beforeMoveFigure, Point difference){
+        movePoints(beforeMoveFigure.getPoints(), getPoints(), difference);
+        movePoints(beforeMoveFigure.getBoardsPoints(), getBoardsPoints(), difference);
+        movePoints(beforeMoveFigure.getRotatePoints(), getRotatePoints(), difference);
+        movePoints(beforeMoveFigure.getResizePoints(), getResizePoints(), difference);
+    }
+
+    private void movePoints(ArrayList<Point> beforeMovePoints, ArrayList<Point> points, Point difference) {
+        for (int i = 0; i < points.size(); i++) {
+
+            double beforeMoveX = beforeMovePoints.get(i).getX();
+            double beforeMoveY = beforeMovePoints.get(i).getY();
+
+            points.get(i).setX(beforeMoveX + difference.getX());
+            points.get(i).setY(beforeMoveY + difference.getY());
+        }
+    }
+    private void calcRotatePoints() {
+        rotatePoints.clear();
+        double hitbox = 10;
+
+        rotatePoints.add(new Point(boardsPoints.get(0).getX() - hitbox, boardsPoints.get(0).getY() - hitbox));
+        rotatePoints.add(new Point(boardsPoints.get(1).getX() + hitbox, boardsPoints.get(1).getY() - hitbox));
+        rotatePoints.add(new Point(boardsPoints.get(2).getX() + hitbox, boardsPoints.get(2).getY() + hitbox));
+        rotatePoints.add(new Point(boardsPoints.get(3).getX() - hitbox, boardsPoints.get(3).getY() + hitbox));
+    }
+    private void calcResizePoints() {
+        resizePoints.clear();
+
+        resizePoints.add(new Point((boardsPoints.get(1).getX() - boardsPoints.get(0).getX())/2 + boardsPoints.get(0).getX(), boardsPoints.get(0).getY()));
+        resizePoints.add(new Point(boardsPoints.get(1).getX(), (boardsPoints.get(1).getY() - boardsPoints.get(2).getY())/2 + boardsPoints.get(2).getY()));
+        resizePoints.add(new Point((boardsPoints.get(2).getX() - boardsPoints.get(3).getX())/2 + boardsPoints.get(3).getX(), boardsPoints.get(2).getY()));
+        resizePoints.add(new Point(boardsPoints.get(3).getX(), (boardsPoints.get(0).getY() - boardsPoints.get(3).getY())/2 + boardsPoints.get(3).getY()));
     }
     public ArrayList<Point> getBoardsPoints() {
-        return null;
-    }
-    public ArrayList<Point> getRotatePoints() {
-        return null;
+        return boardsPoints;
     }
     public ArrayList<Point> getResizePoints() {
-        return null;
+        return resizePoints;
     }
+    public ArrayList<Point> getRotatePoints() {
+        return rotatePoints;
+    }
+
+
     public boolean isClickedOn(double x, double y) {
-        return false;
+        return  (x < ListUtils.getMaxX(getBoardsPoints())) && (x > ListUtils.getMinX(getBoardsPoints())) && (y < ListUtils.getMaxY(getBoardsPoints())) && (y > ListUtils.getMinY(getBoardsPoints()));
     }
 
-
-    public void setStrokeColor(Color figureColor) {
+    public double getAngle() {
+        return angle;
+    }
+    public void setAngle(double angle) {
+        this.angle = angle;
     }
 
-    public ArrayList<Point> getPoints() { return points; }
+    public double getWidth() { return getBoardsPoints().get(2).getX() - getBoardsPoints().get(0).getX(); }
 
+    public void setWidth(double width) {
+        //resize
+    }
+
+    public Point getCenter(){
+        return ListUtils.getCenter(getBoardsPoints());
+    }
+
+    public void addPoint(Point point) {
+        points.add(point);
+    }
+
+    public ArrayList<Point> getPoints() {
+        return points;
+    }
     public Color getStrokeColor() {
-        return null;
+        return strokeColor;
     }
 
-    public void setEndPoint(double x, double y) {
-
+    public void setStrokeColor(Color strokeColor) {
+        this.strokeColor = strokeColor;
     }
 
-    @Override
-    public Figure clone() {
-        return null;
-    }
+    public abstract Figure clone();
 }

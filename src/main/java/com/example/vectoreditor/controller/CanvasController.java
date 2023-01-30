@@ -29,12 +29,12 @@ public class CanvasController {
         actions = new ArrayList<>();
         strokeColor = Color.BLACK;
         bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
+
     }
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
         if (currentFigure != null) {
-
             bordersPainter.drawBoards(currentFigure);
         }
         for (Figure figure : figures) {
