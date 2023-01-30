@@ -35,11 +35,8 @@ public class BordersPainter {
         graphicsContext.fillRect(points.get(3).getX() - 2, points.get(3).getY() - 2, 4, 4);
 
 
-        double centerX = ListUtils.getCenter(figure.getBoardsPoints()).getX();
-        double centerY = ListUtils.getCenter(figure.getBoardsPoints()).getY();
-
         graphicsContext.setFill(Color.SLATEBLUE);
-        graphicsContext.fillOval(centerX - 2, centerY - 2, 4, 4);
+        graphicsContext.fillOval(figure.getCenter().getX() - 2, figure.getCenter().getY() - 2, 4, 4);
 
         for (int i = 0; i < points.size() - 1; i++) {
 

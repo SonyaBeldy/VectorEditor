@@ -2,6 +2,7 @@ package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Figure;
 import com.example.vectoreditor.model.IDrawer;
+import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -18,23 +19,27 @@ import java.util.Observer;
 
 public class MainController {
 
-
     @FXML
     private Button selectButton;
     @FXML
     private Button lineButton;
-
     @FXML
     private Button polylineButton;
-
     @FXML
     private Canvas drawCanvas;
-
     @FXML
     private ColorPicker colorPicker;
 
     @FXML
     private TextField rotateField;
+    @FXML
+    private TextField xPointField;
+    @FXML
+    private TextField yPointField;
+    @FXML
+    private TextField widthField;
+    @FXML
+    private TextField heightField;
 
     private CanvasController canvasController;
     private CurrentFigureParamsDisplay paramsDisplay;
@@ -86,7 +91,7 @@ public class MainController {
     private void initialize() {
         canvasController = new CanvasController(drawCanvas);
         canvasController.setCurrentTool(new SelectTool(canvasController));
-        paramsDisplay = new CurrentFigureParamsDisplay(this);
+        paramsDisplay = new CurrentFigureParamsDisplay(xPointField, yPointField, widthField, heightField, rotateField, canvasController.getCurrentFigure());
         selectButton.setDisable(true);
         colorPicker.setValue(Color.BLACK);
     }
@@ -99,10 +104,22 @@ public class MainController {
 
     @FXML
     private void setAngle() {
+
         if(canvasController.getCurrentFigure() != null) {
-            double angle = Math.toRadians(Double.parseDouble(rotateField.getText()));
+
+            double angle = Double.parseDouble(rotateField.getText());
+            angle = Math.toRadians(angle);
+            double angleDiff = angle - canvasController.getCurrentFigure().getAngle();
+
+//            if (angleDiff > Math.PI) {
+//                angleDiff = -2 * Math.PI + angleDiff;
+//            }
+//            if (angleDiff < -Math.PI) {
+//                angleDiff = 2 * Math.PI + angleDiff;
+//            }
+            canvasController.getCurrentFigure().rotate(canvasController.getCurrentFigure(), canvasController.getCurrentFigure().getCenter(), angleDiff);
+            canvasController.redrawAllFigures();
             canvasController.getCurrentFigure().setAngle(angle);
-            canvasController.getCurrentFigure().rotate(canvasController.getCurrentFigure().clone(), canvasController.getCurrentFigure().getCenter(), angle);
         }
     }
 
