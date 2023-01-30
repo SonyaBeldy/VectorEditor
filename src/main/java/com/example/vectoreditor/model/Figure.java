@@ -35,6 +35,7 @@ public abstract class Figure implements Cloneable<Figure>{
     }
 
     public void rotate(Figure beforeRotateFigure, Point center, double angle) {
+        setAngle(beforeRotateFigure.getAngle() + angle);
         rotate(getPoints(), beforeRotateFigure.getPoints(), center, angle);
         rotate(getBoardsPoints(), beforeRotateFigure.getBoardsPoints(), center, angle);
         rotate(getRotatePoints(), beforeRotateFigure.getRotatePoints(), center, angle);

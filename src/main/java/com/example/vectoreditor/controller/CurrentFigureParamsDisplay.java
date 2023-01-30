@@ -6,8 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class CurrentFigureParamsDisplay implements Initializable {
@@ -33,17 +31,21 @@ public class CurrentFigureParamsDisplay implements Initializable {
     public void update() {
         currentFigure = mainController.getCanvasController().getCurrentFigure();
         if(currentFigure != null) {
-            setRotateField();
+            updateRotateField();
         }
     }
 
-    public void setRotateField() {
+    public void updateRotateField() {
         if(currentFigure != null) {
             double angle = Math.round(Math.toDegrees(currentFigure.getAngle()));
-//            if (angle < 0) {
-//                angle += 360;
-//            }
+            if (angle < 0) {
+                angle+= 360;
+            }
+            if (angle > 360) {
+                angle-= 360;
+            }
             mainController.getRotate().setText(String.valueOf(angle));
+            xPointField.setText(String.valueOf(angle));
         }
     }
 

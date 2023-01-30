@@ -31,9 +31,6 @@ public class MainController {
     private Canvas drawCanvas;
 
     @FXML
-    private VBox vBoxProperties;
-
-    @FXML
     private ColorPicker colorPicker;
 
     @FXML
@@ -73,6 +70,7 @@ public class MainController {
     @FXML
     void onCanvasDragged(MouseEvent event) {
         canvasController.getCurrentTool().mouseDragged(event);
+        paramsDisplay.update();
     }
     @FXML
     void onCanvasReleased(MouseEvent event) {
@@ -93,6 +91,12 @@ public class MainController {
         colorPicker.setValue(Color.BLACK);
     }
 
+    private void enabledAllButtons(){
+        selectButton.setDisable(false);
+        lineButton.setDisable(false);
+        polylineButton.setDisable(false);
+    }
+
     @FXML
     private void setAngle() {
         if(canvasController.getCurrentFigure() != null) {
@@ -103,16 +107,6 @@ public class MainController {
     }
 
 
-    private void enabledAllButtons(){
-        selectButton.setDisable(false);
-        lineButton.setDisable(false);
-        polylineButton.setDisable(false);
-    }
-
-
-    public void setRotate(double angle){
-        rotateField.setText(String.valueOf(angle));
-    }
     public TextField getRotate() {
         return rotateField;
     }
