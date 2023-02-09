@@ -3,9 +3,8 @@ package com.example.vectoreditor.controller;
 import com.example.vectoreditor.model.CursorImage;
 import com.example.vectoreditor.model.Figure;
 import com.example.vectoreditor.model.Point;
+import com.example.vectoreditor.model.ResizeDirection;
 import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 public class SelectTool extends Tool implements ITool {
@@ -55,18 +54,37 @@ public class SelectTool extends Tool implements ITool {
     public Point bordersControlsEntered(MouseEvent event) {
         Point point = new Point(event.getX(), event.getY());
         Figure currentFigure = canvasController.getCurrentFigure();
+        Cursor cursor = Cursor.DEFAULT;
+        Point dragPoint = new Point(0,0);
+        Point oppositePoint = new Point(0,0);
         for (int i = 0; i < currentFigure.getBoardsPoints().size(); i++) {
             Point boardCorner = currentFigure.getBoardsPoints().get(i);
+
             if (Math.pow(boardCorner.getX() - point.getX(), 2) + Math.pow(boardCorner.getY() - point.getY(), 2) <= 20) {
-                Cursor cursor = switch (i) {
-                    case 0 -> Cursor.NW_RESIZE;
-                    case 1 -> Cursor.NE_RESIZE;
-                    case 2 -> Cursor.SE_RESIZE;
-                    case 3 -> Cursor.SW_RESIZE;
-                    default -> Cursor.DEFAULT;
-                };
+                switch (i) {
+                    case 0 -> {
+                        cursor = Cursor.NW_RESIZE;
+                        dragPoint = currentFigure.getBoardsPoints().get(0);
+                        oppositePoint = currentFigure.getBoardsPoints().get(2);
+                    }
+                    case 1 -> {
+                        cursor = Cursor.NE_RESIZE;
+                        dragPoint = currentFigure.getBoardsPoints().get(1);
+                        oppositePoint = currentFigure.getBoardsPoints().get(3);
+                    }
+                    case 2 -> {
+                        cursor = Cursor.SE_RESIZE;
+                        dragPoint = currentFigure.getBoardsPoints().get(2);
+                        oppositePoint = currentFigure.getBoardsPoints().get(0);
+                    }
+                    case 3 -> {
+                        cursor = Cursor.SW_RESIZE;
+                        dragPoint = currentFigure.getBoardsPoints().get(3);
+                        oppositePoint = currentFigure.getBoardsPoints().get(1);
+                    }
+                }
                 canvasController.getDrawCanvas().getScene().setCursor(cursor);
-                canvasController.setCurrentTool(new ResizeCornerTool(canvasController));
+                canvasController.setCurrentTool(new ResizeTool(canvasController, dragPoint, oppositePoint, ResizeDirection.XY));
                 return boardCorner;
             }
         }
@@ -75,11 +93,32 @@ public class SelectTool extends Tool implements ITool {
             Point boardCorner = currentFigure.getResizePoints().get(i);
             if (Math.pow(boardCorner.getX() - point.getX(), 2) + Math.pow(boardCorner.getY() - point.getY(), 2) <= 40) {
                 switch (i) {
-                    case 0 -> canvasController.getDrawCanvas().getScene().setCursor(Cursor.N_RESIZE);
-                    case 1 -> canvasController.getDrawCanvas().getScene().setCursor(Cursor.E_RESIZE);
-                    case 2 -> canvasController.getDrawCanvas().getScene().setCursor(Cursor.S_RESIZE);
-                    case 3 -> canvasController.getDrawCanvas().getScene().setCursor(Cursor.W_RESIZE);
+                    case 0 -> {
+                        cursor = Cursor.N_RESIZE;
+                        dragPoint = currentFigure.getResizePoints().get(0);
+                        oppositePoint = currentFigure.getResizePoints().get(2);
+                        canvasController.setCurrentTool(new ResizeTool(canvasController, dragPoint, oppositePoint, ResizeDirection.Y));
+                    }
+                    case 1 -> {
+                        cursor = Cursor.E_RESIZE;
+                        dragPoint = currentFigure.getResizePoints().get(1);
+                        oppositePoint = currentFigure.getResizePoints().get(3);
+                        canvasController.setCurrentTool(new ResizeTool(canvasController, dragPoint, oppositePoint , ResizeDirection.X));
+                    }
+                    case 2 -> {
+                        cursor = Cursor.S_RESIZE;
+                        dragPoint = currentFigure.getResizePoints().get(2);
+                        oppositePoint = currentFigure.getResizePoints().get(0);
+                        canvasController.setCurrentTool(new ResizeTool(canvasController, dragPoint, oppositePoint, ResizeDirection.Y));
+                    }
+                    case 3 -> {
+                        cursor = Cursor.W_RESIZE;
+                        dragPoint = currentFigure.getResizePoints().get(3);
+                        oppositePoint = currentFigure.getResizePoints().get(1);
+                        canvasController.setCurrentTool(new ResizeTool(canvasController, dragPoint, oppositePoint, ResizeDirection.X));
+                    }
                 }
+                canvasController.getDrawCanvas().getScene().setCursor(cursor);
                 return boardCorner;
             }
         }

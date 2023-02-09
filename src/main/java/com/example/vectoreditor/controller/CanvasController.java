@@ -34,11 +34,11 @@ public class CanvasController {
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
-        if (currentFigure != null) {
-            bordersPainter.drawBoards(currentFigure);
-        }
         for (Figure figure : figures) {
             figure.draw(drawCanvas.getGraphicsContext2D());
+        }
+        if (currentFigure != null) {
+            bordersPainter.drawBoards(currentFigure);
         }
     }
 

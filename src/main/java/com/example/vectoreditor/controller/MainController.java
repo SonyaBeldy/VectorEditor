@@ -80,7 +80,6 @@ public class MainController {
     @FXML
     void onCanvasReleased(MouseEvent event) {
         canvasController.getCurrentTool().mouseReleased(event);
-        paramsDisplay.update();
     }
 
     @FXML
@@ -91,7 +90,8 @@ public class MainController {
     private void initialize() {
         canvasController = new CanvasController(drawCanvas);
         canvasController.setCurrentTool(new SelectTool(canvasController));
-        paramsDisplay = new CurrentFigureParamsDisplay(xPointField, yPointField, widthField, heightField, rotateField, canvasController.getCurrentFigure());
+//        paramsDisplay = new CurrentFigureParamsDisplay(xPointField, yPointField, widthField, heightField, rotateField, canvasController.getCurrentFigure());
+        paramsDisplay = new CurrentFigureParamsDisplay(this);
         selectButton.setDisable(true);
         colorPicker.setValue(Color.BLACK);
     }

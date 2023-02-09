@@ -1,7 +1,6 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Figure;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
@@ -10,46 +9,55 @@ import java.util.ResourceBundle;
 
 public class CurrentFigureParamsDisplay implements Initializable {
 
-    @FXML
     private TextField xPointField;
-    @FXML
     private TextField yPointField;
-    @FXML
     private TextField widthField;
-
-    @FXML
     private TextField heightField;
-    private MainController mainController;
+    private TextField rotateField;
     private Figure currentFigure;
 
-
+    MainController mainController;
 
     public CurrentFigureParamsDisplay(MainController mainController) {
         this.mainController = mainController;
+    }
 
+    public CurrentFigureParamsDisplay(
+            TextField xPointField,
+            TextField yPointField,
+            TextField widthField,
+            TextField heightField,
+            TextField rotateField,
+            Figure currentFigure
+
+    ) {
+        this.xPointField = xPointField;
+        this.yPointField = yPointField;
+        this.widthField = widthField;
+        this.heightField = heightField;
+        this.rotateField = rotateField;
+        this.currentFigure = currentFigure;
     }
     public void update() {
-        currentFigure = mainController.getCanvasController().getCurrentFigure();
-        if(currentFigure != null) {
+        if(mainController.getCanvasController().getCurrentFigure() != null) {
             updateRotateField();
         }
     }
 
-    public void updateRotateField() {
-        if(currentFigure != null) {
-            double angle = Math.round(Math.toDegrees(currentFigure.getAngle()));
+    private void updateRotateField() {
+        if(mainController.getCanvasController().getCurrentFigure() != null) {
+            double angle = Math.round(Math.toDegrees(mainController.getCanvasController().getCurrentFigure().getAngle()));
             if (angle < 0) {
                 angle+= 360;
             }
             if (angle > 360) {
                 angle-= 360;
             }
-            mainController.getRotate().setText(String.valueOf(angle));
-            xPointField.setText(String.valueOf(angle));
+           mainController.getRotate().setText(String.valueOf(angle));
         }
     }
 
-    private void setWidth(Figure currentFigure) {
+    private void updateWidth() {
         widthField.setText(String.valueOf(currentFigure.getWidth()));
     }
 

@@ -6,15 +6,11 @@ import javafx.scene.input.MouseEvent;
 public class RotateTool extends SelectTool  implements ITool{
 
     private Figure copyCurrentFigure;
-    private double angle;
     private Point center;
     private double clickAngle;
 
-    private final Figure currentFigure;
-
     public RotateTool(CanvasController canvasController) {
         super(canvasController);
-        currentFigure = canvasController.getCurrentFigure();
     }
 
     @Override
@@ -26,7 +22,7 @@ public class RotateTool extends SelectTool  implements ITool{
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        angle = Math.atan2(event.getY() - center.getY(), event.getX() - center.getX()) - clickAngle;
+        double angle = Math.atan2(event.getY() - center.getY(), event.getX() - center.getX()) - clickAngle;
         if (angle > Math.PI) {
             angle = -2 * Math.PI + angle;
         }

@@ -12,7 +12,7 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/vectoreditor/canvas-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 550);
-        stage.setTitle("Hello!");
+        stage.setTitle("Vector Editor");
         stage.setMinWidth(350);
         stage.setMinHeight(550);
         stage.setScene(scene);
