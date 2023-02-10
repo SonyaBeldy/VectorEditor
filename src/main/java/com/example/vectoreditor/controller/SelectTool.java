@@ -1,10 +1,8 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.CursorImage;
-import com.example.vectoreditor.model.Figure;
-import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.ResizeDirection;
+import com.example.vectoreditor.model.*;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
 public class SelectTool extends Tool implements ITool {
@@ -91,7 +89,7 @@ public class SelectTool extends Tool implements ITool {
         canvasController.setCurrentTool(new SelectTool(canvasController));
         for (int i = 0; i < currentFigure.getResizePoints().size(); i++) {
             Point boardCorner = currentFigure.getResizePoints().get(i);
-            if (Math.pow(boardCorner.getX() - point.getX(), 2) + Math.pow(boardCorner.getY() - point.getY(), 2) <= 40) {
+            if (Math.pow(boardCorner.getX() - point.getX(), 2) + Math.pow(boardCorner.getY() - point.getY(), 2) <= Values.RESIZE_HITBOX) {
                 switch (i) {
                     case 0 -> {
                         cursor = Cursor.N_RESIZE;
@@ -126,11 +124,13 @@ public class SelectTool extends Tool implements ITool {
             Point rotatePoint = currentFigure.getRotatePoints().get(i);
 
             if (Math.pow(rotatePoint.getX() - point.getX(), 2) + Math.pow(rotatePoint.getY() - point.getY(), 2) <= 80) {
+
+                final Scene scene = canvasController.getDrawCanvas().getScene();
                 switch (i) {
-                    case 0 -> canvasController.getDrawCanvas().getScene().setCursor(CursorImage.rotateCursor(7, canvasController.getCurrentFigure().getAngle()));
-                    case 1 -> canvasController.getDrawCanvas().getScene().setCursor(CursorImage.rotateCursor(1, canvasController.getCurrentFigure().getAngle()));
-                    case 2 -> canvasController.getDrawCanvas().getScene().setCursor(CursorImage.rotateCursor(3, canvasController.getCurrentFigure().getAngle()));
-                    case 3 -> canvasController.getDrawCanvas().getScene().setCursor(CursorImage.rotateCursor(5, canvasController.getCurrentFigure().getAngle()));
+                    case 0 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW, canvasController.getCurrentFigure().getAngle()));
+                    case 1 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW, canvasController.getCurrentFigure().getAngle()));
+                    case 2 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SE, canvasController.getCurrentFigure().getAngle()));
+                    case 3 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NE, canvasController.getCurrentFigure().getAngle()));
                 }
                 canvasController.setCurrentTool(new RotateTool(canvasController));
                 return rotatePoint;

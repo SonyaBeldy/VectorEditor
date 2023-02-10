@@ -2,7 +2,7 @@ package com.example.vectoreditor.model;
 
 import java.util.ArrayList;
 
-public class ListUtils {
+public class PointListUtils {
 
     public static Point calcCenter(ArrayList<Point> points) {
         double centerX = (calcMaxX(points) - calcMinX(points))/2 + calcMinX(points);

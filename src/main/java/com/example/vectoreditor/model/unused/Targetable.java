@@ -1,4 +1,4 @@
-package com.example.vectoreditor.model;
+package com.example.vectoreditor.model.unused;
 
 import javafx.scene.canvas.GraphicsContext;
 

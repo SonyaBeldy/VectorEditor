@@ -52,10 +52,10 @@ public abstract class Figure implements Cloneable<Figure>{
     public void calcBoardsPoints() {
         boardsPoints.clear();
 
-        double minX = ListUtils.calcMinX(points);
-        double minY = ListUtils.calcMinY(points);
-        double maxX = ListUtils.calcMaxX(points);
-        double maxY = ListUtils.calcMaxY(points);
+        double minX = PointListUtils.calcMinX(points);
+        double minY = PointListUtils.calcMinY(points);
+        double maxX = PointListUtils.calcMaxX(points);
+        double maxY = PointListUtils.calcMaxY(points);
 
         boardsPoints.add(new Point(minX, minY));
         boardsPoints.add(new Point(maxX, minY));
@@ -112,7 +112,7 @@ public abstract class Figure implements Cloneable<Figure>{
 
 
     public boolean isClickedOn(double x, double y) {
-        return  (x < ListUtils.calcMaxX(getBoardsPoints())) && (x > ListUtils.calcMinX(getBoardsPoints())) && (y < ListUtils.calcMaxY(getBoardsPoints())) && (y > ListUtils.calcMinY(getBoardsPoints()));
+        return  (x < PointListUtils.calcMaxX(getBoardsPoints())) && (x > PointListUtils.calcMinX(getBoardsPoints())) && (y < PointListUtils.calcMaxY(getBoardsPoints())) && (y > PointListUtils.calcMinY(getBoardsPoints()));
     }
 
     public double getAngle() {
@@ -129,7 +129,7 @@ public abstract class Figure implements Cloneable<Figure>{
     }
 
     public Point getCenter(){
-        return ListUtils.calcCenter(getBoardsPoints());
+        return PointListUtils.calcCenter(getBoardsPoints());
     }
 
     public void addPoint(Point point) {

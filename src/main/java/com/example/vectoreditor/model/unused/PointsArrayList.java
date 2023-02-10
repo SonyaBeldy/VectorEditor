@@ -1,4 +1,6 @@
-package com.example.vectoreditor.model;
+package com.example.vectoreditor.model.unused;
+
+import com.example.vectoreditor.model.Point;
 
 import java.util.ArrayList;
 

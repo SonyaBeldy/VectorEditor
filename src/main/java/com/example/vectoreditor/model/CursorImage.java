@@ -23,34 +23,33 @@ public class CursorImage {
         N_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
         cursors.add(N_ROTATE);
 
-        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/NE_ROTATE.png")));
-        NE_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-        cursors.add(NE_ROTATE);
-
-        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/E_ROTATE.png")));
-        E_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-        cursors.add(E_ROTATE);
-
-        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/SE_ROTATE.png")));
-        SE_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-        cursors.add(SE_ROTATE);
-
-        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/S_ROTATE.png")));
-        S_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-        cursors.add(S_ROTATE);
-
-        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/SW_ROTATE.png")));
-        SW_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-        cursors.add(SW_ROTATE);
+        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/NW_ROTATE.png")));
+        NW_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
+        cursors.add(NW_ROTATE);
 
         image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/W_ROTATE.png")));
         W_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
         cursors.add(W_ROTATE);
 
-        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/NW_ROTATE.png")));
-        NW_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
-        cursors.add(NW_ROTATE);
+        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/SW_ROTATE.png")));
+        SW_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
+        cursors.add(SW_ROTATE);
 
+        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/S_ROTATE.png")));
+        S_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
+        cursors.add(S_ROTATE);
+
+        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/SE_ROTATE.png")));
+        SE_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
+        cursors.add(SE_ROTATE);
+
+        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/E_ROTATE.png")));
+        E_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
+        cursors.add(E_ROTATE);
+
+        image = new Image(String.valueOf(CursorImage.class.getResource("/com/example/vectoreditor/images/icons/NE_ROTATE.png")));
+        NE_ROTATE = new ImageCursor(image, image.getWidth() / 2, image.getHeight() / 2);
+        cursors.add(NE_ROTATE);
     }
 
     void setCursor(){

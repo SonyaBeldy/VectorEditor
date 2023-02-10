@@ -1,9 +1,11 @@
-package com.example.vectoreditor.controller;
+package com.example.vectoreditor.controller.unused;
 
-import com.example.vectoreditor.model.Line;
+import com.example.vectoreditor.controller.CanvasController;
+import com.example.vectoreditor.controller.ITool;
+import com.example.vectoreditor.controller.Tool;
 import javafx.scene.input.MouseEvent;
 
-public class LineTool extends Tool implements ITool{
+public class LineTool extends Tool implements ITool {
 
     public LineTool(CanvasController canvasController){
         super(canvasController);
