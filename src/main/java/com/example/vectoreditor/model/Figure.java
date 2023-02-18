@@ -70,7 +70,8 @@ public abstract class Figure implements Cloneable<Figure>{
         calcCenter();
     }
 
-    public void move(Figure beforeMoveFigure, Point difference){
+    public void move(Point difference) {
+        Figure beforeMoveFigure = clone();
         movePoints(beforeMoveFigure.getPoints(), getPoints(), difference);
         movePoints(beforeMoveFigure.getBoardsPoints(), getBoardsPoints(), difference);
         movePoints(beforeMoveFigure.getRotatePoints(), getRotatePoints(), difference);
@@ -80,7 +81,6 @@ public abstract class Figure implements Cloneable<Figure>{
 
     private void movePoints(ArrayList<Point> beforeMovePoints, ArrayList<Point> points, Point difference) {
         for (int i = 0; i < points.size(); i++) {
-
             double beforeMoveX = beforeMovePoints.get(i).getX();
             double beforeMoveY = beforeMovePoints.get(i).getY();
 

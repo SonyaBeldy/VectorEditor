@@ -122,7 +122,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="142.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
                                  <children>
                                     <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="X:" />
-                                    <TextField maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" fx:id="xPointField" />
+                                    <TextField maxHeight="21.0" maxWidth="-Infinity" onAction="#move" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" fx:id="xPointField" />
                                     <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="W:" />
                                     <TextField fx:id="widthField" maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
                                  </children>
@@ -136,7 +136,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="142.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
                                  <children>
                                     <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="Y:" />
-                                    <TextField fx:id="yPointField" maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+                                    <TextField fx:id="yPointField" maxHeight="21.0" maxWidth="-Infinity" onAction="#move" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
                                     <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="H:" />
                                     <TextField fx:id="heightField" maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
                                  </children>
@@ -147,7 +147,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="171.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
                                  <children>
                                     <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="R:" />
-                                    <TextField fx:id="rotateField" maxHeight="21.0" maxWidth="-Infinity" onAction="#setAngle" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+                                    <TextField fx:id="rotateField" maxHeight="21.0" maxWidth="-Infinity" onAction="#rotate" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
                                  </children>
                                  <padding>
                                     <Insets left="12.0" />

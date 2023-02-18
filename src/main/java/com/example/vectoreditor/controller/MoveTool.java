@@ -34,11 +34,14 @@ public class MoveTool extends Tool implements ITool{
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        double differenceX =  event.getX() - pressPoint.getX();
-        double differenceY =  event.getY() - pressPoint.getY();
+        double shiftX =  event.getX() - pressPoint.getX();
+        double shiftY =  event.getY() - pressPoint.getY();
 
-        canvasController.getCurrentFigure().move(beforeMoveFigure, new Point(differenceX, differenceY));
+        canvasController.getCurrentFigure().move(new Point(shiftX, shiftY));
         canvasController.redrawAllFigures();
+
+        pressPoint.setX(event.getX());
+        pressPoint.setY(event.getY());
     }
 
     @Override

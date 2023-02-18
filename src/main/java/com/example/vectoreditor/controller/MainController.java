@@ -1,5 +1,6 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -95,26 +96,47 @@ public class MainController {
     }
 
     @FXML
-    private void setAngle() {
-
-        if(canvasController.getCurrentFigure() != null) {
-
-            double angle = Double.parseDouble(rotateField.getText());
-            angle = Math.toRadians(angle);
-            double angleDiff = angle - canvasController.getCurrentFigure().getAngle();
-
-//            if (angleDiff > Math.PI) {
-//                angleDiff = -2 * Math.PI + angleDiff;
-//            }
-//            if (angleDiff < -Math.PI) {
-//                angleDiff = 2 * Math.PI + angleDiff;
-//            }
-            canvasController.getCurrentFigure().rotate(canvasController.getCurrentFigure(), canvasController.getCurrentFigure().getCenter(), angleDiff);
-            canvasController.redrawAllFigures();
-            canvasController.getCurrentFigure().setAngle(angle);
+    private void move() {
+        if(canvasController.getCurrentFigure() == null) {
+            return;
         }
+        Point newCenter = new Point(Double.parseDouble(xPointField.getText()), Double.parseDouble(yPointField.getText()));
+        Point center = canvasController.getCurrentFigure().getCenter();
+        Point shift = new Point(newCenter.getX() - center.getX(), newCenter.getY() - center.getY());
+        canvasController.getCurrentFigure().move(shift);
+        canvasController.redrawAllFigures();
     }
 
+    @FXML
+    private void rotate() {
+        if(canvasController.getCurrentFigure() == null) {
+            return;
+        }
+        double angle = Double.parseDouble(rotateField.getText());
+        angle = Math.toRadians(angle);
+        double angleDiff = angle - canvasController.getCurrentFigure().getAngle();
+        canvasController.getCurrentFigure().rotate(canvasController.getCurrentFigure(), canvasController.getCurrentFigure().getCenter(), angleDiff);
+        canvasController.redrawAllFigures();
+        canvasController.getCurrentFigure().setAngle(angle);
+
+    }
+
+
+    public TextField getXPointField() {
+        return xPointField;
+    }
+
+    public TextField getYPointField() {
+        return yPointField;
+    }
+
+    public TextField getWidthField() {
+        return widthField;
+    }
+
+    public TextField getHeightField() {
+        return heightField;
+    }
 
     public TextField getRotate() {
         return rotateField;

@@ -1,20 +1,16 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Figure;
+import com.example.vectoreditor.model.Polyline;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CurrentFigureParamsDisplay implements Initializable {
-
-    private TextField xPointField;
-    private TextField yPointField;
-    private TextField widthField;
-    private TextField heightField;
-    private TextField rotateField;
-    private Figure currentFigure;
 
     MainController mainController;
 
@@ -22,26 +18,11 @@ public class CurrentFigureParamsDisplay implements Initializable {
         this.mainController = mainController;
     }
 
-    public CurrentFigureParamsDisplay(
-            TextField xPointField,
-            TextField yPointField,
-            TextField widthField,
-            TextField heightField,
-            TextField rotateField,
-            Figure currentFigure
-
-    ) {
-        this.xPointField = xPointField;
-        this.yPointField = yPointField;
-        this.widthField = widthField;
-        this.heightField = heightField;
-        this.rotateField = rotateField;
-        this.currentFigure = currentFigure;
-    }
     public void update() {
-        if(mainController.getCanvasController().getCurrentFigure() != null) {
-            updateRotateField();
-        }
+        updateRotateField();
+        updateXPointField();
+        updateYPointField();
+        updateWidth();
     }
 
     private void updateRotateField() {
@@ -57,8 +38,24 @@ public class CurrentFigureParamsDisplay implements Initializable {
         }
     }
 
+    private void updateXPointField() {
+        if(mainController.getCanvasController().getCurrentFigure() != null) {
+            mainController.getXPointField().setText(String.valueOf(mainController.getCanvasController().getCurrentFigure().getCenter().getX()));
+        }
+    }
+    private void updateYPointField() {
+        if(mainController.getCanvasController().getCurrentFigure() != null) {
+            mainController.getYPointField().setText(String.valueOf(mainController.getCanvasController().getCurrentFigure().getCenter().getY()));
+        }
+    }
+
     private void updateWidth() {
-        widthField.setText(String.valueOf(currentFigure.getWidth()));
+        //Optional<Figure> curFigure = Optional.empty();
+//        curFigure = Optional.of(new Polyline(Color.AQUAMARINE));
+
+
+
+        //mainController.getWidthField().setText(String.valueOf(mainController.getCanvasController().getCurrentFigure().getWidth()));
     }
 
 
