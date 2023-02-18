@@ -1,21 +1,13 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Figure;
-import com.example.vectoreditor.model.IDrawer;
-import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
-import java.util.Observable;
-import java.util.Observer;
 
 public class MainController {
 

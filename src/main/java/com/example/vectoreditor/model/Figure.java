@@ -12,6 +12,8 @@ public abstract class Figure implements Cloneable<Figure>{
     protected final ArrayList<Point> rotatePoints;
     protected final ArrayList<Point> resizePoints;
     protected final ArrayList<Point> hitboxPoints;
+
+    protected final Point center;
     protected double angle;
     protected Color strokeColor;
 
@@ -24,6 +26,7 @@ public abstract class Figure implements Cloneable<Figure>{
         hitboxPoints = new ArrayList<>();
         rotatePoints = new ArrayList<>();
         resizePoints = new ArrayList<>();
+        center = new Point(0,0);
     }
 
     public void draw(GraphicsContext graphicsContext) {
@@ -64,6 +67,7 @@ public abstract class Figure implements Cloneable<Figure>{
 
         calcResizePoints();
         calcRotatePoints();
+        calcCenter();
     }
 
     public void move(Figure beforeMoveFigure, Point difference){
@@ -71,6 +75,7 @@ public abstract class Figure implements Cloneable<Figure>{
         movePoints(beforeMoveFigure.getBoardsPoints(), getBoardsPoints(), difference);
         movePoints(beforeMoveFigure.getRotatePoints(), getRotatePoints(), difference);
         movePoints(beforeMoveFigure.getResizePoints(), getResizePoints(), difference);
+        calcCenter();
     }
 
     private void movePoints(ArrayList<Point> beforeMovePoints, ArrayList<Point> points, Point difference) {
@@ -128,12 +133,19 @@ public abstract class Figure implements Cloneable<Figure>{
         //resize
     }
 
-    public Point getCenter(){
-        return PointListUtils.calcCenter(getBoardsPoints());
+    public void calcCenter(){
+        Point newCenter = PointListUtils.calcCenter(getBoardsPoints());
+
+        center.setX(newCenter.getX());
+        center.setY(newCenter.getY());
     }
 
     public void addPoint(Point point) {
         points.add(point);
+    }
+
+    public Point getCenter() {
+        return center;
     }
 
     public ArrayList<Point> getPoints() {

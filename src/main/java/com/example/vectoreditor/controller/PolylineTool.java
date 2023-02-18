@@ -23,7 +23,8 @@ public class PolylineTool extends Tool implements ITool{
                 isDrawing = true;
                 polyline = new Polyline(canvasController.getStrokeColor());
                 polyline.addPoint(new Point(event.getX(), event.getY()));
-
+                polyline.calcBoardsPoints();
+                polyline.calcCenter();
                 canvasController.getFigures().add(polyline);
                 canvasController.setCurrentFigure(null);
             }
@@ -37,6 +38,7 @@ public class PolylineTool extends Tool implements ITool{
 
                 canvasController.redrawAllFigures();
                 polyline.calcBoardsPoints();
+                polyline.calcCenter();
                 canvasController.setCurrentFigure(polyline);
             } else {
                 canvasController.getFigures().remove(canvasController.getFigures().size() - 1);

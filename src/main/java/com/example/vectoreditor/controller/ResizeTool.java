@@ -44,6 +44,7 @@ public class ResizeTool extends SelectTool implements ITool {
             }
         }
         resizeBorders();
+        currentFigure.calcCenter();
         canvasController.redrawAllFigures();
     }
 

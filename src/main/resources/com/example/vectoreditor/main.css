@@ -71,25 +71,47 @@
     -fx-text-fill: #C4C0C4;
 }
 
-.toolBar {
+.titled-pane {
+    -xf-background-color: #39393F;
+}
+
+.menuBar {
     -fx-background-color: #39393F;
     -fx-border-color: #2D2D33;
     -fx-border-width: 1px 1px 1px 1px;
+}
+
+.menu .label {
     -fx-text-fill: #C4C0C4;
 }
 
-.scroll-bar:horizontal {
+.scroll-pane {
+    -fx-background-color: #494850;
+
+}
+
+.scroll-bar:horizontal,
+ .scroll-bar:vertical {
     -fx-background-color: #39393F;
     -fx-border-color: #2D2D33;
     -fx-border-width: 1px 1px 1px 1px;
 }
-.scroll-bar:horizontal.track {
+.scroll-bar:horizontal.track,
+.scroll-bar:vertical.track {
     -fx-background-color: #39393F;
+    -fx-background-radius: 0em;
+    -fx-border-color: transparent;
 }
-.scroll-bar:vertical {
-    -fx-background-color: #39393F;
-    -fx-border-color: #2D2D33;
-    -fx-border-width: 1px 1px 1px 1px;
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #494850;
+    -fx-background-radius: 5em;
+
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: #494850;
 }
 
 .pane {
