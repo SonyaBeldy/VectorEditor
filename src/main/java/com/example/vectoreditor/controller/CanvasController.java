@@ -16,7 +16,7 @@ public class CanvasController {
 
     private ITool currentTool;
     //private Figure currentFigure;
-    private Optional<Figure> currentFigure;
+    private Optional<Figure> currentFigure = Optional.empty();
     private final ArrayList<Figure> figures;
 
     private Color strokeColor;

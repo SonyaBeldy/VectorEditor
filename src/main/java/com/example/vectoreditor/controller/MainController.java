@@ -20,6 +20,8 @@ public class MainController {
     @FXML
     private Button polylineButton;
     @FXML
+    private Button rectangleButton;
+    @FXML
     private Canvas drawCanvas;
     @FXML
     private ColorPicker colorPicker;
@@ -58,6 +60,14 @@ public class MainController {
     }
 
     @FXML
+    protected void onRectangleButtonClick(ActionEvent event) {
+        canvasController.setStrokeColor(colorPicker.getValue());
+        canvasController.setCurrentTool(new RectangleTool(canvasController));
+        enabledAllButtons();
+        rectangleButton.setDisable(true);
+    }
+
+    @FXML
     protected void chooseColor() {
         canvasController.setStrokeColor(colorPicker.getValue());
     }
@@ -65,6 +75,7 @@ public class MainController {
     @FXML
     void onCanvasPressed(MouseEvent event) {
         canvasController.getCurrentTool().mousePressed(event);
+        paramsDisplay.update();
     }
     @FXML
     void onCanvasDragged(MouseEvent event) {
@@ -94,6 +105,7 @@ public class MainController {
         selectButton.setDisable(false);
         lineButton.setDisable(false);
         polylineButton.setDisable(false);
+        rectangleButton.setDisable(false);
     }
 
     @FXML
