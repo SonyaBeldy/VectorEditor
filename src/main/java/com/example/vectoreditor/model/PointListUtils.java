@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 public class PointListUtils {
 
+    public static double calcDist(Point p1, Point p2) {
+        double x1 = p1.getX();
+        double y1 = p1.getY();
+        double x2 = p2.getX();
+        double y2 = p2.getY();
+        double dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        return Math.round(dist);
+    }
     public static Point calcCenter(ArrayList<Point> points) {
         double centerX = (calcMaxX(points) - calcMinX(points))/2 + calcMinX(points);
         double centerY = (calcMaxY(points) - calcMinY(points))/2 + calcMinY(points);

@@ -127,7 +127,14 @@ public abstract class Figure implements Cloneable<Figure>{
         this.angle = angle;
     }
 
-    public double getWidth() { return getBoardsPoints().get(2).getX() - getBoardsPoints().get(0).getX(); }
+    public double getWidth() {
+        double x1 = getBoardsPoints().get(0).getX();
+        double y1 = getBoardsPoints().get(0).getY();
+        double x2 = getBoardsPoints().get(2).getX();
+        double y2 = getBoardsPoints().get(2).getY();
+        double width = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        return Math.round(width);
+    }
 
     public void setWidth(double width) {
         //resize

@@ -18,7 +18,7 @@ public class SelectTool extends Tool implements ITool {
 
         Optional<Figure> currentFigure = canvasController.whatWasClickedOn(event);
         if (currentFigure.isEmpty()) {
-            return;
+            return; 
         }
         canvasController.setCurrentFigure(currentFigure);
         canvasController.redrawAllFigures();
@@ -51,6 +51,9 @@ public class SelectTool extends Tool implements ITool {
 
     private void bordersControlsEntered(MouseEvent event) {
         Point point = new Point(event.getX(), event.getY());
+        if (canvasController.getCurrentFigure().isEmpty()) {
+            return;
+        }
         Figure currentFigure = canvasController.getCurrentFigure().get();
         Cursor cursor = Cursor.DEFAULT;
         Point dragPoint = new Point(0,0);
@@ -58,11 +61,8 @@ public class SelectTool extends Tool implements ITool {
         for (int i = 0; i < currentFigure.getBoardsPoints().size(); i++) {
             Point boardCorner = currentFigure.getBoardsPoints().get(i);
             if (Math.pow(boardCorner.getX() - point.getX(), 2) + Math.pow(boardCorner.getY() - point.getY(), 2) <= 20) {
-                System.out.println("IN");
-                System.out.println(" i " + i);
                 switch (i) {
                     case 0 -> {
-                        System.out.println("0 change");
                         cursor = Cursor.NW_RESIZE;
                         dragPoint = currentFigure.getBoardsPoints().get(0);
                         oppositePoint = currentFigure.getBoardsPoints().get(2);

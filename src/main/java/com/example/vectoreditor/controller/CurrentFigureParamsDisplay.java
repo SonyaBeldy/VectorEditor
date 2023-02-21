@@ -1,6 +1,7 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Figure;
+import com.example.vectoreditor.model.PointListUtils;
 import com.example.vectoreditor.model.Polyline;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -23,6 +24,7 @@ public class CurrentFigureParamsDisplay implements Initializable {
         updateXPointField();
         updateYPointField();
         updateWidth();
+        updateHeight();
     }
 
     private void updateRotateField() {
@@ -53,9 +55,19 @@ public class CurrentFigureParamsDisplay implements Initializable {
     }
 
     private void updateWidth() {
-        Optional<Figure> curFigure = Optional.empty();
-        curFigure = Optional.of(new Polyline(Color.AQUAMARINE));
-        //mainController.getWidthField().setText(String.valueOf(mainController.getCanvasController().getCurrentFigure().getWidth()));
+        if(mainController.getCanvasController().getCurrentFigure().isPresent()) {
+            Figure figure = mainController.getCanvasController().getCurrentFigure().get();
+            double width = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(1));
+            mainController.getWidthField().setText(String.valueOf(width));
+        }
+    }
+
+    private void updateHeight() {
+        if(mainController.getCanvasController().getCurrentFigure().isPresent()) {
+            Figure figure = mainController.getCanvasController().getCurrentFigure().get();
+            double height = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(3));
+            mainController.getHeightField().setText(String.valueOf(height));
+        }
     }
 
 
