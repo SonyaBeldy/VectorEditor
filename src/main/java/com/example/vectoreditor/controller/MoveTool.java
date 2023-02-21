@@ -23,7 +23,7 @@ public class MoveTool extends Tool implements ITool{
     public MoveTool(CanvasController canvasController, Point pressPoint) {
         super(canvasController);
         this.pressPoint = pressPoint;
-        beforeMoveFigure = canvasController.getCurrentFigure().clone();
+        beforeMoveFigure = canvasController.getCurrentFigure().orElseThrow().clone();
         bordersPainter = new BordersPainter(canvasController.getDrawCanvas().getGraphicsContext2D());
     }
 
@@ -34,10 +34,13 @@ public class MoveTool extends Tool implements ITool{
 
     @Override
     public void mouseDragged(MouseEvent event) {
+        if(canvasController.getCurrentFigure().isEmpty()) {
+            return;
+        }
         double shiftX =  event.getX() - pressPoint.getX();
         double shiftY =  event.getY() - pressPoint.getY();
 
-        canvasController.getCurrentFigure().move(new Point(shiftX, shiftY));
+        canvasController.getCurrentFigure().get().move(new Point(shiftX, shiftY));
         canvasController.redrawAllFigures();
 
         pressPoint.setX(event.getX());
@@ -47,7 +50,7 @@ public class MoveTool extends Tool implements ITool{
     @Override
     public void mouseReleased(MouseEvent event) {
         canvasController.redrawAllFigures();
-        bordersPainter.drawBoards(canvasController.getCurrentFigure());
+        bordersPainter.drawBoards(canvasController.getCurrentFigure().orElseThrow());
 
         canvasController.setCurrentTool(new SelectTool(canvasController));
     }

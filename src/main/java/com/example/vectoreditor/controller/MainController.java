@@ -1,5 +1,6 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.Figure;
 import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -97,27 +98,31 @@ public class MainController {
 
     @FXML
     private void move() {
-        if(canvasController.getCurrentFigure() == null) {
+        if(canvasController.getCurrentFigure().isEmpty()) {
             return;
         }
+        Figure figure = canvasController.getCurrentFigure().get();
+
         Point newCenter = new Point(Double.parseDouble(xPointField.getText()), Double.parseDouble(yPointField.getText()));
-        Point center = canvasController.getCurrentFigure().getCenter();
+        Point center = figure.getCenter();
         Point shift = new Point(newCenter.getX() - center.getX(), newCenter.getY() - center.getY());
-        canvasController.getCurrentFigure().move(shift);
+        figure.move(shift);
         canvasController.redrawAllFigures();
     }
 
     @FXML
     private void rotate() {
-        if(canvasController.getCurrentFigure() == null) {
+        if(canvasController.getCurrentFigure().isEmpty()) {
             return;
         }
         double angle = Double.parseDouble(rotateField.getText());
         angle = Math.toRadians(angle);
-        double angleDiff = angle - canvasController.getCurrentFigure().getAngle();
-        canvasController.getCurrentFigure().rotate(canvasController.getCurrentFigure(), canvasController.getCurrentFigure().getCenter(), angleDiff);
+        Figure figure = canvasController.getCurrentFigure().get();
+
+        double angleDiff = angle - figure.getAngle();
+        figure.rotate(figure, figure.getCenter(), angleDiff);
+        figure.setAngle(angle);
         canvasController.redrawAllFigures();
-        canvasController.getCurrentFigure().setAngle(angle);
 
     }
 

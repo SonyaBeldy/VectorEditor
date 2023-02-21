@@ -8,13 +8,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class CanvasController {
 
     private final Canvas drawCanvas;
 
     private ITool currentTool;
-    private Figure currentFigure;
+    //private Figure currentFigure;
+    private Optional<Figure> currentFigure;
     private final ArrayList<Figure> figures;
 
     private Color strokeColor;
@@ -37,34 +39,32 @@ public class CanvasController {
         for (Figure figure : figures) {
             figure.draw(drawCanvas.getGraphicsContext2D());
         }
-        if (currentFigure != null) {
-            bordersPainter.drawBoards(currentFigure);
-        }
+        currentFigure.ifPresent(bordersPainter::drawBoards);
     }
 
-    public Figure whatWasClickedOn(MouseEvent event) {
+    public Optional<Figure> whatWasClickedOn(MouseEvent event) {
         double x = event.getX();
         double y = event.getY();
 
         for (int i = figures.size() - 1; i >= 0; i--) {
             if(figures.get(i).isClickedOn(x, y)){
-                return figures.get(i);
+                return Optional.of(figures.get(i));
             }
         }
-        return null;
+        return Optional.empty();
     }
 
-    public Figure getCurrentFigure() {
+    public Optional<Figure> getCurrentFigure() {
         return currentFigure;
     }
 
-    public void setCurrentFigure(Figure currentFigure) {
+    public void setCurrentFigure(Optional<Figure> currentFigure) {
         this.currentFigure = currentFigure;
-        if (currentFigure == null) {
+        if (currentFigure.isEmpty()) {
             return;
         }
         redrawAllFigures();
-        bordersPainter.drawBoards(currentFigure);
+        bordersPainter.drawBoards(currentFigure.get());
     }
 
     public Canvas getDrawCanvas() {

@@ -26,8 +26,9 @@ public class CurrentFigureParamsDisplay implements Initializable {
     }
 
     private void updateRotateField() {
-        if(mainController.getCanvasController().getCurrentFigure() != null) {
-            double angle = Math.round(Math.toDegrees(mainController.getCanvasController().getCurrentFigure().getAngle()));
+        if(mainController.getCanvasController().getCurrentFigure().isPresent()) {
+            Figure figure = mainController.getCanvasController().getCurrentFigure().get();
+            double angle = Math.round(Math.toDegrees(figure.getAngle()));
             if (angle < 0) {
                 angle+= 360;
             }
@@ -39,22 +40,21 @@ public class CurrentFigureParamsDisplay implements Initializable {
     }
 
     private void updateXPointField() {
-        if(mainController.getCanvasController().getCurrentFigure() != null) {
-            mainController.getXPointField().setText(String.valueOf(mainController.getCanvasController().getCurrentFigure().getCenter().getX()));
+        if(mainController.getCanvasController().getCurrentFigure().isPresent()) {
+            Figure figure = mainController.getCanvasController().getCurrentFigure().get();
+            mainController.getXPointField().setText(String.valueOf(figure.getCenter().getX()));
         }
     }
     private void updateYPointField() {
-        if(mainController.getCanvasController().getCurrentFigure() != null) {
-            mainController.getYPointField().setText(String.valueOf(mainController.getCanvasController().getCurrentFigure().getCenter().getY()));
+        if(mainController.getCanvasController().getCurrentFigure().isPresent()) {
+            Figure figure = mainController.getCanvasController().getCurrentFigure().get();
+            mainController.getYPointField().setText(String.valueOf(figure.getCenter().getY()));
         }
     }
 
     private void updateWidth() {
-        //Optional<Figure> curFigure = Optional.empty();
-//        curFigure = Optional.of(new Polyline(Color.AQUAMARINE));
-
-
-
+        Optional<Figure> curFigure = Optional.empty();
+        curFigure = Optional.of(new Polyline(Color.AQUAMARINE));
         //mainController.getWidthField().setText(String.valueOf(mainController.getCanvasController().getCurrentFigure().getWidth()));
     }
 

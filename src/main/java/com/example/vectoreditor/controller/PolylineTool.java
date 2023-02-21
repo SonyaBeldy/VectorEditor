@@ -4,6 +4,8 @@ import com.example.vectoreditor.model.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.util.Optional;
+
 public class PolylineTool extends Tool implements ITool{
 
     private boolean isDrawing;
@@ -26,7 +28,7 @@ public class PolylineTool extends Tool implements ITool{
                 polyline.calcBoardsPoints();
                 polyline.calcCenter();
                 canvasController.getFigures().add(polyline);
-                canvasController.setCurrentFigure(null);
+                canvasController.setCurrentFigure(Optional.empty());
             }
             polyline.addPoint(new Point(event.getX(), event.getY()));
         }
@@ -39,7 +41,7 @@ public class PolylineTool extends Tool implements ITool{
                 canvasController.redrawAllFigures();
                 polyline.calcBoardsPoints();
                 polyline.calcCenter();
-                canvasController.setCurrentFigure(polyline);
+                canvasController.setCurrentFigure(Optional.of(polyline));
             } else {
                 canvasController.getFigures().remove(canvasController.getFigures().size() - 1);
                 canvasController.redrawAllFigures();

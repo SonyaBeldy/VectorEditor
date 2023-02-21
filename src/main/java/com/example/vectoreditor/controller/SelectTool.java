@@ -5,6 +5,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
+import java.util.Optional;
+
 public class SelectTool extends Tool implements ITool {
 
     public SelectTool(CanvasController canvasController) {
@@ -13,8 +15,9 @@ public class SelectTool extends Tool implements ITool {
 
     @Override
     public void mousePressed(MouseEvent event) {
-        Figure currentFigure = canvasController.whatWasClickedOn(event);
-        if (currentFigure == null) {
+
+        Optional<Figure> currentFigure = canvasController.whatWasClickedOn(event);
+        if (currentFigure.isEmpty()) {
             return;
         }
         canvasController.setCurrentFigure(currentFigure);
@@ -29,7 +32,7 @@ public class SelectTool extends Tool implements ITool {
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        if (canvasController.getCurrentFigure() == null) {
+        if (canvasController.getCurrentFigure().isEmpty()) {
             return;
         }
         canvasController.redrawAllFigures();
@@ -41,26 +44,25 @@ public class SelectTool extends Tool implements ITool {
             return;
         }
         canvasController.redrawAllFigures();
-        Figure enteredFigure = canvasController.whatWasClickedOn(event);
-        if (enteredFigure != null) {
-            enteredFigure.highlight(drawCanvas.getGraphicsContext2D());
-        }
-
+        Optional<Figure> enteredFigure = canvasController.whatWasClickedOn(event);
+        enteredFigure.ifPresent(figure -> figure.highlight(drawCanvas.getGraphicsContext2D()));
         bordersControlsEntered(event);
     }
 
-    public Point bordersControlsEntered(MouseEvent event) {
+    private void bordersControlsEntered(MouseEvent event) {
         Point point = new Point(event.getX(), event.getY());
-        Figure currentFigure = canvasController.getCurrentFigure();
+        Figure currentFigure = canvasController.getCurrentFigure().get();
         Cursor cursor = Cursor.DEFAULT;
         Point dragPoint = new Point(0,0);
         Point oppositePoint = new Point(0,0);
         for (int i = 0; i < currentFigure.getBoardsPoints().size(); i++) {
             Point boardCorner = currentFigure.getBoardsPoints().get(i);
-
             if (Math.pow(boardCorner.getX() - point.getX(), 2) + Math.pow(boardCorner.getY() - point.getY(), 2) <= 20) {
+                System.out.println("IN");
+                System.out.println(" i " + i);
                 switch (i) {
                     case 0 -> {
+                        System.out.println("0 change");
                         cursor = Cursor.NW_RESIZE;
                         dragPoint = currentFigure.getBoardsPoints().get(0);
                         oppositePoint = currentFigure.getBoardsPoints().get(2);
@@ -83,7 +85,7 @@ public class SelectTool extends Tool implements ITool {
                 }
                 canvasController.getDrawCanvas().getScene().setCursor(cursor);
                 canvasController.setCurrentTool(new ResizeTool(canvasController, dragPoint, oppositePoint, ResizeDirection.XY));
-                return boardCorner;
+                return;
             }
         }
         canvasController.setCurrentTool(new SelectTool(canvasController));
@@ -117,7 +119,7 @@ public class SelectTool extends Tool implements ITool {
                     }
                 }
                 canvasController.getDrawCanvas().getScene().setCursor(cursor);
-                return boardCorner;
+                return;
             }
         }
         for (int i = 0; i < currentFigure.getRotatePoints().size(); i++) {
@@ -127,19 +129,16 @@ public class SelectTool extends Tool implements ITool {
 
                 final Scene scene = canvasController.getDrawCanvas().getScene();
                 switch (i) {
-                    case 0 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW, canvasController.getCurrentFigure().getAngle()));
-                    case 1 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW, canvasController.getCurrentFigure().getAngle()));
-                    case 2 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SE, canvasController.getCurrentFigure().getAngle()));
-                    case 3 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NE, canvasController.getCurrentFigure().getAngle()));
+                    case 0 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW, canvasController.getCurrentFigure().get().getAngle()));
+                    case 1 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW, canvasController.getCurrentFigure().get().getAngle()));
+                    case 2 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SE, canvasController.getCurrentFigure().get().getAngle()));
+                    case 3 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NE, canvasController.getCurrentFigure().get().getAngle()));
                 }
                 canvasController.setCurrentTool(new RotateTool(canvasController));
-                return rotatePoint;
+                return;
             }
         }
         canvasController.setCurrentTool(new SelectTool(canvasController));
         canvasController.getDrawCanvas().getScene().setCursor(Cursor.DEFAULT);
-
-        return null;
     }
-
 }
