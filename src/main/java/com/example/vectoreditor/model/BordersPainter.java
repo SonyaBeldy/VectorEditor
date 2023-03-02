@@ -1,5 +1,6 @@
 package com.example.vectoreditor.model;
 
+import com.example.vectoreditor.model.figure.Figure;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 

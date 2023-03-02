@@ -1,9 +1,8 @@
-package com.example.vectoreditor.model;
+package com.example.vectoreditor.model.figure;
 
-import javafx.scene.canvas.GraphicsContext;
+import com.example.vectoreditor.model.Cloneable;
+import com.example.vectoreditor.model.drawer.PolylineDrawer;
 import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
 
 public class Polyline extends Figure implements Cloneable<Figure> {
 

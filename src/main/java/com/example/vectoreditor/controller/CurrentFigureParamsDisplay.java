@@ -1,14 +1,10 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Figure;
+import com.example.vectoreditor.model.figure.Figure;
 import com.example.vectoreditor.model.PointListUtils;
-import com.example.vectoreditor.model.Polyline;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CurrentFigureParamsDisplay implements Initializable {

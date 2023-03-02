@@ -1,11 +1,14 @@
-package com.example.vectoreditor.controller;
+package com.example.vectoreditor.controller.figureTool;
 
+import com.example.vectoreditor.controller.CanvasController;
+import com.example.vectoreditor.controller.ITool;
+import com.example.vectoreditor.controller.Tool;
 import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.Rectangle;
-import javafx.scene.control.Button;
+import com.example.vectoreditor.model.figure.Rectangle;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 public class RectangleTool extends Tool implements ITool {
@@ -19,6 +22,8 @@ public class RectangleTool extends Tool implements ITool {
 
     @Override
     public void mousePressed(MouseEvent event) {
+
+        HashMap<Integer, Integer> map = new HashMap<>();
         rectangle = new Rectangle(canvasController.getStrokeColor());
         for (int i = 0; i < 4; i++) {
             rectangle.addPoint(new Point(event.getX(), event.getY()));
@@ -29,6 +34,7 @@ public class RectangleTool extends Tool implements ITool {
 
     @Override
     public void mouseDragged(MouseEvent event) {
+
         rectangle.getPoints().get(1).setX(event.getX());
 
         rectangle.getPoints().get(2).setX(event.getX());

@@ -1,6 +1,7 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.*;
+import com.example.vectoreditor.model.figure.Figure;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;

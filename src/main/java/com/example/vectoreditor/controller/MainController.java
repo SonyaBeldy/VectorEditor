@@ -1,6 +1,9 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Figure;
+import com.example.vectoreditor.controller.figureTool.PolygonTool;
+import com.example.vectoreditor.controller.figureTool.PolylineTool;
+import com.example.vectoreditor.controller.figureTool.RectangleTool;
+import com.example.vectoreditor.model.figure.Figure;
 import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +24,8 @@ public class MainController {
     private Button polylineButton;
     @FXML
     private Button rectangleButton;
+    @FXML
+    private Button polygonButton;
     @FXML
     private Canvas drawCanvas;
     @FXML
@@ -68,6 +73,18 @@ public class MainController {
     }
 
     @FXML
+    protected void onPolygonButtonClick(ActionEvent event) {
+        canvasController.setStrokeColor(colorPicker.getValue());
+        canvasController.setCurrentTool(new PolygonTool(canvasController));
+        enabledAllButtons();
+        polygonButton.setDisable(true);
+    }
+
+    private void figureButtonClick() {
+
+    }
+
+    @FXML
     protected void chooseColor() {
         canvasController.setStrokeColor(colorPicker.getValue());
     }
@@ -106,6 +123,7 @@ public class MainController {
         lineButton.setDisable(false);
         polylineButton.setDisable(false);
         rectangleButton.setDisable(false);
+        polygonButton.setDisable(false);
     }
 
     @FXML

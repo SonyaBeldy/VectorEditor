@@ -1,5 +1,6 @@
-package com.example.vectoreditor.model;
+package com.example.vectoreditor.model.figure;
 
+import com.example.vectoreditor.model.drawer.RectangleDrawer;
 import javafx.scene.paint.Color;
 
 public class Rectangle extends Polyline{

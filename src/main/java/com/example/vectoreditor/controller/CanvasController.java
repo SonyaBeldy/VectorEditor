@@ -2,7 +2,7 @@ package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Action;
 import com.example.vectoreditor.model.BordersPainter;
-import com.example.vectoreditor.model.Figure;
+import com.example.vectoreditor.model.figure.Figure;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

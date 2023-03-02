@@ -1,6 +1,6 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Figure;
+import com.example.vectoreditor.model.figure.Figure;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.ResizeDirection;
 import javafx.scene.input.MouseEvent;

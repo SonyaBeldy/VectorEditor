@@ -1,12 +1,9 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.BordersPainter;
-import com.example.vectoreditor.model.Figure;
+import com.example.vectoreditor.model.figure.Figure;
 import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.Polyline;
 import javafx.scene.input.MouseEvent;
-
-import java.util.ArrayList;
 
 public class MoveTool extends Tool implements ITool{
 

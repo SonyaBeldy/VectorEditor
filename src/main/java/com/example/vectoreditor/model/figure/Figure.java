@@ -1,11 +1,15 @@
-package com.example.vectoreditor.model;
+package com.example.vectoreditor.model.figure;
 
+import com.example.vectoreditor.model.Cloneable;
+import com.example.vectoreditor.model.Point;
+import com.example.vectoreditor.model.PointListUtils;
+import com.example.vectoreditor.model.drawer.IDrawer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public abstract class Figure implements Cloneable<Figure>{
+public abstract class Figure implements Cloneable<Figure> {
 
     ArrayList<Point> points;
     protected final ArrayList<Point> boardsPoints;
