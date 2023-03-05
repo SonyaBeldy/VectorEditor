@@ -28,8 +28,8 @@ public class CanvasController {
     public CanvasController(Canvas drawCanvas) {
         this.drawCanvas = drawCanvas;
         figures = new ArrayList<>();
-        currentLayer = new Layer("Layer 1");
         layers = new LayerList(1);
+        currentLayer = layers.getLast().orElseThrow();
         actions = new ArrayList<>();
 
         strokeColor = Color.BLACK;
@@ -78,6 +78,7 @@ public class CanvasController {
     }
     public void addFigure(Figure figure) {
         figures.add(figure);
+
     }
 
     public ITool getCurrentTool() {

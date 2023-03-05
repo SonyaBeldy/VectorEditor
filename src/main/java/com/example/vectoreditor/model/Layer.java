@@ -21,8 +21,13 @@ public class Layer {
         this.name = name;
     }
 
-    public ArrayList<Figure> getFigures() {
-        return figures;
+    public void addFigure(Figure figure) {
+        figures.add(figure);
     }
+
+    public Figure getFigure(int ind) {
+        return figures.get(ind);
+    }
+
 
 }

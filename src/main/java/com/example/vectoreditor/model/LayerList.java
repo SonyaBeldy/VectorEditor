@@ -1,7 +1,7 @@
 package com.example.vectoreditor.model;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 public class LayerList {
 
@@ -30,6 +30,17 @@ public class LayerList {
             }
         }
         return name;
+    }
+
+    public Layer get(int ind) {
+        return layers.get(ind);
+    }
+
+    public Optional<Layer> getLast() {
+        if (layers.size() == 0) {
+            return Optional.empty();
+        }
+        return Optional.of(layers.get(layers.size() - 1));
     }
 
     public ArrayList<Layer> getLayers() {

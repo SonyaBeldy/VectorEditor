@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 public class Polyline extends Figure implements Cloneable<Figure> {
 
     public Polyline(Color strokeColor) {
-        super(strokeColor);
+        super("Polyline", strokeColor);
         drawer = new PolylineDrawer(points);
     }
 

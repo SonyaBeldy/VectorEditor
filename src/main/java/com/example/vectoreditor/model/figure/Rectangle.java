@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 public class Rectangle extends Polyline{
     public Rectangle(Color strokeColor) {
         super(strokeColor);
+        name = "Rectangle";
         drawer = new RectangleDrawer(points);
     }
 

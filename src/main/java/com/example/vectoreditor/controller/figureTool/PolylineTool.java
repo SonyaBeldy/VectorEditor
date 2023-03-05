@@ -19,6 +19,7 @@ public class PolylineTool extends Tool implements ITool {
         super(canvasController);
         isDrawing = false;
         figure = new Polyline(Color.BLACK);
+
     }
 
     public void createFigure() {
@@ -34,7 +35,7 @@ public class PolylineTool extends Tool implements ITool {
                 figure.addPoint(new Point(event.getX(), event.getY()));
                 figure.calcBoardsPoints();
                 figure.calcCenter();
-                canvasController.getFigures().add(figure);
+                canvasController.addFigure(figure);
                 canvasController.setCurrentFigure(Optional.empty());
             }
             figure.addPoint(new Point(event.getX(), event.getY()));

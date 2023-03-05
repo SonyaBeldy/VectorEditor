@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public abstract class Figure implements Cloneable<Figure> {
 
+    String name;
     ArrayList<Point> points;
     protected final ArrayList<Point> boardsPoints;
     protected final ArrayList<Point> rotatePoints;
@@ -23,7 +24,8 @@ public abstract class Figure implements Cloneable<Figure> {
 
     IDrawer drawer;
 
-    public Figure(Color strokeColor) {
+    public Figure(String name, Color strokeColor) {
+        this.name = name;
         this.strokeColor = strokeColor;
         points = new ArrayList<>();
         boardsPoints = new ArrayList<>();

@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 public class Polygon extends Polyline {
     public Polygon(Color strokeColor) {
         super(strokeColor);
+        name = "Polygon";
         drawer = new PolygonDrawer(points);
     }
 }
