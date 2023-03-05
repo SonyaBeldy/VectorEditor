@@ -2,36 +2,38 @@ package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Action;
 import com.example.vectoreditor.model.BordersPainter;
+import com.example.vectoreditor.model.Layer;
+import com.example.vectoreditor.model.LayerList;
 import com.example.vectoreditor.model.figure.Figure;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class CanvasController {
 
     private final Canvas drawCanvas;
-
+    private final BordersPainter bordersPainter;
     private ITool currentTool;
-    //private Figure currentFigure;
     private Optional<Figure> currentFigure = Optional.empty();
     private final ArrayList<Figure> figures;
-
     private Color strokeColor;
-
+    private final LayerList layers;
+    private Layer currentLayer;
     private final ArrayList<Action> actions;
-
-    private final BordersPainter bordersPainter;
 
     public CanvasController(Canvas drawCanvas) {
         this.drawCanvas = drawCanvas;
         figures = new ArrayList<>();
+        currentLayer = new Layer("Layer 1");
+        layers = new LayerList(1);
         actions = new ArrayList<>();
+
         strokeColor = Color.BLACK;
         bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
-
     }
 
     public void redrawAllFigures() {

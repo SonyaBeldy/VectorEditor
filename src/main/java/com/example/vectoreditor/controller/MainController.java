@@ -42,8 +42,34 @@ public class MainController {
     @FXML
     private TextField heightField;
 
+    @FXML
+    private TextField figureName;
+
     private CanvasController canvasController;
     private CurrentFigureParamsDisplay paramsDisplay;
+
+    @FXML
+    private void initialize() {
+        canvasController = new CanvasController(drawCanvas);
+        canvasController.setCurrentTool(new SelectTool(canvasController));
+//        paramsDisplay = new CurrentFigureParamsDisplay(xPointField, yPointField, widthField, heightField, rotateField, canvasController.getCurrentFigure());
+        paramsDisplay = new CurrentFigureParamsDisplay(this);
+        selectButton.setDisable(true);
+        colorPicker.setValue(Color.BLACK);
+
+        figureName.setEditable(false);
+        figureName.setOnMouseClicked(event -> {
+            if(event.getClickCount() == 2) {
+                figureName.setEditable(true);
+
+            }
+        });
+    }
+    @FXML
+    protected void figureNameAction(ActionEvent event) {
+        figureName.setEditable(false);
+    }
+
     @FXML
     protected void onSelectButtonClick(ActionEvent event) {
         canvasController.setCurrentTool(new SelectTool(canvasController));
@@ -88,7 +114,6 @@ public class MainController {
     protected void chooseColor() {
         canvasController.setStrokeColor(colorPicker.getValue());
     }
-
     @FXML
     void onCanvasPressed(MouseEvent event) {
         canvasController.getCurrentTool().mousePressed(event);
@@ -99,6 +124,7 @@ public class MainController {
         canvasController.getCurrentTool().mouseDragged(event);
         paramsDisplay.update();
     }
+
     @FXML
     void onCanvasReleased(MouseEvent event) {
         canvasController.getCurrentTool().mouseReleased(event);
@@ -107,16 +133,6 @@ public class MainController {
     @FXML
     void onCanvasEntered(MouseEvent event) { canvasController.getCurrentTool().mouseEntered(event); }
 
-
-    @FXML
-    private void initialize() {
-        canvasController = new CanvasController(drawCanvas);
-        canvasController.setCurrentTool(new SelectTool(canvasController));
-//        paramsDisplay = new CurrentFigureParamsDisplay(xPointField, yPointField, widthField, heightField, rotateField, canvasController.getCurrentFigure());
-        paramsDisplay = new CurrentFigureParamsDisplay(this);
-        selectButton.setDisable(true);
-        colorPicker.setValue(Color.BLACK);
-    }
 
     private void enabledAllButtons(){
         selectButton.setDisable(false);

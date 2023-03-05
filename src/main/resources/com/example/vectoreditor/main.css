@@ -1,9 +1,44 @@
-.main {
 
-
+#figureName {
+    -fx-background-color: transparent;
+    -fx-text-fill: #C4C0C4;
 }
-#toolButton {
 
+#imageButton {
+    -fx-background-color: transparent;
+}
+
+#layerBox {
+    -fx-background-color: #46454C;
+}
+
+.tab-pane:top *.tab-header-area {
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em, 0.166667em, 0.0em, 0.0em;
+    -fx-background-color: #3F3E44;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: #36363C;
+}
+.tab-pane .tab:selected {
+    -fx-background-color: #3F3E44;
+    -fx-border-width: 0 0.5 0.5 0.5;
+    -fx-border-color: #2D2D33;
+    -fx-background-radius: 0 0 0 0;
+    -fx-border-radius: 0 0 0 0;
+}
+
+.tab-pane .tab-label {
+    -fx-text-fill: #C4C0C4;
+}
+
+.tab:hover {
+    -fx-background-color: red;
+}
+
+#toolButton {
+    -fx-background-color: transparent;
     -fx-background-color:  #494850;
     -fx-pref-width: 42px;
     -fx-pref-height: 42px;
@@ -14,7 +49,6 @@
 }
 
 #toolButton:disabled {
-
     -fx-opacity: 1;
     -fx-background-color:  #27272B;
     -fx-pref-width: 42px;
@@ -33,7 +67,7 @@
 .vbox {
     -fx-background-color: #39393F;
     -fx-border-color: #2D2D33;
-    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-width: 0px 1px 1px 1px;
 }
 
 .titledPane {
