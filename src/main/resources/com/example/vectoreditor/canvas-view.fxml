@@ -11,6 +11,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -20,6 +21,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -139,125 +141,198 @@
                               <Font name="Trebuchet MS Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Separator prefWidth="200.0" stylesheets="@main.css" />
-                        <Label id="optionsTitle" stylesheets="@main.css" text="Transforming" textFill="#c4c0c4" />
-                        <Separator prefWidth="200.0" stylesheets="@main.css" />
-                        <VBox prefHeight="79.0" prefWidth="171.0" spacing="2.0">
+                        <AnchorPane maxHeight="-Infinity" minHeight="150.0" prefHeight="1280.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="142.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
-                                 <children>
-                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="X:" />
-                                    <TextField maxHeight="21.0" maxWidth="-Infinity" onAction="#move" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" fx:id="xPointField" />
-                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="W:" />
-                                    <TextField fx:id="widthField" maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets left="12.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="142.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
-                                 <children>
-                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="Y:" />
-                                    <TextField fx:id="yPointField" maxHeight="21.0" maxWidth="-Infinity" onAction="#move" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
-                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="H:" />
-                                    <TextField fx:id="heightField" maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="12.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="171.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
-                                 <children>
-                                    <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="R:" />
-                                    <TextField fx:id="rotateField" maxHeight="21.0" maxWidth="-Infinity" onAction="#rotate" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="12.0" />
-                                 </padding>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <Separator prefWidth="200.0" stylesheets="@main.css" />
-                        <Label id="optionsTitle" text="Decoration" textFill="#c4c0c4">
-                           <padding>
-                              <Insets left="12.0" />
-                           </padding>
-                        </Label>
-                        <HBox>
-                           <children>
-                              <ColorPicker fx:id="colorPicker" onAction="#chooseColor" />
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets left="12.0" />
-                           </padding>
-                        </HBox>
-                        <Separator prefWidth="200.0" stylesheets="@main.css" />
-                        <Label id="optionsTitle" text="Layers" textFill="#c4c0c4">
-                           <padding>
-                              <Insets left="12.0" />
-                           </padding>
-                        </Label>
-                        <VBox>
-                           <children>
-                              <ScrollPane hbarPolicy="NEVER" prefHeight="178.0" prefWidth="204.0" vbarPolicy="ALWAYS">
-                                 <content>
-                                    <VBox id="layerBox" fx:id="layerBox" prefHeight="178.0" prefWidth="197.0">
+                              <SplitPane dividerPositions="0.6" orientation="VERTICAL" prefHeight="463.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="196.0" stylesheets="@main.css">
                                        <children>
-                                          <HBox prefHeight="26.0" prefWidth="198.0" spacing="4.0">
-                                             <children>
-                                                <Button id="imageButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
-                                                   <graphic>
-                                                      <ImageView fitHeight="24.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@images/icons/1x/eye.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </graphic>
-                                                </Button>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
-                                                <Button id="imageButton" layoutX="22.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0">
-                                                   <graphic>
-                                                      <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@images/icons/1x/show.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </graphic>
-                                                </Button>
-                                                <TextField id="figureName" fx:id="figureName" editable="false" onAction="#figureNameAction" prefHeight="25.0" prefWidth="131.0" text="Layer 1" />
-                                             </children>
-                                             <opaqueInsets>
-                                                <Insets />
-                                             </opaqueInsets>
-                                             <padding>
-                                                <Insets left="4.0" right="12.0" />
-                                             </padding>
-                                          </HBox>
+                                          <ScrollPane id="scrollPaneProp" hbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <content>
+                                                <VBox spacing="4.0">
+                                                   <children>
+                                                      <Separator prefWidth="200.0" stylesheets="@main.css" />
+                                                      <Label id="optionsTitle" stylesheets="@main.css" text="Transforming" textFill="#c4c0c4">
+                                                         <VBox.margin>
+                                                            <Insets bottom="4.0" top="4.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Separator prefWidth="200.0" stylesheets="@main.css" />
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
+                                                         <children>
+                                                            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="X:" />
+                                                            <TextField maxHeight="21.0" maxWidth="-Infinity" onAction="#move" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" fx:id="xPointField" />
+                                                            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="W:" />
+                                                            <TextField fx:id="widthField" maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets top="4.0" />
+                                                         </VBox.margin>
+                                                         <padding>
+                                                            <Insets left="12.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
+                                                         <children>
+                                                            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="Y:" />
+                                                            <TextField fx:id="yPointField" maxHeight="21.0" maxWidth="-Infinity" onAction="#move" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+                                                            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="H:" />
+                                                            <TextField fx:id="heightField" maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="12.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
+                                                         <children>
+                                                            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="R:" />
+                                                            <TextField fx:id="rotateField" maxHeight="21.0" maxWidth="-Infinity" onAction="#rotate" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="12.0" />
+                                                         </padding>
+                                                         <VBox.margin>
+                                                            <Insets bottom="4.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <Separator prefWidth="200.0" stylesheets="@main.css" />
+                                                      <Label id="optionsTitle" text="Decoration" textFill="#c4c0c4">
+                                                         <padding>
+                                                            <Insets left="12.0" />
+                                                         </padding>
+                                                         <VBox.margin>
+                                                            <Insets bottom="4.0" top="4.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Separator prefWidth="200.0" stylesheets="@main.css" />
+                                                      <HBox alignment="CENTER_LEFT" spacing="4.0">
+                                                         <children>
+                                                            <Label id="optionsTitle" prefHeight="24.0" prefWidth="45.0" stylesheets="@main.css" text="Line: " />
+                                                            <ColorPicker fx:id="colorPicker" onAction="#chooseColor" prefWidth="125.0" />
+                                                         </children>
+                                                         <opaqueInsets>
+                                                            <Insets />
+                                                         </opaqueInsets>
+                                                         <VBox.margin>
+                                                            <Insets top="4.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox spacing="4.0">
+                                                         <children>
+                                                            <Label id="optionsTitle" prefHeight="24.0" prefWidth="45.0" stylesheets="@main.css" text="Fill: " />
+                                                            <ColorPicker fx:id="colorPicker1" onAction="#chooseColor">
+                                                               <value>
+                                                                  <Color />
+                                                               </value>
+                                                            </ColorPicker>
+                                                         </children>
+                                                         <opaqueInsets>
+                                                            <Insets />
+                                                         </opaqueInsets>
+                                                         <VBox.margin>
+                                                            <Insets bottom="4.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <Separator prefWidth="200.0" stylesheets="@main.css" />
+                                                   </children>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
                                        </children>
-                                       <padding>
-                                          <Insets top="2.0" />
-                                       </padding>
-                                    </VBox>
-                                 </content>
-                              </ScrollPane>
-                              <HBox />
-                              <Button id="imageButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
-                                 <graphic>
-                                    <ImageView fitHeight="24.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/icons/1x/eye.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
+                                    </AnchorPane>
+                                  <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="1000.0" prefWidth="160.0" stylesheets="@main.css">
+                                       <children>
+                                          <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="1024.0" stylesheets="@main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <ScrollPane id="scrollPaneProp" cache="true" hbarPolicy="NEVER" maxHeight="-Infinity" prefHeight="400.0" prefWidth="196.0" stylesheets="@main.css">
+                                                   <content>
+                                                      <VBox id="layerBox" fx:id="layersBox">
+                                                         <children>
+                                                            <Label id="optionsTitle" text="Layers" textFill="#c4c0c4">
+                                                               <padding>
+                                                                  <Insets left="12.0" />
+                                                               </padding>
+                                                               <VBox.margin>
+                                                                  <Insets bottom="8.0" top="6.0" />
+                                                               </VBox.margin>
+                                                               <font>
+                                                                  <Font name="System Bold" size="12.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Separator prefWidth="200.0" stylesheets="@main.css" />
+                                                            <HBox prefHeight="26.0" prefWidth="200.0" spacing="4.0">
+                                                               <children>
+                                                                  <Button id="imageButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
+                                                                     <graphic>
+                                                                        <ImageView fitHeight="24.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                                                           <image>
+                                                                              <Image url="@images/icons/1x/eye.png" />
+                                                                           </image>
+                                                                        </ImageView>
+                                                                     </graphic>
+                                                                  </Button>
+                                                                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
+                                                                  <Button id="imageButton" fx:id="showFigures" layoutX="22.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showFiguresButton" prefHeight="25.0" prefWidth="23.0">
+                                                                     <graphic>
+                                                                        <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                                           <image>
+                                                                              <Image url="@images/icons/1x/show.png" />
+                                                                           </image>
+                                                                        </ImageView>
+                                                                     </graphic>
+                                                                  </Button>
+                                                                  <TextField id="figureName" fx:id="flayerName" editable="false" onAction="#layerNameAction" prefHeight="25.0" prefWidth="131.0" text="Layer 1" />
+                                                               </children>
+                                                               <opaqueInsets>
+                                                                  <Insets />
+                                                               </opaqueInsets>
+                                                               <padding>
+                                                                  <Insets left="4.0" right="12.0" />
+                                                               </padding>
+                                                            </HBox>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets top="2.0" />
+                                                         </padding>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                                <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="198.0" spacing="4.0">
+                                                   <children>
+                                                      <Button id="imageButton" fx:id="deleteLayerButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
+                                                         <graphic>
+                                                            <ImageView fitHeight="24.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@images/icons/4x/delete_2@4x.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button id="imageButton" fx:id="addNewLayerButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addNewLayerButtonClick" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
+                                                         <graphic>
+                                                            <ImageView fitHeight="24.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@images/icons/4x/add_new_layer@4x.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                   </children>
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                   <padding>
+                                                      <Insets left="4.0" right="12.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
                            </children>
-                        </VBox>
+                        </AnchorPane>
                      </children>
                      <padding>
                         <Insets top="10.0" />

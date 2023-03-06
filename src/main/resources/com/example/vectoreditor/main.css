@@ -1,4 +1,24 @@
 
+.scroll-pane .viewport {
+    -fx-background-color: #36363C;
+}
+
+#scrollPaneProp .viewport {
+-fx-background-color: 46454C#;
+}
+#scrollPaneProp {
+-fx-background-color: transparent;
+}
+
+.split-pane:vertical {
+    -fx-background-color:transparent;
+}
+
+.split-pane-divider {
+    -fx-background-color: #2D2D33;
+    -fx-padding:2;
+}
+
 #figureName {
     -fx-background-color: transparent;
     -fx-text-fill: #C4C0C4;
@@ -103,6 +123,7 @@
 #optionsTitle {
     -fx-padding: 0px 0px 0px 12px;
     -fx-text-fill: #C4C0C4;
+    -fx-text-style: bold;
 }
 
 .titled-pane {
@@ -121,7 +142,6 @@
 
 .scroll-pane {
     -fx-background-color: #494850;
-
 }
 
 .scroll-bar:horizontal,

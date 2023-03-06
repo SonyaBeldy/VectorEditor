@@ -77,6 +77,13 @@ public class CanvasController {
         return drawCanvas;
     }
 
+    public void addNewLayer() {
+        layers.createNewLayer();
+    }
+
+    public Optional<Layer> getNewLayer() {
+        return layers.getLast();
+    }
     public void addFigure(Figure figure) {
         currentLayer.addFigure(figure);
     }
