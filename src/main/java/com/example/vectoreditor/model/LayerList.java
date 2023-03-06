@@ -43,7 +43,7 @@ public class LayerList {
         return Optional.of(layers.get(layers.size() - 1));
     }
 
-    public ArrayList<Layer> getLayers() {
-        return layers;
+    public int getSize() {
+        return layers.size();
     }
 }

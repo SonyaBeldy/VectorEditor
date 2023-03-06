@@ -28,7 +28,7 @@ public class RectangleTool extends Tool implements ITool {
         for (int i = 0; i < 4; i++) {
             rectangle.addPoint(new Point(event.getX(), event.getY()));
         }
-        canvasController.getFigures().add(rectangle);
+        canvasController.addFigure(rectangle);
 
     }
 

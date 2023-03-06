@@ -7,10 +7,18 @@ import java.util.ArrayList;
 public class Layer {
 
     private String name = "Layer";
-    private ArrayList<Figure> figures;
+    private final ArrayList<Figure> figures;
 
     public Layer(String name) {
         this.name = name;
+        figures = new ArrayList<>();
+    }
+
+    public void remove(int ind){
+        figures.remove(ind);
+    }
+    public int getObjectsCount() {
+        return figures.size();
     }
 
     public String getName() {

@@ -13,7 +13,7 @@ public class Line extends Figure {
     Point[] hitBoxEdgePoints;
 
     public Line(Color strokeColor) {
-        super(strokeColor);
+        super("Line", strokeColor);
         //startPoint = new Point(startX, startY);
         //endPoint = new Point(endX, endY);
         this.strokeColor = strokeColor;

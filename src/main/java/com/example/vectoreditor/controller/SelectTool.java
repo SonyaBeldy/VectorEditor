@@ -41,7 +41,7 @@ public class SelectTool extends Tool implements ITool {
 
     @Override
     public void mouseEntered(MouseEvent event) {
-        if (canvasController.getFigures().isEmpty()) {
+        if (canvasController.isEmpty()) {
             return;
         }
         canvasController.redrawAllFigures();

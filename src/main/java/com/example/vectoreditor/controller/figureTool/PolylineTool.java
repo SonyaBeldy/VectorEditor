@@ -4,7 +4,6 @@ import com.example.vectoreditor.controller.CanvasController;
 import com.example.vectoreditor.controller.ITool;
 import com.example.vectoreditor.controller.Tool;
 import com.example.vectoreditor.model.*;
-import com.example.vectoreditor.model.figure.Figure;
 import com.example.vectoreditor.model.figure.Polyline;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -51,7 +50,7 @@ public class PolylineTool extends Tool implements ITool {
                 figure.calcCenter();
                 canvasController.setCurrentFigure(Optional.of(figure));
             } else {
-                canvasController.getFigures().remove(canvasController.getFigures().size() - 1);
+                canvasController.removeFigure(canvasController.getCurrentLayer().getObjectsCount() - 1);
                 canvasController.redrawAllFigures();
             }
         }

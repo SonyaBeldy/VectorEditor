@@ -10,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class CanvasController {
@@ -19,7 +18,6 @@ public class CanvasController {
     private final BordersPainter bordersPainter;
     private ITool currentTool;
     private Optional<Figure> currentFigure = Optional.empty();
-    private final ArrayList<Figure> figures;
     private Color strokeColor;
     private final LayerList layers;
     private Layer currentLayer;
@@ -27,7 +25,6 @@ public class CanvasController {
 
     public CanvasController(Canvas drawCanvas) {
         this.drawCanvas = drawCanvas;
-        figures = new ArrayList<>();
         layers = new LayerList(1);
         currentLayer = layers.getLast().orElseThrow();
         actions = new ArrayList<>();
@@ -38,8 +35,11 @@ public class CanvasController {
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
-        for (Figure figure : figures) {
-            figure.draw(drawCanvas.getGraphicsContext2D());
+        for (int i = 0; i < layers.getSize(); i++) {
+            Layer layer = layers.get(i);
+            for (int j = 0; j < layer.getObjectsCount(); j++) {
+                layer.getFigure(j).draw(drawCanvas.getGraphicsContext2D());
+            }
         }
         currentFigure.ifPresent(bordersPainter::drawBoards);
     }
@@ -48,9 +48,13 @@ public class CanvasController {
         double x = event.getX();
         double y = event.getY();
 
-        for (int i = figures.size() - 1; i >= 0; i--) {
-            if(figures.get(i).isClickedOn(x, y)){
-                return Optional.of(figures.get(i));
+        for (int i = layers.getSize() - 1; i >= 0; i--) {
+            Layer layer = layers.get(i);
+            for (int j = 0; j < layer.getObjectsCount(); j++) {
+                Figure figure = layer.getFigure(j);
+                if(figure.isClickedOn(x, y)){
+                    return Optional.of(figure);
+                }
             }
         }
         return Optional.empty();
@@ -73,12 +77,25 @@ public class CanvasController {
         return drawCanvas;
     }
 
-    public ArrayList<Figure> getFigures() {
-        return figures;
-    }
     public void addFigure(Figure figure) {
-        figures.add(figure);
+        currentLayer.addFigure(figure);
+    }
 
+    public void removeFigure(int ind) {
+        currentLayer.remove(ind);
+    }
+    
+    public boolean isEmpty() { //нет фигур вообще
+        for (int i = 0; i < layers.getSize(); i++) {
+            if(layers.get(i).getObjectsCount() >= 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Layer getCurrentLayer() {
+        return currentLayer;
     }
 
     public ITool getCurrentTool() {
