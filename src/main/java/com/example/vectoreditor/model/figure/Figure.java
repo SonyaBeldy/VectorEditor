@@ -35,6 +35,10 @@ public abstract class Figure implements Cloneable<Figure> {
         center = new Point(0,0);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void draw(GraphicsContext graphicsContext) {
         drawer.draw(graphicsContext, strokeColor);
     }

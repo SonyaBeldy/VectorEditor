@@ -3,7 +3,7 @@ package com.example.vectoreditor.controller;
 import com.example.vectoreditor.model.Action;
 import com.example.vectoreditor.model.BordersPainter;
 import com.example.vectoreditor.model.Layer;
-import com.example.vectoreditor.model.LayerList;
+import com.example.vectoreditor.model.LayerControllerList;
 import com.example.vectoreditor.model.figure.Figure;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -19,24 +19,44 @@ public class CanvasController {
     private ITool currentTool;
     private Optional<Figure> currentFigure = Optional.empty();
     private Color strokeColor;
-    private final LayerList layers;
-    private Layer currentLayer;
+    //private final LayerList layers;
+    //private LayerControllerList layerControllerList;
+    private final ArrayList<LayerBoxController> layers = new ArrayList<>();
+
+//    private Layer currentLayer;
+    private LayerBoxController currentLayer;
     private final ArrayList<Action> actions;
 
     public CanvasController(Canvas drawCanvas) {
         this.drawCanvas = drawCanvas;
-        layers = new LayerList(1);
-        currentLayer = layers.getLast().orElseThrow();
-        actions = new ArrayList<>();
 
+        //layerControllerList.createNewLayer();
+        //addNewLayer();
+
+        actions = new ArrayList<>();
         strokeColor = Color.BLACK;
         bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
     }
 
+    public ArrayList<LayerBoxController> getLayers() {
+        return layers;
+    }
+
+    public void addFigureToCurrentLayerItemsList(Figure figure) {
+        currentLayer.getLayer().addFigure(figure);
+//        layerControllerList.get(layerItemsList.size() - 1).getItemController().addFigure(figure);
+    }
+//    public void addFigureToLastLayerItemsList(Figure figure) {
+//        layerItemsList.get(layerItemsList.size() - 1).getItemController().addFigure(figure);
+//    }
+//    public ArrayList<LayerBoxController> getLayerItemsList() {
+//        return layerControllerList;
+//    }
+
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
-        for (int i = 0; i < layers.getSize(); i++) {
-            Layer layer = layers.get(i);
+        for (int i = 0; i < layers.size(); i++) {
+            Layer layer = layers.get(i).getLayer();
             for (int j = 0; j < layer.getObjectsCount(); j++) {
                 layer.getFigure(j).draw(drawCanvas.getGraphicsContext2D());
             }
@@ -48,8 +68,8 @@ public class CanvasController {
         double x = event.getX();
         double y = event.getY();
 
-        for (int i = layers.getSize() - 1; i >= 0; i--) {
-            Layer layer = layers.get(i);
+        for (int i = layers.size() - 1; i >= 0; i--) {
+            Layer layer = layers.get(i).getLayer();
             for (int j = 0; j < layer.getObjectsCount(); j++) {
                 Figure figure = layer.getFigure(j);
                 if(figure.isClickedOn(x, y)){
@@ -77,31 +97,33 @@ public class CanvasController {
         return drawCanvas;
     }
 
-    public void addNewLayer() {
-        layers.createNewLayer();
-    }
-
-    public Optional<Layer> getNewLayer() {
-        return layers.getLast();
-    }
+//    public void addNewLayer() {
+//        layerControllerList.addNewLayer();
+//    }
+//
+//    public Optional<Layer> getNewLayer() {
+//        return layers.getLast();
+//    }
     public void addFigure(Figure figure) {
         currentLayer.addFigure(figure);
+//        addFigureToLastLayerItemsList(figure);
+        addFigureToCurrentLayerItemsList(figure);
     }
 
     public void removeFigure(int ind) {
-        currentLayer.remove(ind);
+        currentLayer.getLayer().remove(ind);
     }
     
     public boolean isEmpty() { //нет фигур вообще
-        for (int i = 0; i < layers.getSize(); i++) {
-            if(layers.get(i).getObjectsCount() >= 0) {
+        for (int i = 0; i < layers.size(); i++) {
+            if(layers.get(i).getLayer().getObjectsCount() >= 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public Layer getCurrentLayer() {
+    public LayerBoxController getCurrentLayer() {
         return currentLayer;
     }
 
@@ -119,5 +141,9 @@ public class CanvasController {
 
     public void setStrokeColor(Color strokeColor) {
         this.strokeColor = strokeColor;
+    }
+
+    public void setCurrentLayer(LayerBoxController controller) {
+        currentLayer = controller;
     }
 }

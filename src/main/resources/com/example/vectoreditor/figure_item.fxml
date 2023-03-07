@@ -6,11 +6,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.shape.Rectangle?>
 
-<HBox prefHeight="26.0" prefWidth="200.0" spacing="4.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.LayerItemController">
+<HBox prefHeight="26.0" prefWidth="200.0" spacing="4.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.FigureItemController">
    <children>
-      <Button id="imageButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
+      <Button id="imageButton" fx:id="visible" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#visibleButtonClick" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
          <graphic>
             <ImageView fx:id="visible" fitHeight="24.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -19,18 +18,17 @@
             </ImageView>
          </graphic>
       </Button>
-      <Rectangle fx:id="color" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
-      <Button id="imageButton" fx:id="showFigures1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showFiguresButton" prefHeight="25.0" prefWidth="23.0">
+      <Button id="imageButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0">
          <graphic>
             <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
-      <Button id="imageButton" fx:id="showFigures" layoutX="22.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showFiguresButton" prefHeight="25.0" prefWidth="23.0">
+      <Button id="imageButton" layoutX="22.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0">
          <graphic>
             <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </Button>
-      <TextField id="figureName" fx:id="figureName" editable="false" onAction="#layerNameAction" prefHeight="25.0" prefWidth="131.0" text="Layer 1" />
+      <TextField id="figureName" fx:id="figureName" editable="false" minHeight="0.0" onAction="#figureNameAction" prefHeight="25.0" prefWidth="131.0" text="Layer 1" />
    </children>
    <opaqueInsets>
       <Insets />

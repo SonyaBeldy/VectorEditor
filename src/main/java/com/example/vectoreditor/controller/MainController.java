@@ -14,18 +14,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainController {
 
-    @FXML
-    private Button addNewLayerButton;
-    @FXML
-    private Button showFigures;
     @FXML
     private VBox layersBox;
     @FXML
@@ -54,9 +50,6 @@ public class MainController {
     @FXML
     private TextField heightField;
 
-    @FXML
-    private TextField layerName;
-
     private CanvasController canvasController;
     private CurrentFigureParamsDisplay paramsDisplay;
 
@@ -69,6 +62,8 @@ public class MainController {
         paramsDisplay = new CurrentFigureParamsDisplay(this);
         selectButton.setDisable(true);
         colorPicker.setValue(Color.BLACK);
+
+        addNewLayerButtonClick();
     }
 
     @FXML
@@ -76,24 +71,37 @@ public class MainController {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/layer_item.fxml"));
         try {
-            HBox hBox = fxmlLoader.load();
-            LayerItemController layerItem = fxmlLoader.getController();
-            layersBox.getChildren().add(hBox);
+            VBox vBox = fxmlLoader.load();
 
-            canvasController.addNewLayer();
-            Layer layer = canvasController.getNewLayer().orElseThrow();
-            layerItem.setLayer(layer);
+            LayerBoxController layerController = fxmlLoader.getController();
+
+            layerController.init(canvasController, generateDefaultLayerName());
+            layersBox.getChildren().add(vBox);
+
+            layerController.setCurrent();
+
+            canvasController.getLayers().add(layerController);
+            canvasController.setCurrentLayer(layerController);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    @FXML
-    protected void showFiguresButton() {
-        VBox vBox = new VBox();
-    }
-    @FXML
-    protected void layerNameAction(ActionEvent event) {
-        layerName.setEditable(false);
+
+    private String generateDefaultLayerName() {
+        ArrayList<LayerBoxController> layers = canvasController.getLayers();
+        int number = layers.size() + 1;
+        String name = "Layer " + number;
+        int i = 0;
+        while (i != layers.size()) {
+            if(layers.get(i).getLayer().getName().equals(name)) {
+                number++;
+                name = "Layer " + number;
+                i = 0;
+            } else {
+                i++;
+            }
+        }
+        return name;
     }
 
     @FXML
@@ -130,10 +138,6 @@ public class MainController {
         canvasController.setCurrentTool(new PolygonTool(canvasController));
         enabledAllButtons();
         polygonButton.setDisable(true);
-    }
-
-    private void figureButtonClick() {
-
     }
 
     @FXML
@@ -196,10 +200,6 @@ public class MainController {
         figure.setAngle(angle);
         canvasController.redrawAllFigures();
 
-    }
-
-    public VBox getLayersBox() {
-        return layersBox;
     }
 
     public TextField getXPointField() {

@@ -22,7 +22,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="550.0" prefWidth="1004.0" style="-fx-background-color: #494850;" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.MainController">
@@ -246,7 +245,7 @@
                                              <children>
                                                 <ScrollPane id="scrollPaneProp" cache="true" hbarPolicy="NEVER" maxHeight="-Infinity" prefHeight="400.0" prefWidth="196.0" stylesheets="@main.css">
                                                    <content>
-                                                      <VBox id="layerBox" fx:id="layersBox">
+                                                      <VBox>
                                                          <children>
                                                             <Label id="optionsTitle" text="Layers" textFill="#c4c0c4">
                                                                <padding>
@@ -260,40 +259,12 @@
                                                                </font>
                                                             </Label>
                                                             <Separator prefWidth="200.0" stylesheets="@main.css" />
-                                                            <HBox prefHeight="26.0" prefWidth="200.0" spacing="4.0">
-                                                               <children>
-                                                                  <Button id="imageButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
-                                                                     <graphic>
-                                                                        <ImageView fitHeight="24.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@images/icons/1x/eye.png" />
-                                                                           </image>
-                                                                        </ImageView>
-                                                                     </graphic>
-                                                                  </Button>
-                                                                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
-                                                                  <Button id="imageButton" fx:id="showFigures" layoutX="22.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showFiguresButton" prefHeight="25.0" prefWidth="23.0">
-                                                                     <graphic>
-                                                                        <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@images/icons/1x/show.png" />
-                                                                           </image>
-                                                                        </ImageView>
-                                                                     </graphic>
-                                                                  </Button>
-                                                                  <TextField id="figureName" fx:id="flayerName" editable="false" onAction="#layerNameAction" prefHeight="25.0" prefWidth="131.0" text="Layer 1" />
-                                                               </children>
-                                                               <opaqueInsets>
-                                                                  <Insets />
-                                                               </opaqueInsets>
+                                                            <VBox id="layerBox" fx:id="layersBox">
                                                                <padding>
-                                                                  <Insets left="4.0" right="12.0" />
+                                                                  <Insets top="2.0" />
                                                                </padding>
-                                                            </HBox>
+                                                            </VBox>
                                                          </children>
-                                                         <padding>
-                                                            <Insets top="2.0" />
-                                                         </padding>
                                                       </VBox>
                                                    </content>
                                                 </ScrollPane>
