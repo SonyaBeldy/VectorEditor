@@ -61,14 +61,10 @@ public class LayerBoxController implements Initializable {
         });
     }
 
-    public Layer getLayer() {
-        return layer;
-    }
-
     public void init(CanvasController canvasController, String layerName) {
         layer = new Layer(layerName);
         setCanvasController(canvasController);
-        setLayer();
+        setLayerName();
     }
 
     public void setCanvasController(CanvasController canvasController) {
@@ -122,12 +118,8 @@ public class LayerBoxController implements Initializable {
         }
     }
 
-    public void setLayer() {
+    public void setLayerName() {
         layerName.setText(layer.getName());
-    }
-
-    public void setLayerName(String name) {
-        layerName.setText(name);
     }
 
     public void changeColor() {
@@ -136,5 +128,9 @@ public class LayerBoxController implements Initializable {
         float g = random.nextFloat();
         float b = random.nextFloat();
         color.setFill(Color.color(r, g, b));
+    }
+
+    public Layer getLayer() {
+        return layer;
     }
 }

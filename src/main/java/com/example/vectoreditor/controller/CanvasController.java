@@ -3,7 +3,6 @@ package com.example.vectoreditor.controller;
 import com.example.vectoreditor.model.Action;
 import com.example.vectoreditor.model.BordersPainter;
 import com.example.vectoreditor.model.Layer;
-import com.example.vectoreditor.model.LayerControllerList;
 import com.example.vectoreditor.model.figure.Figure;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
@@ -19,19 +18,12 @@ public class CanvasController {
     private ITool currentTool;
     private Optional<Figure> currentFigure = Optional.empty();
     private Color strokeColor;
-    //private final LayerList layers;
-    //private LayerControllerList layerControllerList;
     private final ArrayList<LayerBoxController> layers = new ArrayList<>();
-
-//    private Layer currentLayer;
     private LayerBoxController currentLayer;
     private final ArrayList<Action> actions;
 
     public CanvasController(Canvas drawCanvas) {
         this.drawCanvas = drawCanvas;
-
-        //layerControllerList.createNewLayer();
-        //addNewLayer();
 
         actions = new ArrayList<>();
         strokeColor = Color.BLACK;
@@ -44,14 +36,7 @@ public class CanvasController {
 
     public void addFigureToCurrentLayerItemsList(Figure figure) {
         currentLayer.getLayer().addFigure(figure);
-//        layerControllerList.get(layerItemsList.size() - 1).getItemController().addFigure(figure);
     }
-//    public void addFigureToLastLayerItemsList(Figure figure) {
-//        layerItemsList.get(layerItemsList.size() - 1).getItemController().addFigure(figure);
-//    }
-//    public ArrayList<LayerBoxController> getLayerItemsList() {
-//        return layerControllerList;
-//    }
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
@@ -97,16 +82,8 @@ public class CanvasController {
         return drawCanvas;
     }
 
-//    public void addNewLayer() {
-//        layerControllerList.addNewLayer();
-//    }
-//
-//    public Optional<Layer> getNewLayer() {
-//        return layers.getLast();
-//    }
     public void addFigure(Figure figure) {
         currentLayer.addFigure(figure);
-//        addFigureToLastLayerItemsList(figure);
         addFigureToCurrentLayerItemsList(figure);
     }
 
@@ -114,9 +91,9 @@ public class CanvasController {
         currentLayer.getLayer().remove(ind);
     }
     
-    public boolean isEmpty() { //нет фигур вообще
-        for (int i = 0; i < layers.size(); i++) {
-            if(layers.get(i).getLayer().getObjectsCount() >= 0) {
+    public boolean isEmpty() {
+        for (LayerBoxController layer : layers) {
+            if (layer.getLayer().getObjectsCount() >= 0) {
                 return false;
             }
         }
