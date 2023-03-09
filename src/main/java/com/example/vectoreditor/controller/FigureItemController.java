@@ -11,15 +11,8 @@ import javafx.scene.shape.Rectangle;
 public class FigureItemController {
 
     Figure figure;
-
-    @FXML
-    private Rectangle color;
-
     @FXML
     private TextField figureName;
-
-    @FXML
-    private Button showFigures;
 
     @FXML
     void visibleButtonClick(ActionEvent event) {
@@ -27,11 +20,6 @@ public class FigureItemController {
     }
     @FXML
     void figureNameAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void showFiguresButton(ActionEvent event) {
 
     }
 

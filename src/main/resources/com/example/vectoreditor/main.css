@@ -1,3 +1,7 @@
+#hBoxLayerItem {
+    -fx-background-color: #3F3E44;
+}
+
 
 .scroll-pane .viewport {
     -fx-background-color: #36363C;

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -25,14 +26,14 @@ import java.util.ResourceBundle;
 public class LayerBoxController implements Initializable {
 
 
-    Layer layer;
+    private Layer layer;
     @FXML
     private HBox layerItem;
 
     private boolean showLayerFiguresItem = false;
 
     @FXML
-    private Rectangle color;
+    private Rectangle layerColor;
 
     @FXML
     private TextField layerName;
@@ -46,25 +47,30 @@ public class LayerBoxController implements Initializable {
     @FXML
     private ImageView visible;
 
-    CanvasController canvasController;
+    @FXML
+    private ImageView showFiguresImg;
+
+    private CanvasController canvasController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        changeColor();
         layerName.setEditable(false);
         layerName.setOnMouseClicked(event -> {
             if(event.getClickCount() == 2) {
                 layerName.setEditable(true);
+                layerName.setCursor(Cursor.TEXT);
+
             } else {
                 layerItem.fireEvent(event);
             }
         });
     }
 
-    public void init(CanvasController canvasController, String layerName) {
+    public void init(CanvasController canvasController, String layerName, Color color) {
         layer = new Layer(layerName);
         setCanvasController(canvasController);
         setLayerName();
+        layerColor.setFill(color);
     }
 
     public void setCanvasController(CanvasController canvasController) {
@@ -88,10 +94,15 @@ public class LayerBoxController implements Initializable {
     @FXML
     void layerNameAction(ActionEvent event) {
         layerName.setEditable(false);
+        layerName.setCursor(Cursor.DEFAULT);
     }
 
     @FXML
     void showFiguresButton(ActionEvent event) {
+        if (showFiguresImg.getRotate() == 0) {
+        }
+        showFiguresImg.setRotate((showFiguresImg.getRotate() + 90) % 180);
+
         if (!showLayerFiguresItem) {
             figuresBox.setVisible(true);
             figuresBox.setManaged(true);
@@ -122,15 +133,10 @@ public class LayerBoxController implements Initializable {
         layerName.setText(layer.getName());
     }
 
-    public void changeColor() {
-        Random random = new Random();
-        float r = random.nextFloat();
-        float g = random.nextFloat();
-        float b = random.nextFloat();
-        color.setFill(Color.color(r, g, b));
-    }
-
     public Layer getLayer() {
         return layer;
+    }
+    public Color getColor() {
+        return (Color) layerColor.getFill();
     }
 }

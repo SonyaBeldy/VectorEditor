@@ -75,7 +75,11 @@ public class MainController {
 
             LayerBoxController layerController = fxmlLoader.getController();
 
-            layerController.init(canvasController, generateDefaultLayerName());
+            Color color = Color.hsb(185, 0.8, 1);
+            if (canvasController.getLastLayer().isPresent()) {
+                color = canvasController.getLastLayer().get().getColor();
+            }
+            layerController.init(canvasController, generateDefaultLayerName(), nextLayerColor(color));
             layersBox.getChildren().add(vBox);
 
             layerController.setCurrent();
@@ -86,7 +90,10 @@ public class MainController {
             throw new RuntimeException(e);
         }
     }
-
+    public Color nextLayerColor(Color oldColor) {
+        double oldHue = oldColor.getHue();
+        return Color.hsb(oldHue + 70, 0.8, 1);
+    }
     private String generateDefaultLayerName() {
         ArrayList<LayerBoxController> layers = canvasController.getLayers();
         int number = layers.size() + 1;

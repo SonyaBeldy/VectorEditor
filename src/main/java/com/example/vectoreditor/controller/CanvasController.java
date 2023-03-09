@@ -123,4 +123,12 @@ public class CanvasController {
     public void setCurrentLayer(LayerBoxController controller) {
         currentLayer = controller;
     }
+
+    public Optional<LayerBoxController> getLastLayer() {
+        if (layers.size() < 1) {
+            return Optional.empty();
+        } else {
+            return Optional.of(layers.get(layers.size() - 1));
+        }
+    }
 }
