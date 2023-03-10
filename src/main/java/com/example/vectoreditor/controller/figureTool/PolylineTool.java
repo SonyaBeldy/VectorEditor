@@ -50,7 +50,9 @@ public class PolylineTool extends Tool implements ITool {
                 figure.calcCenter();
                 canvasController.setCurrentFigure(Optional.of(figure));
             } else {
-                canvasController.removeFigure(canvasController.getCurrentLayer().getLayer().getObjectsCount() - 1);
+                if (canvasController.getCurrentLayer().isPresent()) {
+                    canvasController.getCurrentLayer().get().removeFigure(canvasController.getCurrentLayer().get().getLayer().getObjectsCount() - 1);
+                }
                 canvasController.redrawAllFigures();
             }
         }

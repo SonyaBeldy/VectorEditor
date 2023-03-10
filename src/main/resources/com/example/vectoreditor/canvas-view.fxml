@@ -270,7 +270,7 @@
                                                 </ScrollPane>
                                                 <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="198.0" spacing="4.0">
                                                    <children>
-                                                      <Button id="imageButton" fx:id="deleteLayerButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
+                                                      <Button id="imageButton" fx:id="deleteLayerButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteLayerButtonClick" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
                                                          <graphic>
                                                             <ImageView fitHeight="24.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>

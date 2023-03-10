@@ -66,6 +66,9 @@ public class LayerBoxController implements Initializable {
         });
     }
 
+    public void removeFigure(int ind) {
+        layer.remove(ind);
+    }
     public void init(CanvasController canvasController, String layerName, Color color) {
         layer = new Layer(layerName);
         setCanvasController(canvasController);
@@ -113,6 +116,10 @@ public class LayerBoxController implements Initializable {
             figuresBox.setManaged(false);
             showLayerFiguresItem = false;
         }
+    }
+
+    public HBox getLayerItem() {
+        return layerItem;
     }
 
     public void addFigure(Figure figure) {

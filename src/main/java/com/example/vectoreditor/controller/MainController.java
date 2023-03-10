@@ -50,6 +50,9 @@ public class MainController {
     @FXML
     private TextField heightField;
 
+    @FXML
+    private Button deleteLayerButton;
+
     private CanvasController canvasController;
     private CurrentFigureParamsDisplay paramsDisplay;
 
@@ -64,6 +67,18 @@ public class MainController {
         colorPicker.setValue(Color.BLACK);
 
         addNewLayerButtonClick();
+        canvasController.setCurrentLayer(canvasController.getLastLayer().orElseThrow());
+    }
+
+    @FXML
+    protected void deleteLayerButtonClick() {
+        if (canvasController.getLastLayer().isPresent() && canvasController.getCurrentLayer().isPresent()) {
+            if (canvasController.getCurrentLayerInd() > -1) {
+                layersBox.getChildren().remove(canvasController.getCurrentLayerInd());
+                canvasController.removeLayer(canvasController.getCurrentLayerInd());
+                canvasController.setCurrentLayer(null);
+            }
+        }
     }
 
     @FXML
@@ -154,7 +169,7 @@ public class MainController {
     @FXML
     void onCanvasPressed(MouseEvent event) {
         canvasController.getCurrentTool().mousePressed(event);
-        paramsDisplay.update();
+
     }
     @FXML
     void onCanvasDragged(MouseEvent event) {
@@ -165,6 +180,7 @@ public class MainController {
     @FXML
     void onCanvasReleased(MouseEvent event) {
         canvasController.getCurrentTool().mouseReleased(event);
+        paramsDisplay.update();
     }
 
     @FXML

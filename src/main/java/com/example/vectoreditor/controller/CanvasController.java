@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 public class CanvasController {
@@ -19,7 +20,7 @@ public class CanvasController {
     private Optional<Figure> currentFigure = Optional.empty();
     private Color strokeColor;
     private final ArrayList<LayerBoxController> layers = new ArrayList<>();
-    private LayerBoxController currentLayer;
+    private Optional<LayerBoxController> currentLayer;
     private final ArrayList<Action> actions;
 
     public CanvasController(Canvas drawCanvas) {
@@ -35,7 +36,9 @@ public class CanvasController {
     }
 
     public void addFigureToCurrentLayerItemsList(Figure figure) {
-        currentLayer.getLayer().addFigure(figure);
+        if (currentLayer.isPresent()) {
+            currentLayer.get().getLayer().addFigure(figure);
+        }
     }
 
     public void redrawAllFigures() {
@@ -83,12 +86,10 @@ public class CanvasController {
     }
 
     public void addFigure(Figure figure) {
-        currentLayer.addFigure(figure);
-        addFigureToCurrentLayerItemsList(figure);
-    }
-
-    public void removeFigure(int ind) {
-        currentLayer.getLayer().remove(ind);
+        if (currentLayer.isPresent()) {
+            currentLayer.get().addFigure(figure);
+            addFigureToCurrentLayerItemsList(figure);
+        }
     }
     
     public boolean isEmpty() {
@@ -100,7 +101,7 @@ public class CanvasController {
         return true;
     }
 
-    public LayerBoxController getCurrentLayer() {
+    public Optional<LayerBoxController> getCurrentLayer() {
         return currentLayer;
     }
 
@@ -121,7 +122,7 @@ public class CanvasController {
     }
 
     public void setCurrentLayer(LayerBoxController controller) {
-        currentLayer = controller;
+        currentLayer = Optional.ofNullable(controller);
     }
 
     public Optional<LayerBoxController> getLastLayer() {
@@ -130,5 +131,17 @@ public class CanvasController {
         } else {
             return Optional.of(layers.get(layers.size() - 1));
         }
+    }
+
+    public int getCurrentLayerInd() {
+        if (currentLayer.isPresent()) {
+            return layers.indexOf(currentLayer.get());
+        } else {
+            return -1;
+        }
+    }
+
+    public void removeLayer(int ind) {
+        layers.remove(ind);
     }
 }
