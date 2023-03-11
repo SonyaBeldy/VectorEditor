@@ -9,7 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Optional;
 
 public class CanvasController {
@@ -19,23 +18,19 @@ public class CanvasController {
     private ITool currentTool;
     private Optional<Figure> currentFigure = Optional.empty();
     private Color strokeColor;
-    private final ArrayList<LayerBoxController> layers = new ArrayList<>();
-    private Optional<LayerBoxController> currentLayer;
     private final ArrayList<Action> actions;
 
-    public CanvasController(Canvas drawCanvas) {
+    private LayerBoxController layerBoxController;
+    public CanvasController(Canvas drawCanvas, LayerBoxController layerBox) {
         this.drawCanvas = drawCanvas;
-
+        this.layerBoxController = layerBox;
         actions = new ArrayList<>();
         strokeColor = Color.BLACK;
         bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
     }
 
-    public ArrayList<LayerBoxController> getLayers() {
-        return layers;
-    }
-
     public void addFigureToCurrentLayerItemsList(Figure figure) {
+        Optional<LayerItemController> currentLayer = layerBoxController.getCurrentLayer();
         if (currentLayer.isPresent()) {
             currentLayer.get().getLayer().addFigure(figure);
         }
@@ -43,8 +38,8 @@ public class CanvasController {
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
-        for (int i = 0; i < layers.size(); i++) {
-            Layer layer = layers.get(i).getLayer();
+        for (int i = 0; i < layerBoxController.getLayers().size(); i++) {
+            Layer layer = layerBoxController.getLayers().get(i).getLayer();
             for (int j = 0; j < layer.getObjectsCount(); j++) {
                 layer.getFigure(j).draw(drawCanvas.getGraphicsContext2D());
             }
@@ -56,8 +51,8 @@ public class CanvasController {
         double x = event.getX();
         double y = event.getY();
 
-        for (int i = layers.size() - 1; i >= 0; i--) {
-            Layer layer = layers.get(i).getLayer();
+        for (int i = layerBoxController.getLayers().size() - 1; i >= 0; i--) {
+            Layer layer = layerBoxController.getLayers().get(i).getLayer();
             for (int j = 0; j < layer.getObjectsCount(); j++) {
                 Figure figure = layer.getFigure(j);
                 if(figure.isClickedOn(x, y)){
@@ -86,6 +81,7 @@ public class CanvasController {
     }
 
     public void addFigure(Figure figure) {
+        Optional<LayerItemController> currentLayer = layerBoxController.getCurrentLayer();
         if (currentLayer.isPresent()) {
             currentLayer.get().addFigure(figure);
             addFigureToCurrentLayerItemsList(figure);
@@ -93,7 +89,8 @@ public class CanvasController {
     }
     
     public boolean isEmpty() {
-        for (LayerBoxController layer : layers) {
+
+        for (LayerItemController layer : layerBoxController.getLayers()) {
             if (layer.getLayer().getObjectsCount() >= 0) {
                 return false;
             }
@@ -101,8 +98,8 @@ public class CanvasController {
         return true;
     }
 
-    public Optional<LayerBoxController> getCurrentLayer() {
-        return currentLayer;
+    public Optional<LayerItemController> getCurrentLayer() {
+        return layerBoxController.getCurrentLayer();
     }
 
     public ITool getCurrentTool() {
@@ -119,30 +116,5 @@ public class CanvasController {
 
     public void setStrokeColor(Color strokeColor) {
         this.strokeColor = strokeColor;
-    }
-
-    public void setCurrentLayer(LayerBoxController controller) {
-        currentLayer = Optional.ofNullable(controller);
-        currentLayer.ifPresent(LayerBoxController::highlight);
-    }
-
-    public Optional<LayerBoxController> getLastLayer() {
-        if (layers.size() < 1) {
-            return Optional.empty();
-        } else {
-            return Optional.of(layers.get(layers.size() - 1));
-        }
-    }
-
-    public int getCurrentLayerInd() {
-        if (currentLayer.isPresent()) {
-            return layers.indexOf(currentLayer.get());
-        } else {
-            return -1;
-        }
-    }
-
-    public void removeLayer(int ind) {
-        layers.remove(ind);
     }
 }

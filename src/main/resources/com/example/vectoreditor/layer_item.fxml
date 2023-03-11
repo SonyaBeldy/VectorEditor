@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.LayerBoxController">
+<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.LayerItemController">
    <children>
       <HBox id="HBoxLayerItem" fx:id="layerItem" onMouseClicked="#layerItemClick" prefHeight="26.0" prefWidth="200.0" spacing="4.0" stylesheets="@main.css">
          <children>

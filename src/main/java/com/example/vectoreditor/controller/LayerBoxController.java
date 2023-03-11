@@ -1,148 +1,97 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Layer;
-import com.example.vectoreditor.model.figure.Figure;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.Optional;
 
-public class LayerBoxController implements Initializable {
+public class LayerBoxController extends VBox {
 
+    private final ArrayList<LayerItemController> layers = new ArrayList<>();
+    private Optional<LayerItemController> currentLayer;
 
-    private Layer layer;
-    @FXML
-    private HBox layerItem;
-
-    private boolean showLayerFiguresItem = false;
-
-    @FXML
-    private Rectangle layerColor;
-
-    @FXML
-    private TextField layerName;
-
-    @FXML
-    private VBox figuresBox;
-
-    @FXML
-    private Button showFigures;
-
-    @FXML
-    private ImageView visible;
-
-    @FXML
-    private ImageView showFiguresImg;
-
-    private CanvasController canvasController;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        layerName.setEditable(false);
-        layerName.setOnMouseClicked(event -> {
-            if(event.getClickCount() == 2) {
-                layerName.setEditable(true);
-                layerName.setCursor(Cursor.TEXT);
-
-            } else {
-                layerItem.fireEvent(event);
-            }
-        });
-    }
-
-    public void removeFigure(int ind) {
-        layer.remove(ind);
-    }
-    public void init(CanvasController canvasController, String layerName, Color color) {
-        layer = new Layer(layerName);
-        setCanvasController(canvasController);
-        setLayerName();
-        layerColor.setFill(color);
-    }
-
-    public void setCanvasController(CanvasController canvasController) {
-        this.canvasController = canvasController;
-    }
-
-    @FXML
-    void layerItemClick(MouseEvent event) {
-        canvasController.setCurrentLayer(this);
-        highlight();
-    }
-
-    public void highlight() {
-        ObservableList<Node> childrenUnmodifiable = layerItem.getParent().getParent().getChildrenUnmodifiable();
-        for (Node node : childrenUnmodifiable) {
-            node.setStyle("-fx-background-color: transparent");
-        }
-        layerItem.getParent().setStyle("-fx-background-color: dodgerblue");
-    }
-
-    @FXML
-    void layerNameAction(ActionEvent event) {
-        layerName.setEditable(false);
-        layerName.setCursor(Cursor.DEFAULT);
-    }
-
-    @FXML
-    void showFiguresButton(ActionEvent event) {
-        if (showFiguresImg.getRotate() == 0) {
-        }
-        showFiguresImg.setRotate((showFiguresImg.getRotate() + 90) % 180);
-
-        if (!showLayerFiguresItem) {
-            figuresBox.setVisible(true);
-            figuresBox.setManaged(true);
-
-            showLayerFiguresItem = true;
-        } else {
-            figuresBox.setVisible(false);
-            figuresBox.setManaged(false);
-            showLayerFiguresItem = false;
-        }
-    }
-
-    public HBox getLayerItem() {
-        return layerItem;
-    }
-
-    public void addFigure(Figure figure) {
+    protected void createLayer() {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/figure_item.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/layer_item.fxml"));
+        VBox layerBox;
         try {
-            HBox hBox = fxmlLoader.load();
-            FigureItemController figureItem = fxmlLoader.getController();
-            figureItem.setFigure(figure);
-            figuresBox.getChildren().add(hBox);
-            showLayerFiguresItem = true;
+            layerBox = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        LayerItemController layerItemController = fxmlLoader.getController();
+
+        Color color;
+        if (layers.size() < 1) {
+            color = Color.hsb(185, 0.8, 1);
+        } else {
+            color = layers.get(layers.size() - 1).getColor();
+        }
+        layerItemController.init(this, generateDefaultLayerName(), nextLayerColor(color));
+
+        getChildren().add(layerBox);
+        layers.add(layerItemController);
+        layerItemController.highlight(); //стоит ли перенести в canvasController в setCurrentLayer?
+        currentLayer = Optional.of(layerItemController);
+//        canvasController.setCurrentLayer(layerItemController);
+
+//        canvasController.getLayers().add(layerItemController);
     }
 
-    public void setLayerName() {
-        layerName.setText(layer.getName());
+    public Color nextLayerColor(Color oldColor) {
+        double oldHue = oldColor.getHue();
+        return Color.hsb(oldHue + 70, 0.8, 1);
     }
 
-    public Layer getLayer() {
-        return layer;
+    private String generateDefaultLayerName() {
+        int number = layers.size() + 1;
+        String name = "Layer " + number;
+        int i = 0;
+        while (i != layers.size()) {
+            if(layers.get(i).getLayer().getName().equals(name)) {
+                number++;
+                name = "Layer " + number;
+                i = 0;
+            } else {
+                i++;
+            }
+        }
+        return name;
     }
-    public Color getColor() {
-        return (Color) layerColor.getFill();
+
+    protected boolean canDeleteLayer() {
+        return layers.size() > 1;
+    }
+    protected void deleteCurrentLayer() {
+        if (layers.size() < 2) {
+            throw new RuntimeException("layers.size() < 2");
+        }
+        if (currentLayer.isPresent()) {
+            int currentLayerInd = layers.indexOf(currentLayer.get());
+            if (currentLayerInd > -1) {
+                getChildren().remove(currentLayerInd);
+                layers.remove(currentLayerInd);
+                if (currentLayerInd == layers.size()) {
+                    currentLayerInd = 0;
+                }
+                currentLayer = Optional.of(layers.get(currentLayerInd));
+                currentLayer.orElseThrow().highlight();
+            }
+        }
+    }
+
+    public Optional<LayerItemController> getCurrentLayer() {
+        return currentLayer;
+    }
+
+    public void setCurrentLayer(Optional<LayerItemController> currentLayer) {
+        this.currentLayer = currentLayer;
+    }
+
+    public ArrayList<LayerItemController> getLayers() {
+        return layers;
     }
 }
