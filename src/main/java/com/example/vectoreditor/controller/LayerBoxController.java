@@ -20,7 +20,6 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class LayerBoxController implements Initializable {
@@ -83,10 +82,10 @@ public class LayerBoxController implements Initializable {
     @FXML
     void layerItemClick(MouseEvent event) {
         canvasController.setCurrentLayer(this);
-        setCurrent();
+        highlight();
     }
 
-    public void setCurrent() {
+    public void highlight() {
         ObservableList<Node> childrenUnmodifiable = layerItem.getParent().getParent().getChildrenUnmodifiable();
         for (Node node : childrenUnmodifiable) {
             node.setStyle("-fx-background-color: transparent");

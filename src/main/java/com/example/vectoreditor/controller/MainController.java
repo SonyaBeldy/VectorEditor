@@ -3,7 +3,6 @@ package com.example.vectoreditor.controller;
 import com.example.vectoreditor.controller.figureTool.PolygonTool;
 import com.example.vectoreditor.controller.figureTool.PolylineTool;
 import com.example.vectoreditor.controller.figureTool.RectangleTool;
-import com.example.vectoreditor.model.Layer;
 import com.example.vectoreditor.model.figure.Figure;
 import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
@@ -68,19 +67,30 @@ public class MainController {
 
         addNewLayerButtonClick();
         canvasController.setCurrentLayer(canvasController.getLastLayer().orElseThrow());
+        deleteLayerButton.setDisable(true);
     }
 
     @FXML
     protected void deleteLayerButtonClick() {
-        if (canvasController.getLastLayer().isPresent() && canvasController.getCurrentLayer().isPresent()) {
-            if (canvasController.getCurrentLayerInd() > -1) {
-                layersBox.getChildren().remove(canvasController.getCurrentLayerInd());
-                canvasController.removeLayer(canvasController.getCurrentLayerInd());
-                canvasController.setCurrentLayer(null);
+        if (canvasController.getLayers().size() <= 1) {
+            return;
+        }
+        if (canvasController.getCurrentLayer().isPresent()) {
+            int currentLayerInd = getCanvasController().getCurrentLayerInd();
+            if (currentLayerInd > -1) {
+                layersBox.getChildren().remove(currentLayerInd);
+                canvasController.removeLayer(currentLayerInd);
+                if (currentLayerInd == canvasController.getLayers().size()) {
+                    currentLayerInd = 0;
+                }
+                canvasController.setCurrentLayer(canvasController.getLayers().get(currentLayerInd));
+                canvasController.getLayers().get(currentLayerInd).highlight();
             }
         }
+        if (canvasController.getLayers().size() == 1) {
+            deleteLayerButton.setDisable(true);
+        }
     }
-
     @FXML
     protected void addNewLayerButtonClick() {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -95,12 +105,14 @@ public class MainController {
                 color = canvasController.getLastLayer().get().getColor();
             }
             layerController.init(canvasController, generateDefaultLayerName(), nextLayerColor(color));
+            
             layersBox.getChildren().add(vBox);
 
-            layerController.setCurrent();
+            layerController.highlight(); //стоит ли перенести в canvasController в setCurrentLayer?
+            canvasController.setCurrentLayer(layerController);
 
             canvasController.getLayers().add(layerController);
-            canvasController.setCurrentLayer(layerController);
+            deleteLayerButton.setDisable(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

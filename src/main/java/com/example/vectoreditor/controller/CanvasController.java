@@ -123,6 +123,7 @@ public class CanvasController {
 
     public void setCurrentLayer(LayerBoxController controller) {
         currentLayer = Optional.ofNullable(controller);
+        currentLayer.ifPresent(LayerBoxController::highlight);
     }
 
     public Optional<LayerBoxController> getLastLayer() {
