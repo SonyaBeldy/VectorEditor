@@ -1,0 +1,43 @@
+#create-btn, #cancel-btn{
+    -fx-background-color:  #36363C;
+    -fx-background-radius: 14 14 14 14;
+    -fx-border-radius: 14 14 14 14;
+    -fx-text-fill: #C4C0C4;
+}
+#tool-bar {
+    -fx-background-color: #3F3E44;
+}
+#scroll-pane, #scroll-pane .viewport {
+    -fx-background-color: #2B2B33;
+}
+#pane {
+    -fx-background-color: #36363C;
+}
+
+#scroll-pane-prop, #scroll-pane-prop .viewport {
+    -fx-background-color: #36363C;
+}
+
+.scroll-bar:horizontal,
+ .scroll-bar:vertical {
+    -fx-background-color: #39393F;
+    -fx-border-color: #2D2D33;
+    -fx-border-width: 1px 1px 1px 1px;
+}
+.scroll-bar:horizontal.track,
+.scroll-bar:vertical.track {
+    -fx-background-color: #39393F;
+    -fx-background-radius: 0em;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #494850;
+    -fx-background-radius: 5em;
+
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: #494850;
+}

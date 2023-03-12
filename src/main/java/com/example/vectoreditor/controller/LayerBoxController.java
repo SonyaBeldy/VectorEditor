@@ -24,6 +24,7 @@ public class LayerBoxController extends VBox {
         }
         LayerItemController layerItemController = fxmlLoader.getController();
 
+
         Color color;
         if (layers.size() < 1) {
             color = Color.hsb(185, 0.8, 1);

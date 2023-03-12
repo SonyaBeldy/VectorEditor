@@ -7,13 +7,17 @@ import com.example.vectoreditor.model.figure.Figure;
 import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainController {
 
@@ -51,6 +55,12 @@ public class MainController {
     @FXML
     private VBox layerBoxContainer;
 
+    @FXML
+    private MenuItem newFileMenuItem;
+
+    @FXML
+    private TabPane workspaceBox;
+
     private CanvasController canvasController;
     private CurrentFigureParamsDisplay paramsDisplay;
 
@@ -73,6 +83,26 @@ public class MainController {
         addNewLayerButtonClick();
         //canvasController.setCurrentLayer(canvasController.getLastLayer().orElseThrow());
         deleteLayerButton.setDisable(true);
+    }
+
+    @FXML
+    protected void newFileMenuItemClick() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/new-file-view.fxml"));
+            //Parent root1 = (Parent) fxmlLoader.load();
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Create file");
+            stage.setScene(scene);
+
+            NewFileViewController newFileViewController = fxmlLoader.getController();
+            newFileViewController.init(workspaceBox);
+            stage.show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
