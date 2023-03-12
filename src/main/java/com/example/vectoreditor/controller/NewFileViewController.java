@@ -32,7 +32,7 @@ public class NewFileViewController {
 
     private void createNewView() {
         Tab newView = new Tab();
-        newView.setText("Untitled " + workspaceBox.getTabs().size());
+
 
 
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -46,6 +46,7 @@ public class NewFileViewController {
         }
         newView.setContent(scrollPane);
         workspaceBox.getTabs().add(newView);
+        newView.setText("Untitled " + workspaceBox.getTabs().size());
         ScrollPaneController scrollPaneController = fxmlLoader.getController();
 
         scrollPaneController.init(mainController);
