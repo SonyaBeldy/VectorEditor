@@ -2,6 +2,7 @@ package com.example.vectoreditor.controller.figureTool;
 
 import com.example.vectoreditor.controller.CanvasController;
 import com.example.vectoreditor.controller.ITool;
+import com.example.vectoreditor.controller.ScrollPaneController;
 import com.example.vectoreditor.controller.Tool;
 import com.example.vectoreditor.model.*;
 import com.example.vectoreditor.model.figure.Polyline;
@@ -14,15 +15,15 @@ public class PolylineTool extends Tool implements ITool {
 
     private boolean isDrawing;
 
-    public PolylineTool(CanvasController canvasController) {
-        super(canvasController);
+    public PolylineTool(ScrollPaneController currentCanvasController) {
+        super(currentCanvasController);
         isDrawing = false;
         figure = new Polyline(Color.BLACK);
 
     }
 
     public void createFigure() {
-        figure = new Polyline(canvasController.getStrokeColor());
+        figure = new Polyline(currentCanvasController.getStrokeColor());
     }
     @Override
     public void mousePressed(MouseEvent event) {
@@ -34,8 +35,8 @@ public class PolylineTool extends Tool implements ITool {
                 figure.addPoint(new Point(event.getX(), event.getY()));
                 figure.calcBoardsPoints();
                 figure.calcCenter();
-                canvasController.addFigure(figure);
-                canvasController.setCurrentFigure(Optional.empty());
+                currentCanvasController.addFigure(figure);
+                currentCanvasController.setCurrentFigure(Optional.empty());
             }
             figure.addPoint(new Point(event.getX(), event.getY()));
         }
@@ -45,15 +46,15 @@ public class PolylineTool extends Tool implements ITool {
             if (figure.getPoints().size() > 2){
                 figure.getPoints().remove(figure.getPoints().size() - 1);
 
-                canvasController.redrawAllFigures();
+                currentCanvasController.redrawAllFigures();
                 figure.calcBoardsPoints();
                 figure.calcCenter();
-                canvasController.setCurrentFigure(Optional.of(figure));
+                currentCanvasController.setCurrentFigure(Optional.of(figure));
             } else {
-                if (canvasController.getCurrentLayer().isPresent()) {
-                    canvasController.getCurrentLayer().get().removeFigure(canvasController.getCurrentLayer().get().getLayer().getObjectsCount() - 1);
+                if (currentCanvasController.getCurrentLayer().isPresent()) {
+                    currentCanvasController.getCurrentLayer().get().removeFigure(currentCanvasController.getCurrentLayer().get().getLayer().getObjectsCount() - 1);
                 }
-                canvasController.redrawAllFigures();
+                currentCanvasController.redrawAllFigures();
             }
         }
     }
@@ -66,7 +67,7 @@ public class PolylineTool extends Tool implements ITool {
         getLastPoint().setX(event.getX());
         getLastPoint().setY(event.getY());
 
-        canvasController.redrawAllFigures();
+        currentCanvasController.redrawAllFigures();
     }
 
     @Override
@@ -78,7 +79,7 @@ public class PolylineTool extends Tool implements ITool {
         getLastPoint().setY(event.getY());
 
         figure.calcBoardsPoints();
-        canvasController.redrawAllFigures();
+        currentCanvasController.redrawAllFigures();
     }
 
     @Override
@@ -87,7 +88,7 @@ public class PolylineTool extends Tool implements ITool {
             getLastPoint().setX(event.getX());
             getLastPoint().setY(event.getY());
 
-            canvasController.redrawAllFigures();
+            currentCanvasController.redrawAllFigures();
         }
     }
 

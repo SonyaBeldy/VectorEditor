@@ -2,6 +2,7 @@ package com.example.vectoreditor.controller.figureTool;
 
 import com.example.vectoreditor.controller.CanvasController;
 import com.example.vectoreditor.controller.ITool;
+import com.example.vectoreditor.controller.ScrollPaneController;
 import com.example.vectoreditor.controller.Tool;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.figure.Rectangle;
@@ -15,8 +16,8 @@ public class RectangleTool extends Tool implements ITool {
 
 
     private Rectangle rectangle;
-    public RectangleTool(CanvasController canvasController) {
-        super(canvasController);
+    public RectangleTool(ScrollPaneController currentCanvasController) {
+        super(currentCanvasController);
         rectangle = new Rectangle(Color.BLACK);
     }
 
@@ -24,11 +25,11 @@ public class RectangleTool extends Tool implements ITool {
     public void mousePressed(MouseEvent event) {
 
         HashMap<Integer, Integer> map = new HashMap<>();
-        rectangle = new Rectangle(canvasController.getStrokeColor());
+        rectangle = new Rectangle(currentCanvasController.getStrokeColor());
         for (int i = 0; i < 4; i++) {
             rectangle.addPoint(new Point(event.getX(), event.getY()));
         }
-        canvasController.addFigure(rectangle);
+        currentCanvasController.addFigure(rectangle);
 
     }
 
@@ -42,14 +43,14 @@ public class RectangleTool extends Tool implements ITool {
 
         rectangle.getPoints().get(3).setY(event.getY());
 
-        canvasController.redrawAllFigures();
+        currentCanvasController.redrawAllFigures();
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
         rectangle.calcBoardsPoints();
         rectangle.calcCenter();
-        canvasController.setCurrentFigure(Optional.of(rectangle));
+        currentCanvasController.setCurrentFigure(Optional.of(rectangle));
 
     }
 

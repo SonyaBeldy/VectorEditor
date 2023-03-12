@@ -52,7 +52,7 @@ public class LayerItemController implements Initializable {
 
     private CanvasController canvasController;
 
-    private LayerBoxController layerBoxController;
+    private LayerBox layerBoxController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,7 +71,7 @@ public class LayerItemController implements Initializable {
     public void removeFigure(int ind) {
         layer.remove(ind);
     }
-    public void init(LayerBoxController layerBoxController, String layerName, Color color) {
+    public void init(LayerBox layerBoxController, String layerName, Color color) {
         this.layerBoxController = layerBoxController;
         layer = new Layer(layerName);
         setLayerName();

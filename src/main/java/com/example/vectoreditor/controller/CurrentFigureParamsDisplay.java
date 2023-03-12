@@ -14,7 +14,13 @@ public class CurrentFigureParamsDisplay implements Initializable {
     public CurrentFigureParamsDisplay(MainController mainController) {
         this.mainController = mainController;
     }
-
+    public void update(ScrollPaneController canvasController) {
+        updateRotateField(canvasController);
+        updateXPointField(canvasController);
+        updateYPointField(canvasController);
+        updateWidth(canvasController);
+        updateHeight(canvasController);
+    }
     public void update() {
         updateRotateField();
         updateXPointField();
@@ -23,6 +29,19 @@ public class CurrentFigureParamsDisplay implements Initializable {
         updateHeight();
     }
 
+    private void updateRotateField(ScrollPaneController canvasController) {
+        if(canvasController.getCurrentFigure().isPresent()) {
+            Figure figure = canvasController.getCurrentFigure().get();
+            double angle = Math.round(Math.toDegrees(figure.getAngle()));
+            if (angle < 0) {
+                angle+= 360;
+            }
+            if (angle > 360) {
+                angle-= 360;
+            }
+            mainController.getRotate().setText(String.valueOf(angle));
+        }
+    }
     private void updateRotateField() {
         if(mainController.getCanvasController().getCurrentFigure().isPresent()) {
             Figure figure = mainController.getCanvasController().getCurrentFigure().get();
@@ -36,11 +55,22 @@ public class CurrentFigureParamsDisplay implements Initializable {
            mainController.getRotate().setText(String.valueOf(angle));
         }
     }
-
+    private void updateXPointField(ScrollPaneController canvasController) {
+        if(canvasController.getCurrentFigure().isPresent()) {
+            Figure figure = canvasController.getCurrentFigure().get();
+            mainController.getXPointField().setText(String.valueOf(figure.getCenter().getX()));
+        }
+    }
     private void updateXPointField() {
         if(mainController.getCanvasController().getCurrentFigure().isPresent()) {
             Figure figure = mainController.getCanvasController().getCurrentFigure().get();
             mainController.getXPointField().setText(String.valueOf(figure.getCenter().getX()));
+        }
+    }
+    private void updateYPointField(ScrollPaneController canvasController) {
+        if(canvasController.getCurrentFigure().isPresent()) {
+            Figure figure = canvasController.getCurrentFigure().get();
+            mainController.getYPointField().setText(String.valueOf(figure.getCenter().getY()));
         }
     }
     private void updateYPointField() {
@@ -50,6 +80,13 @@ public class CurrentFigureParamsDisplay implements Initializable {
         }
     }
 
+    private void updateWidth(ScrollPaneController canvasController) {
+        if(canvasController.getCurrentFigure().isPresent()) {
+            Figure figure = canvasController.getCurrentFigure().get();
+            double width = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(1));
+            mainController.getWidthField().setText(String.valueOf(width));
+        }
+    }
     private void updateWidth() {
         if(mainController.getCanvasController().getCurrentFigure().isPresent()) {
             Figure figure = mainController.getCanvasController().getCurrentFigure().get();
@@ -58,6 +95,13 @@ public class CurrentFigureParamsDisplay implements Initializable {
         }
     }
 
+    private void updateHeight(ScrollPaneController canvasController) {
+        if(canvasController.getCurrentFigure().isPresent()) {
+            Figure figure = canvasController.getCurrentFigure().get();
+            double height = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(3));
+            mainController.getHeightField().setText(String.valueOf(height));
+        }
+    }
     private void updateHeight() {
         if(mainController.getCanvasController().getCurrentFigure().isPresent()) {
             Figure figure = mainController.getCanvasController().getCurrentFigure().get();

@@ -8,7 +8,6 @@ import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
@@ -61,28 +60,42 @@ public class MainController {
     @FXML
     private TabPane workspaceBox;
 
-    private CanvasController canvasController;
+    //private CanvasController canvasController;
     private CurrentFigureParamsDisplay paramsDisplay;
 
-    private LayerBoxController layerBox;
+    private LayerBox layerBox;
+    private ScrollPaneController currentCanvasController;
 
     @FXML
     private void initialize() {
-        layerBox = new LayerBoxController();
-        layerBoxContainer.getChildren().add(layerBox);
+        //layerBox = new LayerBox();
+        //layerBoxContainer.getChildren().add(layerBox);
 
-        canvasController = new CanvasController(drawCanvas, layerBox);
-        canvasController.setCurrentTool(new SelectTool(canvasController));
-//        paramsDisplay = new CurrentFigureParamsDisplay(xPointField, yPointField, widthField, heightField, rotateField, canvasController.getCurrentFigure());
+//        canvasController = new CanvasController(drawCanvas, layerBox);
+//        canvasController.setCurrentTool(new SelectTool(currentCanvasController));
+        
         paramsDisplay = new CurrentFigureParamsDisplay(this);
         selectButton.setDisable(true);
         colorPicker.setValue(Color.BLACK);
 
-
-
-        addNewLayerButtonClick();
+        //addNewLayerButtonClick();
         //canvasController.setCurrentLayer(canvasController.getLastLayer().orElseThrow());
         deleteLayerButton.setDisable(true);
+    }
+
+    public void changeCanvas(LayerBox layerBox) {
+        this.layerBox = layerBox;
+        layerBoxContainer.getChildren().clear();
+        layerBoxContainer.getChildren().add(layerBox);
+        paramsDisplay.update(currentCanvasController);
+    }
+
+    public void setCurrentCanvasController(ScrollPaneController currentCanvasController) {
+        this.currentCanvasController = currentCanvasController;
+    }
+
+    public ScrollPaneController getCurrentCanvasController() {
+        return currentCanvasController;
     }
 
     @FXML
@@ -97,7 +110,7 @@ public class MainController {
             stage.setScene(scene);
 
             NewFileViewController newFileViewController = fxmlLoader.getController();
-            newFileViewController.init(workspaceBox);
+            newFileViewController.init(this);
             stage.show();
 
         } catch (IOException e) {
@@ -106,22 +119,27 @@ public class MainController {
     }
 
     @FXML
-    protected void deleteLayerButtonClick() {
-        if (layerBox.canDeleteLayer()) {
-            layerBox.deleteCurrentLayer();
-        }
-    }
-    @FXML
     protected void addNewLayerButtonClick() {
         deleteLayerButton.setDisable(false);
         layerBox.createLayer();
     }
 
+    public void setLayerBox(LayerBox layerBox) {
+        this.layerBox = layerBox;
+    }
+
+    @FXML
+    protected void deleteLayerButtonClick() {
+        if (layerBox.canDeleteLayer()) {
+            layerBox.deleteCurrentLayer();
+        }
+    }
+
     @FXML
     protected void onSelectButtonClick(ActionEvent event) {
-        canvasController.setCurrentTool(new SelectTool(canvasController));
-        enabledAllButtons();
-        selectButton.setDisable(true);
+//        canvasController.setCurrentTool(new SelectTool(currentCanvasController));
+//        enabledAllButtons();
+//        selectButton.setDisable(true);
     }
 
     @FXML
@@ -131,51 +149,53 @@ public class MainController {
 
     @FXML
     protected void onPolylineButtonClick(ActionEvent event) {
-        canvasController.setStrokeColor(colorPicker.getValue());
-        canvasController.setCurrentTool(new PolylineTool(canvasController));
+        currentCanvasController.setStrokeColor(colorPicker.getValue());
+        currentCanvasController.setCurrentTool(new PolylineTool(currentCanvasController));
         enabledAllButtons();
         polylineButton.setDisable(true);
     }
 
     @FXML
     protected void onRectangleButtonClick(ActionEvent event) {
-        canvasController.setStrokeColor(colorPicker.getValue());
-        canvasController.setCurrentTool(new RectangleTool(canvasController));
+        currentCanvasController.setStrokeColor(colorPicker.getValue());
+        currentCanvasController.setCurrentTool(new RectangleTool(currentCanvasController));
         enabledAllButtons();
         rectangleButton.setDisable(true);
     }
 
     @FXML
     protected void onPolygonButtonClick(ActionEvent event) {
-        canvasController.setStrokeColor(colorPicker.getValue());
-        canvasController.setCurrentTool(new PolygonTool(canvasController));
+        currentCanvasController.setStrokeColor(colorPicker.getValue());
+        currentCanvasController.setCurrentTool(new PolygonTool(currentCanvasController));
         enabledAllButtons();
         polygonButton.setDisable(true);
     }
 
     @FXML
     protected void chooseColor() {
-        canvasController.setStrokeColor(colorPicker.getValue());
+        currentCanvasController.setStrokeColor(colorPicker.getValue());
     }
     @FXML
     void onCanvasPressed(MouseEvent event) {
-        canvasController.getCurrentTool().mousePressed(event);
+//        canvasController.getCurrentTool().mousePressed(event);
 
     }
     @FXML
     void onCanvasDragged(MouseEvent event) {
-        canvasController.getCurrentTool().mouseDragged(event);
-        paramsDisplay.update();
+//        canvasController.getCurrentTool().mouseDragged(event);
+//        paramsDisplay.update();
     }
 
     @FXML
     void onCanvasReleased(MouseEvent event) {
-        canvasController.getCurrentTool().mouseReleased(event);
-        paramsDisplay.update();
+//        canvasController.getCurrentTool().mouseReleased(event);
+//        paramsDisplay.update();
     }
 
     @FXML
-    void onCanvasEntered(MouseEvent event) { canvasController.getCurrentTool().mouseEntered(event); }
+    void onCanvasEntered(MouseEvent event) { 
+//        canvasController.getCurrentTool().mouseEntered(event); 
+    }
 
 
     private void enabledAllButtons(){
@@ -188,31 +208,31 @@ public class MainController {
 
     @FXML
     private void move() {
-        if(canvasController.getCurrentFigure().isEmpty()) {
+        if(currentCanvasController.getCurrentFigure().isEmpty()) {
             return;
         }
-        Figure figure = canvasController.getCurrentFigure().get();
+        Figure figure = currentCanvasController.getCurrentFigure().get();
 
         Point newCenter = new Point(Double.parseDouble(xPointField.getText()), Double.parseDouble(yPointField.getText()));
         Point center = figure.getCenter();
         Point shift = new Point(newCenter.getX() - center.getX(), newCenter.getY() - center.getY());
         figure.move(shift);
-        canvasController.redrawAllFigures();
+        currentCanvasController.redrawAllFigures();
     }
 
     @FXML
     private void rotate() {
-        if(canvasController.getCurrentFigure().isEmpty()) {
+        if(currentCanvasController.getCurrentFigure().isEmpty()) {
             return;
         }
         double angle = Double.parseDouble(rotateField.getText());
         angle = Math.toRadians(angle);
-        Figure figure = canvasController.getCurrentFigure().get();
+        Figure figure = currentCanvasController.getCurrentFigure().get();
 
         double angleDiff = angle - figure.getAngle();
         figure.rotate(figure, figure.getCenter(), angleDiff);
         figure.setAngle(angle);
-        canvasController.redrawAllFigures();
+        currentCanvasController.redrawAllFigures();
 
     }
 
@@ -236,8 +256,15 @@ public class MainController {
         return rotateField;
     }
 
-    public CanvasController getCanvasController() {
-        return canvasController;
+    public ScrollPaneController getCanvasController() {
+        return currentCanvasController;
     }
 
+    public TabPane getWorkspaceBox() {
+        return workspaceBox;
+    }
+
+    public LayerBox getLayerBox() {
+        return layerBox;
+    }
 }

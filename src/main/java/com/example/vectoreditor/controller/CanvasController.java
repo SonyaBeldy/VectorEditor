@@ -20,8 +20,8 @@ public class CanvasController {
     private Color strokeColor;
     private final ArrayList<Action> actions;
 
-    private LayerBoxController layerBoxController;
-    public CanvasController(Canvas drawCanvas, LayerBoxController layerBox) {
+    private LayerBox layerBoxController;
+    public CanvasController(Canvas drawCanvas, LayerBox layerBox) {
         this.drawCanvas = drawCanvas;
         this.layerBoxController = layerBox;
         actions = new ArrayList<>();
@@ -89,7 +89,6 @@ public class CanvasController {
     }
     
     public boolean isEmpty() {
-
         for (LayerItemController layer : layerBoxController.getLayers()) {
             if (layer.getLayer().getObjectsCount() >= 0) {
                 return false;

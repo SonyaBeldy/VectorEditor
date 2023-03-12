@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class LayerBoxController extends VBox {
+public class LayerBox extends VBox {
 
     private final ArrayList<LayerItemController> layers = new ArrayList<>();
     private Optional<LayerItemController> currentLayer;
@@ -16,9 +16,9 @@ public class LayerBoxController extends VBox {
     protected void createLayer() {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/layer_item.fxml"));
-        VBox layerBox;
+        VBox layerItem;
         try {
-            layerBox = fxmlLoader.load();
+            layerItem = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -33,7 +33,7 @@ public class LayerBoxController extends VBox {
         }
         layerItemController.init(this, generateDefaultLayerName(), nextLayerColor(color));
 
-        getChildren().add(layerBox);
+        getChildren().add(layerItem);
         layers.add(layerItemController);
         layerItemController.highlight(); //стоит ли перенести в canvasController в setCurrentLayer?
         currentLayer = Optional.of(layerItemController);

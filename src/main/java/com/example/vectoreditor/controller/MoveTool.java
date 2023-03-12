@@ -11,17 +11,17 @@ public class MoveTool extends Tool implements ITool{
     private final Point pressPoint;
     Figure beforeMoveFigure;
 
-    public MoveTool(CanvasController canvasController) {
-        super(canvasController);
+    public MoveTool(ScrollPaneController currentCanvasController) {
+        super(currentCanvasController);
         pressPoint = new Point(0,0);
 
     }
 
-    public MoveTool(CanvasController canvasController, Point pressPoint) {
-        super(canvasController);
+    public MoveTool(ScrollPaneController currentCanvasController, Point pressPoint) {
+        super(currentCanvasController);
         this.pressPoint = pressPoint;
-        beforeMoveFigure = canvasController.getCurrentFigure().orElseThrow().clone();
-        bordersPainter = new BordersPainter(canvasController.getDrawCanvas().getGraphicsContext2D());
+        beforeMoveFigure = currentCanvasController.getCurrentFigure().orElseThrow().clone();
+        bordersPainter = new BordersPainter(currentCanvasController.getDrawCanvas().getGraphicsContext2D());
     }
 
     @Override
@@ -31,14 +31,14 @@ public class MoveTool extends Tool implements ITool{
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        if(canvasController.getCurrentFigure().isEmpty()) {
+        if(currentCanvasController.getCurrentFigure().isEmpty()) {
             return;
         }
         double shiftX =  event.getX() - pressPoint.getX();
         double shiftY =  event.getY() - pressPoint.getY();
 
-        canvasController.getCurrentFigure().get().move(new Point(shiftX, shiftY));
-        canvasController.redrawAllFigures();
+        currentCanvasController.getCurrentFigure().get().move(new Point(shiftX, shiftY));
+        currentCanvasController.redrawAllFigures();
 
         pressPoint.setX(event.getX());
         pressPoint.setY(event.getY());
@@ -46,10 +46,10 @@ public class MoveTool extends Tool implements ITool{
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        canvasController.redrawAllFigures();
-        bordersPainter.drawBoards(canvasController.getCurrentFigure().orElseThrow());
+        currentCanvasController.redrawAllFigures();
+        bordersPainter.drawBoards(currentCanvasController.getCurrentFigure().orElseThrow());
 
-        canvasController.setCurrentTool(new SelectTool(canvasController));
+        currentCanvasController.setCurrentTool(new SelectTool(currentCanvasController));
     }
 
     @Override
