@@ -1,9 +1,6 @@
 package com.example.vectoreditor.controller.figureTool;
 
-import com.example.vectoreditor.controller.CanvasController;
-import com.example.vectoreditor.controller.ITool;
-import com.example.vectoreditor.controller.ScrollPaneController;
-import com.example.vectoreditor.controller.Tool;
+import com.example.vectoreditor.controller.*;
 import com.example.vectoreditor.model.*;
 import com.example.vectoreditor.model.figure.Polyline;
 import javafx.scene.input.MouseEvent;
@@ -15,19 +12,19 @@ public class PolylineTool extends Tool implements ITool {
 
     private boolean isDrawing;
 
-    public PolylineTool(ScrollPaneController currentCanvasController) {
-        super(currentCanvasController);
+    public PolylineTool(MainController mainController) {
+        super(mainController);
         isDrawing = false;
         figure = new Polyline(Color.BLACK);
 
     }
 
     public void createFigure() {
-        figure = new Polyline(currentCanvasController.getStrokeColor());
+        figure = new Polyline(mainController.getCurrentCanvasController().getStrokeColor());
     }
     @Override
     public void mousePressed(MouseEvent event) {
-
+        ScrollPaneController currentCanvasController = mainController.getCurrentCanvasController();
         if (event.isPrimaryButtonDown()) {
             if (!isDrawing) {
                 isDrawing = true;
@@ -67,7 +64,7 @@ public class PolylineTool extends Tool implements ITool {
         getLastPoint().setX(event.getX());
         getLastPoint().setY(event.getY());
 
-        currentCanvasController.redrawAllFigures();
+        mainController.getCurrentCanvasController().redrawAllFigures();
     }
 
     @Override
@@ -79,7 +76,7 @@ public class PolylineTool extends Tool implements ITool {
         getLastPoint().setY(event.getY());
 
         figure.calcBoardsPoints();
-        currentCanvasController.redrawAllFigures();
+        mainController.getCurrentCanvasController().redrawAllFigures();
     }
 
     @Override
@@ -88,7 +85,7 @@ public class PolylineTool extends Tool implements ITool {
             getLastPoint().setX(event.getX());
             getLastPoint().setY(event.getY());
 
-            currentCanvasController.redrawAllFigures();
+            mainController.getCurrentCanvasController().redrawAllFigures();
         }
     }
 

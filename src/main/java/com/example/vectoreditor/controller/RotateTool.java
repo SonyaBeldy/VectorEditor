@@ -10,13 +10,13 @@ public class RotateTool extends SelectTool  implements ITool{
     private Point center;
     private double clickAngle;
 
-    public RotateTool(ScrollPaneController currentCanvasController) {
-        super(currentCanvasController);
+    public RotateTool(MainController mainController) {
+        super(mainController);
     }
 
     @Override
     public void mousePressed(MouseEvent event) {
-        copyCurrentFigure = currentCanvasController.getCurrentFigure().orElseThrow().clone();
+        copyCurrentFigure = mainController.getCurrentCanvasController().getCurrentFigure().orElseThrow().clone();
         center = copyCurrentFigure.getCenter();
         clickAngle = Math.atan2(event.getY() - center.getY(), event.getX() - center.getX());
     }
@@ -30,8 +30,8 @@ public class RotateTool extends SelectTool  implements ITool{
         if (angle < -Math.PI) {
             angle = 2 * Math.PI + angle;
         }
-        currentCanvasController.getCurrentFigure().orElseThrow().rotate(copyCurrentFigure, center, angle);
-        currentCanvasController.redrawAllFigures();
+        mainController.getCurrentCanvasController().getCurrentFigure().orElseThrow().rotate(copyCurrentFigure, center, angle);
+        mainController.getCurrentCanvasController().redrawAllFigures();
     }
 
     @Override

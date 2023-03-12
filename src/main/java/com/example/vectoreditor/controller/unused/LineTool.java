@@ -1,15 +1,12 @@
 package com.example.vectoreditor.controller.unused;
 
-import com.example.vectoreditor.controller.CanvasController;
-import com.example.vectoreditor.controller.ITool;
-import com.example.vectoreditor.controller.ScrollPaneController;
-import com.example.vectoreditor.controller.Tool;
+import com.example.vectoreditor.controller.*;
 import javafx.scene.input.MouseEvent;
 
 public class LineTool extends Tool implements ITool {
 
-    public LineTool(ScrollPaneController currentCanvasController){
-        super(currentCanvasController);
+    public LineTool(MainController mainController){
+        super(mainController);
     }
     @Override
     public void mousePressed(MouseEvent event) {
@@ -26,7 +23,7 @@ public class LineTool extends Tool implements ITool {
         double y = event.getY();
 
         //currentFigure.setEndPoint(x, y);
-        currentCanvasController.redrawAllFigures();
+        mainController.getCurrentCanvasController().redrawAllFigures();
 
         //currentFigure.draw(drawCanvas.getGraphicsContext2D());
     }
@@ -35,7 +32,7 @@ public class LineTool extends Tool implements ITool {
     public void mouseReleased(MouseEvent event) {
         double x = event.getX();
         double y = event.getY();
-        currentCanvasController.redrawAllFigures();
+        mainController.getCurrentCanvasController().redrawAllFigures();
         //currentFigure.setEndPoint(x, y);
         //currentFigure.draw(drawCanvas.getGraphicsContext2D());
 

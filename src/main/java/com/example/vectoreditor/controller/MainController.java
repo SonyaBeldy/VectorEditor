@@ -65,6 +65,7 @@ public class MainController {
 
     private LayerBox layerBox;
     private ScrollPaneController currentCanvasController;
+    private ITool currentTool = new SelectTool(this);
 
     @FXML
     private void initialize() {
@@ -81,6 +82,14 @@ public class MainController {
         //addNewLayerButtonClick();
         //canvasController.setCurrentLayer(canvasController.getLastLayer().orElseThrow());
         deleteLayerButton.setDisable(true);
+    }
+
+    public ITool getCurrentTool() {
+        return currentTool;
+    }
+
+    public void setCurrentTool(ITool currentTool) {
+        this.currentTool = currentTool;
     }
 
     public void changeCanvas(LayerBox layerBox) {
@@ -137,9 +146,9 @@ public class MainController {
 
     @FXML
     protected void onSelectButtonClick(ActionEvent event) {
-//        canvasController.setCurrentTool(new SelectTool(currentCanvasController));
-//        enabledAllButtons();
-//        selectButton.setDisable(true);
+        currentTool = new SelectTool(this);
+        enabledAllButtons();
+        selectButton.setDisable(true);
     }
 
     @FXML
@@ -150,7 +159,7 @@ public class MainController {
     @FXML
     protected void onPolylineButtonClick(ActionEvent event) {
         currentCanvasController.setStrokeColor(colorPicker.getValue());
-        currentCanvasController.setCurrentTool(new PolylineTool(currentCanvasController));
+        currentTool = new PolylineTool(this);
         enabledAllButtons();
         polylineButton.setDisable(true);
     }
@@ -158,7 +167,7 @@ public class MainController {
     @FXML
     protected void onRectangleButtonClick(ActionEvent event) {
         currentCanvasController.setStrokeColor(colorPicker.getValue());
-        currentCanvasController.setCurrentTool(new RectangleTool(currentCanvasController));
+        currentTool = new RectangleTool(this);
         enabledAllButtons();
         rectangleButton.setDisable(true);
     }
@@ -166,7 +175,7 @@ public class MainController {
     @FXML
     protected void onPolygonButtonClick(ActionEvent event) {
         currentCanvasController.setStrokeColor(colorPicker.getValue());
-        currentCanvasController.setCurrentTool(new PolygonTool(currentCanvasController));
+        currentTool = new PolygonTool(this);
         enabledAllButtons();
         polygonButton.setDisable(true);
     }

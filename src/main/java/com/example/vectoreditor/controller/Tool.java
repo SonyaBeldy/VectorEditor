@@ -5,13 +5,13 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 
 public class Tool {
-    protected final ScrollPaneController currentCanvasController;
+    protected final MainController mainController;
 //    protected final Canvas drawCanvas;
     public Figure figure;
 
 
-    public Tool(ScrollPaneController currentCanvasController) {
-        this.currentCanvasController = currentCanvasController;
+    public Tool(MainController mainController) {
+        this.mainController = mainController;
 //        drawCanvas = canvasController.getDrawCanvas();
     }
 }

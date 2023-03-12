@@ -16,9 +16,9 @@ public class ResizeTool extends SelectTool implements ITool {
 
     ResizeDirection direction;
 
-    public ResizeTool(ScrollPaneController currentCanvasController, Point dragPoint, Point oppositePoint, ResizeDirection direction) {
-        super(currentCanvasController);
-        currentFigure = currentCanvasController.getCurrentFigure().orElseThrow();
+    public ResizeTool(MainController mainController, Point dragPoint, Point oppositePoint, ResizeDirection direction) {
+        super(mainController);
+        currentFigure = mainController.getCurrentCanvasController().getCurrentFigure().orElseThrow();
         this.direction = direction;
 
         copyCurrentFigure = currentFigure.clone();
@@ -45,7 +45,7 @@ public class ResizeTool extends SelectTool implements ITool {
         }
         resizeBorders();
         currentFigure.calcCenter();
-        currentCanvasController.redrawAllFigures();
+        mainController.getCurrentCanvasController().redrawAllFigures();
     }
 
     private void resize(MouseEvent event, Point dragPoint, Point oppositePoint) {

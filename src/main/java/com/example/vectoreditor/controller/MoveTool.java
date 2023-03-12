@@ -11,17 +11,17 @@ public class MoveTool extends Tool implements ITool{
     private final Point pressPoint;
     Figure beforeMoveFigure;
 
-    public MoveTool(ScrollPaneController currentCanvasController) {
-        super(currentCanvasController);
+    public MoveTool(MainController mainController) {
+        super(mainController);
         pressPoint = new Point(0,0);
 
     }
 
-    public MoveTool(ScrollPaneController currentCanvasController, Point pressPoint) {
-        super(currentCanvasController);
+    public MoveTool(MainController mainController, Point pressPoint) {
+        super(mainController);
         this.pressPoint = pressPoint;
-        beforeMoveFigure = currentCanvasController.getCurrentFigure().orElseThrow().clone();
-        bordersPainter = new BordersPainter(currentCanvasController.getDrawCanvas().getGraphicsContext2D());
+        beforeMoveFigure = mainController.getCurrentCanvasController().getCurrentFigure().orElseThrow().clone();
+        bordersPainter = new BordersPainter(mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D());
     }
 
     @Override
@@ -31,14 +31,14 @@ public class MoveTool extends Tool implements ITool{
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        if(currentCanvasController.getCurrentFigure().isEmpty()) {
+        if(mainController.getCurrentCanvasController().getCurrentFigure().isEmpty()) {
             return;
         }
         double shiftX =  event.getX() - pressPoint.getX();
         double shiftY =  event.getY() - pressPoint.getY();
 
-        currentCanvasController.getCurrentFigure().get().move(new Point(shiftX, shiftY));
-        currentCanvasController.redrawAllFigures();
+        mainController.getCurrentCanvasController().getCurrentFigure().get().move(new Point(shiftX, shiftY));
+        mainController.getCurrentCanvasController().redrawAllFigures();
 
         pressPoint.setX(event.getX());
         pressPoint.setY(event.getY());
@@ -46,10 +46,11 @@ public class MoveTool extends Tool implements ITool{
 
     @Override
     public void mouseReleased(MouseEvent event) {
+        ScrollPaneController currentCanvasController = mainController.getCurrentCanvasController();
         currentCanvasController.redrawAllFigures();
         bordersPainter.drawBoards(currentCanvasController.getCurrentFigure().orElseThrow());
 
-        currentCanvasController.setCurrentTool(new SelectTool(currentCanvasController));
+        mainController.setCurrentTool(new SelectTool(mainController));
     }
 
     @Override

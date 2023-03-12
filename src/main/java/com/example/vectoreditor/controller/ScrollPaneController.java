@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ScrollPaneController extends ScrollPane {
 
 
-    private ITool currentTool;
+    //private ITool currentTool;
     private Optional<Figure> currentFigure = Optional.empty();
     private Color strokeColor;
     private BordersPainter bordersPainter;
@@ -30,7 +30,7 @@ public class ScrollPaneController extends ScrollPane {
         layerBox = new LayerBox();
         strokeColor = Color.BLACK;
         bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
-        currentTool = new SelectTool(this);
+        //currentTool = new SelectTool(mainController);
         mainController.setCurrentCanvasController(this);
         mainController.setLayerBox(layerBox);
         mainController.addNewLayerButtonClick();
@@ -38,22 +38,22 @@ public class ScrollPaneController extends ScrollPane {
 
     @FXML
     private void onCanvasMouseMoved(MouseEvent event) {
-        currentTool.mouseEntered(event);
+        mainController.getCurrentTool().mouseEntered(event);
     }
     @FXML
     private void onCanvasMousePressed(MouseEvent event) {
         System.out.println("pressed");
-        currentTool.mousePressed(event);
+        mainController.getCurrentTool().mousePressed(event);
 
     }
     @FXML
     private void onCanvasMouseDragged(MouseEvent event) {
-        currentTool.mouseDragged(event);
+        mainController.getCurrentTool().mouseDragged(event);
         mainController.changeCanvas(layerBox);
     }
     @FXML
     private void onCanvasMouseReleased(MouseEvent event) {
-        currentTool.mouseReleased(event);
+        mainController.getCurrentTool().mouseReleased(event);
         mainController.changeCanvas(layerBox);
     }
 
@@ -113,7 +113,7 @@ public class ScrollPaneController extends ScrollPane {
     }
 
     public ITool getCurrentTool() {
-        return currentTool;
+        return mainController.getCurrentTool();
     }
 
     public Canvas getDrawCanvas() {
@@ -135,9 +135,6 @@ public class ScrollPaneController extends ScrollPane {
 
     public Optional<LayerItemController> getCurrentLayer() {
         return layerBox.getCurrentLayer();
-    }
-    public void setCurrentTool(ITool currentTool) {
-        this.currentTool = currentTool;
     }
 
     public Color getStrokeColor() {
