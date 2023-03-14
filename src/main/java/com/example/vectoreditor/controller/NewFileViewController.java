@@ -2,7 +2,6 @@ package com.example.vectoreditor.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -10,12 +9,12 @@ import javafx.scene.control.TabPane;
 import java.io.IOException;
 
 public class NewFileViewController {
-    private TabPane workspaceTabBox;
+    private TabPane workspaceTabPane;
     private MainController mainController;
 
     public void init (MainController mainController) {
         this.mainController = mainController;
-        workspaceTabBox = mainController.getWorkspaceBox();
+        workspaceTabPane = mainController.getWorkspaceBox();
     }
 
     @FXML
@@ -41,17 +40,18 @@ public class NewFileViewController {
             throw new RuntimeException(e);
         }
         newView.setContent(scrollPane);
-        workspaceTabBox.getTabs().add(newView);
-        newView.setText("Untitled " + workspaceTabBox.getTabs().size());
+        workspaceTabPane.getTabs().add(newView);
+        newView.setText("Untitled " + workspaceTabPane.getTabs().size());
 
-        ScrollPaneController scrollPaneController = fxmlLoader.getController();
+        CanvasViewController scrollPaneController = fxmlLoader.getController();
         scrollPaneController.init(mainController);
+        mainController.changeLayerBox(scrollPaneController.getLayerBox());
 
-        workspaceTabBox.getSelectionModel().select(newView);
+        workspaceTabPane.getSelectionModel().select(newView);
         newView.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 mainController.setCurrentCanvasController(scrollPaneController);
-                mainController.changeCanvas(scrollPaneController.getLayerBox());
+                mainController.changeLayerBox(scrollPaneController.getLayerBox());
             }
         });
 

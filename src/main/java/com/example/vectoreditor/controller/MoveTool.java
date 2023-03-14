@@ -46,7 +46,7 @@ public class MoveTool extends Tool implements ITool{
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        ScrollPaneController currentCanvasController = mainController.getCurrentCanvasController();
+        CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         currentCanvasController.redrawAllFigures();
         bordersPainter.drawBoards(currentCanvasController.getCurrentFigure().orElseThrow());
 

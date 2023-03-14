@@ -9,9 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -59,16 +57,17 @@ public class MainController {
     private CurrentFigureParamsDisplay paramsDisplay;
 
     private LayerBox layerBox;
-    private ScrollPaneController currentCanvasController;
+    private CanvasViewController currentCanvasController;
     private ITool currentTool = new SelectTool(this);
 
     @FXML
     private void initialize() {
+        paramsDisplay = new CurrentFigureParamsDisplay(this);
+
         NewFileViewController newFileViewController = new NewFileViewController();
         newFileViewController.init(this);
         newFileViewController.createNewView();
 
-        paramsDisplay = new CurrentFigureParamsDisplay(this);
         selectButton.setDisable(true);
         colorPicker.setValue(Color.BLACK);
 
@@ -83,7 +82,7 @@ public class MainController {
         this.currentTool = currentTool;
     }
 
-    public void changeCanvas(LayerBox layerBox) {
+    public void changeLayerBox(LayerBox layerBox) {
         this.layerBox = layerBox;
         layerBoxContainer.getChildren().clear();
         layerBoxContainer.getChildren().add(layerBox);
@@ -93,11 +92,11 @@ public class MainController {
         }
     }
 
-    public void setCurrentCanvasController(ScrollPaneController currentCanvasController) {
+    public void setCurrentCanvasController(CanvasViewController currentCanvasController) {
         this.currentCanvasController = currentCanvasController;
     }
 
-    public ScrollPaneController getCurrentCanvasController() {
+    public CanvasViewController getCurrentCanvasController() {
         return currentCanvasController;
     }
 
@@ -236,7 +235,7 @@ public class MainController {
         return rotateField;
     }
 
-    public ScrollPaneController getCanvasController() {
+    public CanvasViewController getCanvasController() {
         return currentCanvasController;
     }
 

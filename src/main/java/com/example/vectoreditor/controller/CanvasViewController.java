@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 
 import java.util.Optional;
 
-public class ScrollPaneController extends ScrollPane {
+public class CanvasViewController extends ScrollPane {
 
     private Optional<Figure> currentFigure = Optional.empty();
     private final LayerBox layerBox = new LayerBox();
@@ -43,12 +43,12 @@ public class ScrollPaneController extends ScrollPane {
     @FXML
     private void onCanvasMouseDragged(MouseEvent event) {
         mainController.getCurrentTool().mouseDragged(event);
-        mainController.changeCanvas(layerBox);
+        mainController.changeLayerBox(layerBox);
     }
     @FXML
     private void onCanvasMouseReleased(MouseEvent event) {
         mainController.getCurrentTool().mouseReleased(event);
-        mainController.changeCanvas(layerBox);
+        mainController.changeLayerBox(layerBox);
     }
 
     public void addFigure(Figure figure) {

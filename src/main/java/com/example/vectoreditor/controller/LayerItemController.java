@@ -30,8 +30,6 @@ public class LayerItemController implements Initializable {
     @FXML
     private HBox layerItem;
 
-    private boolean showLayerFiguresItem = false;
-
     @FXML
     private Rectangle layerColor;
 
@@ -49,8 +47,6 @@ public class LayerItemController implements Initializable {
 
     @FXML
     private ImageView showFiguresImg;
-
-    private CanvasController canvasController;
 
     private LayerBox layerBoxController;
 
@@ -125,7 +121,6 @@ public class LayerItemController implements Initializable {
             FigureItemController figureItem = fxmlLoader.getController();
             figureItem.setFigure(figure);
             figuresBox.getChildren().add(hBox);
-            showLayerFiguresItem = true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -14,7 +14,7 @@ public class CurrentFigureParamsDisplay implements Initializable {
     public CurrentFigureParamsDisplay(MainController mainController) {
         this.mainController = mainController;
     }
-    public void update(ScrollPaneController canvasController) {
+    public void update(CanvasViewController canvasController) {
         updateRotateField(canvasController);
         updateXPointField(canvasController);
         updateYPointField(canvasController);
@@ -29,7 +29,7 @@ public class CurrentFigureParamsDisplay implements Initializable {
         updateHeight();
     }
 
-    private void updateRotateField(ScrollPaneController canvasController) {
+    private void updateRotateField(CanvasViewController canvasController) {
         if(canvasController.getCurrentFigure().isPresent()) {
             Figure figure = canvasController.getCurrentFigure().get();
             double angle = Math.round(Math.toDegrees(figure.getAngle()));
@@ -55,7 +55,7 @@ public class CurrentFigureParamsDisplay implements Initializable {
            mainController.getRotate().setText(String.valueOf(angle));
         }
     }
-    private void updateXPointField(ScrollPaneController canvasController) {
+    private void updateXPointField(CanvasViewController canvasController) {
         if(canvasController.getCurrentFigure().isPresent()) {
             Figure figure = canvasController.getCurrentFigure().get();
             mainController.getXPointField().setText(String.valueOf(figure.getCenter().getX()));
@@ -67,7 +67,7 @@ public class CurrentFigureParamsDisplay implements Initializable {
             mainController.getXPointField().setText(String.valueOf(figure.getCenter().getX()));
         }
     }
-    private void updateYPointField(ScrollPaneController canvasController) {
+    private void updateYPointField(CanvasViewController canvasController) {
         if(canvasController.getCurrentFigure().isPresent()) {
             Figure figure = canvasController.getCurrentFigure().get();
             mainController.getYPointField().setText(String.valueOf(figure.getCenter().getY()));
@@ -80,7 +80,7 @@ public class CurrentFigureParamsDisplay implements Initializable {
         }
     }
 
-    private void updateWidth(ScrollPaneController canvasController) {
+    private void updateWidth(CanvasViewController canvasController) {
         if(canvasController.getCurrentFigure().isPresent()) {
             Figure figure = canvasController.getCurrentFigure().get();
             double width = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(1));
@@ -95,7 +95,7 @@ public class CurrentFigureParamsDisplay implements Initializable {
         }
     }
 
-    private void updateHeight(ScrollPaneController canvasController) {
+    private void updateHeight(CanvasViewController canvasController) {
         if(canvasController.getCurrentFigure().isPresent()) {
             Figure figure = canvasController.getCurrentFigure().get();
             double height = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(3));

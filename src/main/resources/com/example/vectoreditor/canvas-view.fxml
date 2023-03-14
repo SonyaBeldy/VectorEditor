@@ -4,7 +4,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<ScrollPane hvalue="0.5" stylesheets="@main.css" vvalue="0.5" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.ScrollPaneController">
+<ScrollPane hvalue="0.5" stylesheets="@main.css" vvalue="0.5" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.CanvasViewController">
    <content>
       <AnchorPane id="canvasPane" accessibleText="rrr" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="2000.0" prefWidth="2000.0" styleClass="scroll-pane" stylesheets="@main.css">
          <children>

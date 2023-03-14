@@ -51,7 +51,7 @@ public class SelectTool extends Tool implements ITool {
     }
 
     private void bordersControlsEntered(MouseEvent event) {
-        ScrollPaneController currentCanvasController = mainController.getCurrentCanvasController();
+        CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         Point point = new Point(event.getX(), event.getY());
         if (currentCanvasController.getCurrentFigure().isEmpty()) {
             return;

@@ -24,7 +24,7 @@ public class PolylineTool extends Tool implements ITool {
     }
     @Override
     public void mousePressed(MouseEvent event) {
-        ScrollPaneController currentCanvasController = mainController.getCurrentCanvasController();
+        CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         if (event.isPrimaryButtonDown()) {
             if (!isDrawing) {
                 isDrawing = true;
