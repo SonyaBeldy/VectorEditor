@@ -8,6 +8,7 @@ import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -49,13 +50,9 @@ public class MainController {
     private VBox layerBoxContainer;
 
     @FXML
-    private MenuItem newFileMenuItem;
-
-    @FXML
-    private TabPane workspaceBox;
+    private TabPane workspaceTabPane;
 
     private CurrentFigureParamsDisplay paramsDisplay;
-
     private LayerBox layerBox;
     private CanvasViewController currentCanvasController;
     private ITool currentTool = new SelectTool(this);
@@ -74,14 +71,6 @@ public class MainController {
         deleteLayerButton.setDisable(true);
     }
 
-    public ITool getCurrentTool() {
-        return currentTool;
-    }
-
-    public void setCurrentTool(ITool currentTool) {
-        this.currentTool = currentTool;
-    }
-
     public void changeLayerBox(LayerBox layerBox) {
         this.layerBox = layerBox;
         layerBoxContainer.getChildren().clear();
@@ -90,14 +79,6 @@ public class MainController {
         if (layerBox.getLayers().size() < 2) {
             deleteLayerButton.setDisable(true);
         }
-    }
-
-    public void setCurrentCanvasController(CanvasViewController currentCanvasController) {
-        this.currentCanvasController = currentCanvasController;
-    }
-
-    public CanvasViewController getCurrentCanvasController() {
-        return currentCanvasController;
     }
 
     @FXML
@@ -119,14 +100,34 @@ public class MainController {
         }
     }
 
+    public void createNewCanvasView() {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/canvas-view.fxml"));
+        ScrollPane scrollPane;
+        try {
+            scrollPane = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Tab newCanvasView = createTab(scrollPane);
+        workspaceTabPane.getTabs().add(newCanvasView);
+
+        CanvasViewController scrollPaneController = fxmlLoader.getController();
+        scrollPaneController.init(this);
+
+        workspaceTabPane.getSelectionModel().select(newCanvasView);
+        newCanvasView.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                currentCanvasController = scrollPaneController;
+                changeLayerBox(scrollPaneController.getLayerBox());
+            }
+        });
+    }
+
     @FXML
     protected void addNewLayerButtonClick() {
         deleteLayerButton.setDisable(false);
         layerBox.createLayer();
-    }
-
-    public void setLayerBox(LayerBox layerBox) {
-        this.layerBox = layerBox;
     }
 
     @FXML
@@ -135,7 +136,6 @@ public class MainController {
             layerBox.deleteCurrentLayer();
         }
     }
-
     @FXML
     protected void onSelectButtonClick(ActionEvent event) {
         currentTool = new SelectTool(this);
@@ -177,14 +177,6 @@ public class MainController {
         currentCanvasController.setStrokeColor(colorPicker.getValue());
     }
 
-    private void enabledAllButtons(){
-        selectButton.setDisable(false);
-        lineButton.setDisable(false);
-        polylineButton.setDisable(false);
-        rectangleButton.setDisable(false);
-        polygonButton.setDisable(false);
-    }
-
     @FXML
     private void move() {
         if(currentCanvasController.getCurrentFigure().isEmpty()) {
@@ -212,7 +204,37 @@ public class MainController {
         figure.rotate(figure, figure.getCenter(), angleDiff);
         figure.setAngle(angle);
         currentCanvasController.redrawAllFigures();
+    }
 
+    private Tab createTab(Node content) {
+        Tab newCanvasView = new Tab();
+        newCanvasView.setContent(content);
+        newCanvasView.setText("Untitled " + workspaceTabPane.getTabs().size());
+        return newCanvasView;
+    }
+
+    private void enabledAllButtons(){
+        selectButton.setDisable(false);
+        lineButton.setDisable(false);
+        polylineButton.setDisable(false);
+        rectangleButton.setDisable(false);
+        polygonButton.setDisable(false);
+    }
+
+    public CanvasViewController getCurrentCanvasController() {
+        return currentCanvasController;
+    }
+
+    public void setCurrentCanvasController(CanvasViewController currentCanvasController) {
+        this.currentCanvasController = currentCanvasController;
+    }
+
+    public ITool getCurrentTool() {
+        return currentTool;
+    }
+
+    public void setCurrentTool(ITool currentTool) {
+        this.currentTool = currentTool;
     }
 
     public TextField getXPointField() {
@@ -237,10 +259,6 @@ public class MainController {
 
     public CanvasViewController getCanvasController() {
         return currentCanvasController;
-    }
-
-    public TabPane getWorkspaceBox() {
-        return workspaceBox;
     }
 
 }

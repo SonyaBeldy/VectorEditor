@@ -29,7 +29,7 @@ public class CanvasViewController extends ScrollPane {
         bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
         mainController.setCurrentCanvasController(this);
         layerBox.createLayer();
-        mainController.setLayerBox(layerBox);
+        mainController.changeLayerBox(layerBox);
     }
 
     @FXML
