@@ -24,7 +24,6 @@ public class LayerBox extends VBox {
         }
         LayerItemController layerItemController = fxmlLoader.getController();
 
-
         Color color;
         if (layers.size() < 1) {
             color = Color.hsb(185, 0.8, 1);
@@ -35,11 +34,8 @@ public class LayerBox extends VBox {
 
         getChildren().add(layerItem);
         layers.add(layerItemController);
-        layerItemController.highlight(); //стоит ли перенести в canvasController в setCurrentLayer?
+        layerItemController.highlight();
         currentLayer = Optional.of(layerItemController);
-//        canvasController.setCurrentLayer(layerItemController);
-
-//        canvasController.getLayers().add(layerItemController);
     }
 
     public Color nextLayerColor(Color oldColor) {

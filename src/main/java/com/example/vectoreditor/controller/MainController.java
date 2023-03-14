@@ -20,8 +20,6 @@ import java.io.IOException;
 
 public class MainController {
 
-    //@FXML
-    //private VBox layersBox;
     @FXML
     private Button selectButton;
     @FXML
@@ -32,8 +30,6 @@ public class MainController {
     private Button rectangleButton;
     @FXML
     private Button polygonButton;
-    @FXML
-    private Canvas drawCanvas;
     @FXML
     private ColorPicker colorPicker;
 
@@ -60,7 +56,6 @@ public class MainController {
     @FXML
     private TabPane workspaceBox;
 
-    //private CanvasController canvasController;
     private CurrentFigureParamsDisplay paramsDisplay;
 
     private LayerBox layerBox;
@@ -69,18 +64,14 @@ public class MainController {
 
     @FXML
     private void initialize() {
-        //layerBox = new LayerBox();
-        //layerBoxContainer.getChildren().add(layerBox);
+        NewFileViewController newFileViewController = new NewFileViewController();
+        newFileViewController.init(this);
+        newFileViewController.createNewView();
 
-//        canvasController = new CanvasController(drawCanvas, layerBox);
-//        canvasController.setCurrentTool(new SelectTool(currentCanvasController));
-        
         paramsDisplay = new CurrentFigureParamsDisplay(this);
         selectButton.setDisable(true);
         colorPicker.setValue(Color.BLACK);
 
-        //addNewLayerButtonClick();
-        //canvasController.setCurrentLayer(canvasController.getLastLayer().orElseThrow());
         deleteLayerButton.setDisable(true);
     }
 
@@ -97,6 +88,9 @@ public class MainController {
         layerBoxContainer.getChildren().clear();
         layerBoxContainer.getChildren().add(layerBox);
         paramsDisplay.update(currentCanvasController);
+        if (layerBox.getLayers().size() < 2) {
+            deleteLayerButton.setDisable(true);
+        }
     }
 
     public void setCurrentCanvasController(ScrollPaneController currentCanvasController) {
@@ -112,7 +106,6 @@ public class MainController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/new-file-view.fxml"));
-            //Parent root1 = (Parent) fxmlLoader.load();
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setTitle("Create file");
@@ -184,28 +177,6 @@ public class MainController {
     protected void chooseColor() {
         currentCanvasController.setStrokeColor(colorPicker.getValue());
     }
-    @FXML
-    void onCanvasPressed(MouseEvent event) {
-//        canvasController.getCurrentTool().mousePressed(event);
-
-    }
-    @FXML
-    void onCanvasDragged(MouseEvent event) {
-//        canvasController.getCurrentTool().mouseDragged(event);
-//        paramsDisplay.update();
-    }
-
-    @FXML
-    void onCanvasReleased(MouseEvent event) {
-//        canvasController.getCurrentTool().mouseReleased(event);
-//        paramsDisplay.update();
-    }
-
-    @FXML
-    void onCanvasEntered(MouseEvent event) { 
-//        canvasController.getCurrentTool().mouseEntered(event); 
-    }
-
 
     private void enabledAllButtons(){
         selectButton.setDisable(false);
@@ -273,7 +244,4 @@ public class MainController {
         return workspaceBox;
     }
 
-    public LayerBox getLayerBox() {
-        return layerBox;
-    }
 }

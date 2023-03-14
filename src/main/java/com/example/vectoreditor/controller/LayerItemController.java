@@ -76,6 +76,8 @@ public class LayerItemController implements Initializable {
         layer = new Layer(layerName);
         setLayerName();
         layerColor.setFill(color);
+        figuresBox.setVisible(false);
+        figuresBox.setManaged(false);
     }
 
     @FXML
@@ -100,19 +102,14 @@ public class LayerItemController implements Initializable {
 
     @FXML
     void showFiguresButton(ActionEvent event) {
-        if (showFiguresImg.getRotate() == 0) {
-        }
         showFiguresImg.setRotate((showFiguresImg.getRotate() + 90) % 180);
 
-        if (!showLayerFiguresItem) {
-            figuresBox.setVisible(true);
-            figuresBox.setManaged(true);
-
-            showLayerFiguresItem = true;
-        } else {
+        if (figuresBox.isVisible()) {
             figuresBox.setVisible(false);
             figuresBox.setManaged(false);
-            showLayerFiguresItem = false;
+        } else {
+            figuresBox.setVisible(true);
+            figuresBox.setManaged(true);
         }
     }
 

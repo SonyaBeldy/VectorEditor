@@ -13,13 +13,11 @@ import java.util.Optional;
 
 public class ScrollPaneController extends ScrollPane {
 
-
-    //private ITool currentTool;
     private Optional<Figure> currentFigure = Optional.empty();
+    private final LayerBox layerBox = new LayerBox();
     private Color strokeColor;
     private BordersPainter bordersPainter;
     private MainController mainController;
-    private LayerBox layerBox;
 
 
     @FXML
@@ -27,13 +25,11 @@ public class ScrollPaneController extends ScrollPane {
 
     public void init(MainController mainController) {
         this.mainController = mainController;
-        layerBox = new LayerBox();
         strokeColor = Color.BLACK;
         bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
-        //currentTool = new SelectTool(mainController);
         mainController.setCurrentCanvasController(this);
+        layerBox.createLayer();
         mainController.setLayerBox(layerBox);
-        mainController.addNewLayerButtonClick();
     }
 
     @FXML
@@ -42,9 +38,7 @@ public class ScrollPaneController extends ScrollPane {
     }
     @FXML
     private void onCanvasMousePressed(MouseEvent event) {
-        System.out.println("pressed");
         mainController.getCurrentTool().mousePressed(event);
-
     }
     @FXML
     private void onCanvasMouseDragged(MouseEvent event) {

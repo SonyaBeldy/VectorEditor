@@ -10,14 +10,12 @@ import javafx.scene.control.TabPane;
 import java.io.IOException;
 
 public class NewFileViewController {
-    private TabPane workspaceBox;
+    private TabPane workspaceTabBox;
     private MainController mainController;
-    @FXML
-    private Button createBtn;
 
     public void init (MainController mainController) {
         this.mainController = mainController;
-        workspaceBox = mainController.getWorkspaceBox();
+        workspaceTabBox = mainController.getWorkspaceBox();
     }
 
     @FXML
@@ -30,10 +28,8 @@ public class NewFileViewController {
 
     }
 
-    private void createNewView() {
+    public void createNewView() {
         Tab newView = new Tab();
-
-
 
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/canvas-view.fxml"));
@@ -45,13 +41,13 @@ public class NewFileViewController {
             throw new RuntimeException(e);
         }
         newView.setContent(scrollPane);
-        workspaceBox.getTabs().add(newView);
-        newView.setText("Untitled " + workspaceBox.getTabs().size());
-        ScrollPaneController scrollPaneController = fxmlLoader.getController();
+        workspaceTabBox.getTabs().add(newView);
+        newView.setText("Untitled " + workspaceTabBox.getTabs().size());
 
+        ScrollPaneController scrollPaneController = fxmlLoader.getController();
         scrollPaneController.init(mainController);
 
-
+        workspaceTabBox.getSelectionModel().select(newView);
         newView.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 mainController.setCurrentCanvasController(scrollPaneController);
