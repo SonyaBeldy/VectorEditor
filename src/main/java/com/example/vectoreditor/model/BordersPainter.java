@@ -8,36 +8,41 @@ import java.util.ArrayList;
 
 public class BordersPainter {
 
-    GraphicsContext graphicsContext;
+    private GraphicsContext graphicsContext;
+    private int CONTROL_SIZE = 8;
 
     public BordersPainter(GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
     }
 
-    public void drawBoards(Figure figure) {
-
-        ArrayList<Point> points = figure.getBoardsPoints();
+    private void drawFrame(ArrayList<Point> points) {
         graphicsContext.setStroke(Color.MEDIUMSLATEBLUE);
+        graphicsContext.strokeLine(points.get(0).getX(), points.get(0).getY(), points.get(3).getX(), points.get(3).getY());
+
+    }
+    public void drawBoards(Figure figure, Color layerColor) {
+        ArrayList<Point> points = figure.getBoardsPoints();
+        graphicsContext.setStroke(layerColor);
         graphicsContext.strokeLine(points.get(0).getX(), points.get(0).getY(), points.get(3).getX(), points.get(3).getY());
         for (int i = 0; i < points.size() - 1; i++) {
             String a;
             //graphicsContext.setStroke(Color.web("#c6ff42"));
             graphicsContext.strokeLine(points.get(i).getX(), points.get(i).getY(), points.get(i + 1).getX(), points.get(i + 1).getY());
 
-            graphicsContext.setFill(Color.SLATEBLUE);
+            graphicsContext.setFill(layerColor);
             graphicsContext.fillRect(points.get(i).getX() - 4, points.get(i).getY() - 4, 8, 8);
             graphicsContext.setFill(Color.WHITE);
             graphicsContext.fillRect(points.get(i).getX() - 2, points.get(i).getY() - 2, 4, 4);
         }
 
 
-        graphicsContext.setFill(Color.SLATEBLUE);
+        graphicsContext.setFill(layerColor);
         graphicsContext.fillRect(points.get(3).getX() - 4, points.get(3).getY() - 4, 8, 8);
-        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.setFill(layerColor);
         graphicsContext.fillRect(points.get(3).getX() - 2, points.get(3).getY() - 2, 4, 4);
 
 
-        graphicsContext.setFill(Color.SLATEBLUE);
+        graphicsContext.setFill(layerColor);
         graphicsContext.fillOval(figure.getCenter().getX() - 2, figure.getCenter().getY() - 2, 4, 4);
 
         for (int i = 0; i < points.size() - 1; i++) {
@@ -52,7 +57,7 @@ public class BordersPainter {
             //graphicsContext.setStroke(Color.MEDIUMSLATEBLUE);
             //graphicsContext.strokeLine((maxX - minX)/2 + minX, points.get(i).getY(), points.get(i + 1).getX(), points.get(i + 1).getY());
 
-            graphicsContext.setFill(Color.SLATEBLUE);
+            graphicsContext.setFill(layerColor);
             graphicsContext.fillRect((maxX - minX)/2 + minX - 4, (maxY - minY)/2 + minY - 4, 8, 8);
             graphicsContext.setFill(Color.WHITE);
             graphicsContext.fillRect((maxX - minX)/2 + minX - 2, (maxY - minY)/2 + minY - 2, 4, 4);
@@ -64,10 +69,14 @@ public class BordersPainter {
         double minY = Math.min(points.get(0).getY(), points.get(3).getY());
         double maxY = Math.max(points.get(0).getY(), points.get(3).getY());
 
-        graphicsContext.setFill(Color.SLATEBLUE);
+        graphicsContext.setFill(layerColor);
         graphicsContext.fillRect((maxX - minX)/2 + minX - 4, (maxY - minY)/2 + minY - 4, 8, 8);
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.fillRect((maxX - minX)/2 + minX - 2, (maxY - minY)/2 + minY - 2, 4, 4);
+
+    }
+
+    private void drawBorderControl() {
 
     }
 

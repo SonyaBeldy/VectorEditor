@@ -40,9 +40,6 @@ public class LayerItemController implements Initializable {
     private VBox figuresBox;
 
     @FXML
-    private Button showFigures;
-
-    @FXML
     private ImageView visible;
 
     @FXML
@@ -78,7 +75,7 @@ public class LayerItemController implements Initializable {
 
     @FXML
     void layerItemClick(MouseEvent event) {
-        layerBoxController.setCurrentLayer(Optional.of(this));
+        layerBoxController.setCurrentLayer(this);
         highlight();
     }
 

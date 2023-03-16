@@ -18,7 +18,7 @@ public class Layer {
     public void remove(int ind){
         figures.remove(ind);
     }
-    public int getObjectsCount() {
+    public int getFiguresCount() {
         return figures.size();
     }
 

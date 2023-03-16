@@ -48,7 +48,7 @@ public class MoveTool extends Tool implements ITool{
     public void mouseReleased(MouseEvent event) {
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         currentCanvasController.redrawAllFigures();
-        bordersPainter.drawBoards(currentCanvasController.getCurrentFigure().orElseThrow());
+        bordersPainter.drawBoards(currentCanvasController.getCurrentFigure().orElseThrow(), mainController.getCurrentCanvasController().getCurrentLayer().getColor());
 
         mainController.setCurrentTool(new SelectTool(mainController));
     }

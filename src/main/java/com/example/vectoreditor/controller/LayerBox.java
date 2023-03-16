@@ -11,7 +11,7 @@ import java.util.Optional;
 public class LayerBox extends VBox {
 
     private final ArrayList<LayerItemController> layers = new ArrayList<>();
-    private Optional<LayerItemController> currentLayer;
+    private LayerItemController currentLayer;
 
     protected void createLayer() {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -27,15 +27,17 @@ public class LayerBox extends VBox {
         Color color;
         if (layers.size() < 1) {
             color = Color.hsb(185, 0.8, 1);
+            color = Color.MEDIUMSLATEBLUE;
         } else {
             color = layers.get(layers.size() - 1).getColor();
+            color = nextLayerColor(color);
         }
-        layerItemController.init(this, generateDefaultLayerName(), nextLayerColor(color));
+        layerItemController.init(this, generateDefaultLayerName(), color);
 
-        getChildren().add(layerItem);
+        getChildren().add(0, layerItem);
         layers.add(layerItemController);
         layerItemController.highlight();
-        currentLayer = Optional.of(layerItemController);
+        currentLayer = layerItemController;
     }
 
     public Color nextLayerColor(Color oldColor) {
@@ -66,25 +68,23 @@ public class LayerBox extends VBox {
         if (layers.size() < 2) {
             throw new RuntimeException("layers.size() < 2");
         }
-        if (currentLayer.isPresent()) {
-            int currentLayerInd = layers.indexOf(currentLayer.get());
-            if (currentLayerInd > -1) {
-                getChildren().remove(currentLayerInd);
-                layers.remove(currentLayerInd);
-                if (currentLayerInd == layers.size()) {
-                    currentLayerInd = 0;
-                }
-                currentLayer = Optional.of(layers.get(currentLayerInd));
-                currentLayer.orElseThrow().highlight();
+        int currentLayerInd = layers.indexOf(currentLayer);
+        if (currentLayerInd > -1) {
+            getChildren().remove(currentLayerInd);
+            layers.remove(currentLayerInd);
+            if (currentLayerInd == layers.size()) {
+                currentLayerInd = 0;
             }
+            currentLayer = layers.get(currentLayerInd);
+            currentLayer.highlight();
         }
     }
 
-    public Optional<LayerItemController> getCurrentLayer() {
+    public LayerItemController getCurrentLayer() {
         return currentLayer;
     }
 
-    public void setCurrentLayer(Optional<LayerItemController> currentLayer) {
+    public void setCurrentLayer(LayerItemController currentLayer) {
         this.currentLayer = currentLayer;
     }
 

@@ -16,12 +16,10 @@ public class SelectTool extends Tool implements ITool {
 
     @Override
     public void mousePressed(MouseEvent event) {
-
-        Optional<Figure> currentFigure = mainController.getCurrentCanvasController().whatWasClickedOn(event);
-        if (currentFigure.isEmpty()) {
+        selectFigure(event);
+        if (mainController.getCurrentCanvasController().getCurrentFigure().isEmpty()) {
             return; 
         }
-        mainController.getCurrentCanvasController().setCurrentFigure(currentFigure);
         mainController.getCurrentCanvasController().redrawAllFigures();
         mainController.setCurrentTool(new MoveTool(mainController, new Point(event.getX(), event.getY())));
     }
@@ -45,9 +43,44 @@ public class SelectTool extends Tool implements ITool {
             return;
         }
         mainController.getCurrentCanvasController().redrawAllFigures();
-        Optional<Figure> enteredFigure = mainController.getCurrentCanvasController().whatWasClickedOn(event);
-        enteredFigure.ifPresent(figure -> figure.highlight(mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D()));
+        Optional<Figure> figure = enteredFigure(event);
+        figure.ifPresent(value -> value.highlight(mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D()));
         bordersControlsEntered(event);
+
+    }
+
+    private void selectFigure(MouseEvent event) {
+        LayerBox layerBox = mainController.getCurrentCanvasController().getLayerBox();
+        double x = event.getX();
+        double y = event.getY();
+
+        for (int i = layerBox.getLayers().size() - 1; i >= 0; i--) {
+            Layer layer = layerBox.getLayers().get(i).getLayer();
+            for (int j = 0; j < layer.getFiguresCount(); j++) {
+                Figure figure = layer.getFigure(j);
+                if(figure.isClickedOn(x, y)) {
+                    mainController.getCurrentCanvasController().selectFigure(layerBox.getLayers().get(i), figure);
+                    return;
+                }
+            }
+        }
+        mainController.getCurrentCanvasController().removeFigureSelection();
+    }
+    private Optional<Figure> enteredFigure(MouseEvent event) {
+        LayerBox layerBox = mainController.getCurrentCanvasController().getLayerBox();
+        double x = event.getX();
+        double y = event.getY();
+
+        for (int i = layerBox.getLayers().size() - 1; i >= 0; i--) {
+            Layer layer = layerBox.getLayers().get(i).getLayer();
+            for (int j = 0; j < layer.getFiguresCount(); j++) {
+                Figure figure = layer.getFigure(j);
+                if(figure.isClickedOn(x, y)) {
+                    return Optional.of(figure);
+                }
+            }
+        }
+        return Optional.empty();
     }
 
     private void bordersControlsEntered(MouseEvent event) {

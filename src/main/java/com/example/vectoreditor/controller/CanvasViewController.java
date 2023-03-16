@@ -52,50 +52,35 @@ public class CanvasViewController extends ScrollPane {
     }
 
     public void addFigure(Figure figure) {
-        Optional<LayerItemController> currentLayer = layerBox.getCurrentLayer();
-        if (currentLayer.isPresent()) {
-            currentLayer.get().addFigure(figure);
-            addFigureToCurrentLayerItemsList(figure);
-        }
+        LayerItemController currentLayer = layerBox.getCurrentLayer();
+        currentLayer.addFigure(figure);
+        addFigureToCurrentLayerItemsList(figure);
     }
 
     public void addFigureToCurrentLayerItemsList(Figure figure) {
-        Optional<LayerItemController> currentLayer = layerBox.getCurrentLayer();
-        if (currentLayer.isPresent()) {
-            currentLayer.get().getLayer().addFigure(figure);
-        }
+        LayerItemController currentLayer = layerBox.getCurrentLayer();
+        currentLayer.getLayer().addFigure(figure);
     }
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
         for (int i = 0; i < layerBox.getLayers().size(); i++) {
             Layer layer = layerBox.getLayers().get(i).getLayer();
-            for (int j = 0; j < layer.getObjectsCount(); j++) {
+            for (int j = 0; j < layer.getFiguresCount(); j++) {
                 layer.getFigure(j).draw(drawCanvas.getGraphicsContext2D());
             }
         }
-        currentFigure.ifPresent(bordersPainter::drawBoards);
+
+        currentFigure.ifPresent(figure -> bordersPainter.drawBoards(figure, layerBox.getCurrentLayer().getColor()));
+
+
+//        currentFigure.ifPresent(bordersPainter::drawBoards);
     }
 
-    public Optional<Figure> whatWasClickedOn(MouseEvent event) {
-        double x = event.getX();
-        double y = event.getY();
-
-        for (int i = layerBox.getLayers().size() - 1; i >= 0; i--) {
-            Layer layer = layerBox.getLayers().get(i).getLayer();
-            for (int j = 0; j < layer.getObjectsCount(); j++) {
-                Figure figure = layer.getFigure(j);
-                if(figure.isClickedOn(x, y)){
-                    return Optional.of(figure);
-                }
-            }
-        }
-        return Optional.empty();
-    }
 
     public boolean isEmpty() {
         for (LayerItemController layer : layerBox.getLayers()) {
-            if (layer.getLayer().getObjectsCount() >= 0) {
+            if (layer.getLayer().getFiguresCount() >= 0) {
                 return false;
             }
         }
@@ -104,10 +89,6 @@ public class CanvasViewController extends ScrollPane {
 
     public LayerBox getLayerBox() {
         return layerBox;
-    }
-
-    public ITool getCurrentTool() {
-        return mainController.getCurrentTool();
     }
 
     public Canvas getDrawCanvas() {
@@ -124,10 +105,19 @@ public class CanvasViewController extends ScrollPane {
             return;
         }
         redrawAllFigures();
-        bordersPainter.drawBoards(currentFigure.get());
+        bordersPainter.drawBoards(currentFigure.get(), layerBox.getCurrentLayer().getColor());
     }
 
-    public Optional<LayerItemController> getCurrentLayer() {
+    public void selectFigure(LayerItemController layerItemController, Figure figure) {
+        currentFigure = Optional.of(figure);
+        layerBox.setCurrentLayer(layerItemController);
+    }
+
+    public void removeFigureSelection() {
+        currentFigure = Optional.empty();
+    }
+
+    public LayerItemController getCurrentLayer() {
         return layerBox.getCurrentLayer();
     }
 

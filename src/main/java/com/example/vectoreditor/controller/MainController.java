@@ -257,8 +257,4 @@ public class MainController {
         return rotateField;
     }
 
-    public CanvasViewController getCanvasController() {
-        return currentCanvasController;
-    }
-
 }
