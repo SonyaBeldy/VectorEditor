@@ -112,14 +112,14 @@ public class MainController {
         Tab newCanvasView = createTab(scrollPane);
         workspaceTabPane.getTabs().add(newCanvasView);
 
-        CanvasViewController scrollPaneController = fxmlLoader.getController();
-        scrollPaneController.init(this);
+        CanvasViewController canvasViewController = fxmlLoader.getController();
+        canvasViewController.init(this);
 
         workspaceTabPane.getSelectionModel().select(newCanvasView);
         newCanvasView.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                currentCanvasController = scrollPaneController;
-                changeLayerBox(scrollPaneController.getLayerBox());
+                currentCanvasController = canvasViewController;
+                changeLayerBox(canvasViewController.getLayerBox());
             }
         });
     }

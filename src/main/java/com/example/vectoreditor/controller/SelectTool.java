@@ -15,10 +15,21 @@ public class SelectTool extends Tool implements ITool {
     }
 
     @Override
+    public void mouseEntered(MouseEvent event) {
+        if (mainController.getCurrentCanvasController().isEmpty()) {
+            return;
+        }
+        mainController.getCurrentCanvasController().redrawAllFigures();
+        Optional<Figure> figure = enteredFigure(event);
+        figure.ifPresent(value -> value.highlight(mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D()));
+        bordersControlsEntered(event);
+    }
+
+    @Override
     public void mousePressed(MouseEvent event) {
         selectFigure(event);
         if (mainController.getCurrentCanvasController().getCurrentFigure().isEmpty()) {
-            return; 
+            return;
         }
         mainController.getCurrentCanvasController().redrawAllFigures();
         mainController.setCurrentTool(new MoveTool(mainController, new Point(event.getX(), event.getY())));
@@ -37,25 +48,13 @@ public class SelectTool extends Tool implements ITool {
         mainController.getCurrentCanvasController().redrawAllFigures();
     }
 
-    @Override
-    public void mouseEntered(MouseEvent event) {
-        if (mainController.getCurrentCanvasController().isEmpty()) {
-            return;
-        }
-        mainController.getCurrentCanvasController().redrawAllFigures();
-        Optional<Figure> figure = enteredFigure(event);
-        figure.ifPresent(value -> value.highlight(mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D()));
-        bordersControlsEntered(event);
-
-    }
-
     private void selectFigure(MouseEvent event) {
         LayerBox layerBox = mainController.getCurrentCanvasController().getLayerBox();
         double x = event.getX();
         double y = event.getY();
 
         for (int i = layerBox.getLayers().size() - 1; i >= 0; i--) {
-            Layer layer = layerBox.getLayers().get(i).getLayer();
+            LayerItemController layer = layerBox.getLayers().get(i);
             for (int j = 0; j < layer.getFiguresCount(); j++) {
                 Figure figure = layer.getFigure(j);
                 if(figure.isClickedOn(x, y)) {
@@ -72,7 +71,7 @@ public class SelectTool extends Tool implements ITool {
         double y = event.getY();
 
         for (int i = layerBox.getLayers().size() - 1; i >= 0; i--) {
-            Layer layer = layerBox.getLayers().get(i).getLayer();
+            LayerItemController layer = layerBox.getLayers().get(i);
             for (int j = 0; j < layer.getFiguresCount(); j++) {
                 Figure figure = layer.getFigure(j);
                 if(figure.isClickedOn(x, y)) {

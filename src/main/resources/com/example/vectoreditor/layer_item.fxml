@@ -33,7 +33,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <TextField id="figureName" fx:id="layerName" editable="false" onAction="#layerNameAction" prefHeight="25.0" prefWidth="131.0" text="Layer 1">
+            <TextField id="figureName" fx:id="layerNameField" editable="false" onAction="#layerNameAction" prefHeight="25.0" prefWidth="131.0" text="Layer 1">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></TextField>

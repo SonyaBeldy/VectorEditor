@@ -54,18 +54,18 @@ public class CanvasViewController extends ScrollPane {
     public void addFigure(Figure figure) {
         LayerItemController currentLayer = layerBox.getCurrentLayer();
         currentLayer.addFigure(figure);
-        addFigureToCurrentLayerItemsList(figure);
+        //addFigureToCurrentLayerItemsList(figure);
     }
 
     public void addFigureToCurrentLayerItemsList(Figure figure) {
         LayerItemController currentLayer = layerBox.getCurrentLayer();
-        currentLayer.getLayer().addFigure(figure);
+        currentLayer.addFigure(figure);
     }
 
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
         for (int i = 0; i < layerBox.getLayers().size(); i++) {
-            Layer layer = layerBox.getLayers().get(i).getLayer();
+            LayerItemController layer = layerBox.getLayers().get(i);
             for (int j = 0; j < layer.getFiguresCount(); j++) {
                 layer.getFigure(j).draw(drawCanvas.getGraphicsContext2D());
             }
@@ -80,7 +80,7 @@ public class CanvasViewController extends ScrollPane {
 
     public boolean isEmpty() {
         for (LayerItemController layer : layerBox.getLayers()) {
-            if (layer.getLayer().getFiguresCount() >= 0) {
+            if (layer.getFiguresCount() >= 0) {
                 return false;
             }
         }

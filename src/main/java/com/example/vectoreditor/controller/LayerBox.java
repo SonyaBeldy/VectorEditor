@@ -38,6 +38,7 @@ public class LayerBox extends VBox {
         layers.add(layerItemController);
         layerItemController.highlight();
         currentLayer = layerItemController;
+
     }
 
     public Color nextLayerColor(Color oldColor) {
@@ -50,7 +51,7 @@ public class LayerBox extends VBox {
         String name = "Layer " + number;
         int i = 0;
         while (i != layers.size()) {
-            if(layers.get(i).getLayer().getName().equals(name)) {
+            if(layers.get(i).getName().equals(name)) {
                 number++;
                 name = "Layer " + number;
                 i = 0;

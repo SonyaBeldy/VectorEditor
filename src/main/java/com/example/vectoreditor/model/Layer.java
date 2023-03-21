@@ -1,5 +1,6 @@
 package com.example.vectoreditor.model;
 
+import com.example.vectoreditor.controller.LayerItemController;
 import com.example.vectoreditor.model.figure.Figure;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ public class Layer {
 
     private String name;
     private final ArrayList<Figure> figures;
+
 
     public Layer(String name) {
         this.name = name;

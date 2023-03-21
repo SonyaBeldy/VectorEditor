@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,13 +19,17 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LayerItemController implements Initializable {
 
 
-    private Layer layer;
+    //private Layer layer;
+    private String name;
+
+    private ArrayList<FigureItemController> figureControllers;
+    private LayerBox layerBoxController;
     @FXML
     private HBox layerItem;
 
@@ -34,7 +37,7 @@ public class LayerItemController implements Initializable {
     private Rectangle layerColor;
 
     @FXML
-    private TextField layerName;
+    private TextField layerNameField;
 
     @FXML
     private VBox figuresBox;
@@ -45,15 +48,14 @@ public class LayerItemController implements Initializable {
     @FXML
     private ImageView showFiguresImg;
 
-    private LayerBox layerBoxController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        layerName.setEditable(false);
-        layerName.setOnMouseClicked(event -> {
+        layerNameField.setEditable(false);
+        layerNameField.setOnMouseClicked(event -> {
             if(event.getClickCount() == 2) {
-                layerName.setEditable(true);
-                layerName.setCursor(Cursor.TEXT);
+                layerNameField.setEditable(true);
+                layerNameField.setCursor(Cursor.TEXT);
 
             } else {
                 layerItem.fireEvent(event);
@@ -62,13 +64,24 @@ public class LayerItemController implements Initializable {
     }
 
     public void removeFigure(int ind) {
-        layer.remove(ind);
+//        layer.remove(ind);
+        figureControllers.remove(ind);
     }
+    public int getFiguresCount() {
+        return figureControllers.size();
+    }
+    public String getName() {
+        return layerNameField.getText();
+    }
+
+
     public void init(LayerBox layerBoxController, String layerName, Color color) {
         this.layerBoxController = layerBoxController;
-        layer = new Layer(layerName);
-        setLayerName();
+        //layer = new Layer(layerName);
+        //setLayerName();
+        layerNameField.setText(layerName);
         layerColor.setFill(color);
+        figureControllers = new ArrayList<>();
         figuresBox.setVisible(false);
         figuresBox.setManaged(false);
     }
@@ -89,8 +102,8 @@ public class LayerItemController implements Initializable {
 
     @FXML
     void layerNameAction(ActionEvent event) {
-        layerName.setEditable(false);
-        layerName.setCursor(Cursor.DEFAULT);
+        layerNameField.setEditable(false);
+        layerNameField.setCursor(Cursor.DEFAULT);
     }
 
     @FXML
@@ -113,24 +126,27 @@ public class LayerItemController implements Initializable {
     public void addFigure(Figure figure) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/figure_item.fxml"));
+        HBox figureBox;
         try {
-            HBox hBox = fxmlLoader.load();
-            FigureItemController figureItem = fxmlLoader.getController();
-            figureItem.setFigure(figure);
-            figuresBox.getChildren().add(hBox);
+            figureBox = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        FigureItemController figureItem = fxmlLoader.getController();
+        figureItem.setFigure(figure);
+        figureControllers.add(figureItem);
+        figuresBox.getChildren().add(figureBox);
     }
 
-    public void setLayerName() {
-        layerName.setText(layer.getName());
+    public void setLayerNameField(String name) {
+        layerNameField.setText(name);
     }
 
-    public Layer getLayer() {
-        return layer;
-    }
     public Color getColor() {
         return (Color) layerColor.getFill();
+    }
+
+    public Figure getFigure(int ind) {
+        return figureControllers.get(ind).getFigure();
     }
 }

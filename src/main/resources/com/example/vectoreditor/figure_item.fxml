@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox id="hBoxLayerItem" prefHeight="26.0" prefWidth="200.0" spacing="4.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.FigureItemController">
+<HBox id="hBoxLayerItem" fx:id="figureItem" onMouseClicked="#figureItemClick" prefHeight="26.0" prefWidth="200.0" spacing="4.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.FigureItemController">
    <children>
       <Button id="imageButton" fx:id="visible" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#visibleButtonClick" prefHeight="25.0" prefWidth="25.0" stylesheets="@main.css">
          <graphic>
