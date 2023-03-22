@@ -121,20 +121,13 @@ public class LayerItemController implements Initializable {
     }
 
     public FigureItemController addFigure(Figure figure) {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/figure_item.fxml"));
-        HBox figureBox;
-        try {
-            figureBox = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        FigureItemController figureController = fxmlLoader.getController();
-        figureController.setFigure(figure);
-        figureController.init(layerBoxController.getMainController(), this);
-        figureControllers.add(figureController);
-        figuresBox.getChildren().add(figureBox);
-        return figureController;
+        NodeController<FigureItemController> figureItem = MyFXMLLoader.loadFigureItem();
+
+        figureItem.controller.setFigure(figure);
+        figureItem.controller.init(layerBoxController.getMainController(), this);
+        figureControllers.add(figureItem.controller);
+        figuresBox.getChildren().add(figureItem.node);
+        return figureItem.controller;
     }
 
     public void setLayerNameField(String name) {
