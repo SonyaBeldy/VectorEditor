@@ -16,7 +16,7 @@ public class RotateTool extends SelectTool  implements ITool{
 
     @Override
     public void mousePressed(MouseEvent event) {
-        copyCurrentFigure = mainController.getCurrentCanvasController().getCurrentFigure().orElseThrow().clone();
+        copyCurrentFigure = mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().clone();
         center = copyCurrentFigure.getCenter();
         clickAngle = Math.atan2(event.getY() - center.getY(), event.getX() - center.getX());
     }
@@ -30,7 +30,7 @@ public class RotateTool extends SelectTool  implements ITool{
         if (angle < -Math.PI) {
             angle = 2 * Math.PI + angle;
         }
-        mainController.getCurrentCanvasController().getCurrentFigure().orElseThrow().rotate(copyCurrentFigure, center, angle);
+        mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().rotate(copyCurrentFigure, center, angle);
         mainController.getCurrentCanvasController().redrawAllFigures();
     }
 

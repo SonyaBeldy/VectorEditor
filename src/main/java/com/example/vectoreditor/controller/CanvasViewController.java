@@ -1,7 +1,6 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.BordersPainter;
-import com.example.vectoreditor.model.Layer;
 import com.example.vectoreditor.model.figure.Figure;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -13,18 +12,18 @@ import java.util.Optional;
 
 public class CanvasViewController extends ScrollPane {
 
-    private Optional<Figure> currentFigure = Optional.empty();
-    private final LayerBox layerBox = new LayerBox();
+    private Optional<FigureItemController> currentFigureController = Optional.empty();
+    private LayerBox layerBox;
     private Color strokeColor;
     private BordersPainter bordersPainter;
     private MainController mainController;
-
 
     @FXML
     private Canvas drawCanvas;
 
     public void init(MainController mainController) {
         this.mainController = mainController;
+        layerBox = new LayerBox(mainController);
         strokeColor = Color.BLACK;
         bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
         mainController.setCurrentCanvasController(this);
@@ -52,14 +51,12 @@ public class CanvasViewController extends ScrollPane {
     }
 
     public void addFigure(Figure figure) {
-        LayerItemController currentLayer = layerBox.getCurrentLayer();
-        currentLayer.addFigure(figure);
-        //addFigureToCurrentLayerItemsList(figure);
-    }
+        LayerItemController currentLayerController = layerBox.getCurrentLayer();
+        FigureItemController figureController = currentLayerController.addFigure(figure);
+        figureController.init(mainController, currentLayerController);
+        currentFigureController = Optional.of(figureController);
 
-    public void addFigureToCurrentLayerItemsList(Figure figure) {
-        LayerItemController currentLayer = layerBox.getCurrentLayer();
-        currentLayer.addFigure(figure);
+        //addFigureToCurrentLayerItemsList(figure);
     }
 
     public void redrawAllFigures() {
@@ -67,12 +64,10 @@ public class CanvasViewController extends ScrollPane {
         for (int i = 0; i < layerBox.getLayers().size(); i++) {
             LayerItemController layer = layerBox.getLayers().get(i);
             for (int j = 0; j < layer.getFiguresCount(); j++) {
-                layer.getFigure(j).draw(drawCanvas.getGraphicsContext2D());
+                layer.getFigureController(j).getFigure().draw(drawCanvas.getGraphicsContext2D());
             }
         }
-
-        currentFigure.ifPresent(figure -> bordersPainter.drawBoards(figure, layerBox.getCurrentLayer().getColor()));
-
+        currentFigureController.ifPresent(figureController -> bordersPainter.drawBoards(figureController.getFigure(), currentFigureController.get().getLayerController().getColor()));
 
 //        currentFigure.ifPresent(bordersPainter::drawBoards);
     }
@@ -95,26 +90,26 @@ public class CanvasViewController extends ScrollPane {
         return drawCanvas;
     }
 
-    public Optional<Figure> getCurrentFigure() {
-        return currentFigure;
+    public Optional<FigureItemController> getCurrentFigureController() {
+        return currentFigureController;
     }
 
-    public void setCurrentFigure(Optional<Figure> currentFigure) {
-        this.currentFigure = currentFigure;
-        if (currentFigure.isEmpty()) {
+    public void setCurrentFigureController(Optional<FigureItemController> currentFigureController) {
+        this.currentFigureController = currentFigureController;
+        if (currentFigureController.isEmpty()) {
             return;
         }
         redrawAllFigures();
-        bordersPainter.drawBoards(currentFigure.get(), layerBox.getCurrentLayer().getColor());
+        bordersPainter.drawBoards(currentFigureController.get().getFigure(), layerBox.getCurrentLayer().getColor());
     }
 
-    public void selectFigure(LayerItemController layerItemController, Figure figure) {
-        currentFigure = Optional.of(figure);
+    public void selectFigure(LayerItemController layerItemController, FigureItemController figureController) {
+        currentFigureController = Optional.of(figureController);
         layerBox.setCurrentLayer(layerItemController);
     }
 
     public void removeFigureSelection() {
-        currentFigure = Optional.empty();
+        currentFigureController = Optional.empty();
     }
 
     public LayerItemController getCurrentLayer() {

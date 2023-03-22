@@ -30,8 +30,8 @@ public class CurrentFigureParamsDisplay implements Initializable {
     }
 
     private void updateRotateField(CanvasViewController canvasController) {
-        if(canvasController.getCurrentFigure().isPresent()) {
-            Figure figure = canvasController.getCurrentFigure().get();
+        if(canvasController.getCurrentFigureController().isPresent()) {
+            Figure figure = canvasController.getCurrentFigureController().get().getFigure();
             double angle = Math.round(Math.toDegrees(figure.getAngle()));
             if (angle < 0) {
                 angle+= 360;
@@ -43,8 +43,8 @@ public class CurrentFigureParamsDisplay implements Initializable {
         }
     }
     private void updateRotateField() {
-        if(mainController.getCurrentCanvasController().getCurrentFigure().isPresent()) {
-            Figure figure = mainController.getCurrentCanvasController().getCurrentFigure().get();
+        if(mainController.getCurrentCanvasController().getCurrentFigureController().isPresent()) {
+            Figure figure = mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure();
             double angle = Math.round(Math.toDegrees(figure.getAngle()));
             if (angle < 0) {
                 angle+= 360;
@@ -56,55 +56,55 @@ public class CurrentFigureParamsDisplay implements Initializable {
         }
     }
     private void updateXPointField(CanvasViewController canvasController) {
-        if(canvasController.getCurrentFigure().isPresent()) {
-            Figure figure = canvasController.getCurrentFigure().get();
+        if(canvasController.getCurrentFigureController().isPresent()) {
+            Figure figure = canvasController.getCurrentFigureController().get().getFigure();
             mainController.getXPointField().setText(String.valueOf(figure.getCenter().getX()));
         }
     }
     private void updateXPointField() {
-        if(mainController.getCurrentCanvasController().getCurrentFigure().isPresent()) {
-            Figure figure = mainController.getCurrentCanvasController().getCurrentFigure().get();
+        if(mainController.getCurrentCanvasController().getCurrentFigureController().isPresent()) {
+            Figure figure = mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure();
             mainController.getXPointField().setText(String.valueOf(figure.getCenter().getX()));
         }
     }
     private void updateYPointField(CanvasViewController canvasController) {
-        if(canvasController.getCurrentFigure().isPresent()) {
-            Figure figure = canvasController.getCurrentFigure().get();
+        if(canvasController.getCurrentFigureController().isPresent()) {
+            Figure figure = canvasController.getCurrentFigureController().get().getFigure();
             mainController.getYPointField().setText(String.valueOf(figure.getCenter().getY()));
         }
     }
     private void updateYPointField() {
-        if(mainController.getCurrentCanvasController().getCurrentFigure().isPresent()) {
-            Figure figure = mainController.getCurrentCanvasController().getCurrentFigure().get();
+        if(mainController.getCurrentCanvasController().getCurrentFigureController().isPresent()) {
+            Figure figure = mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure();
             mainController.getYPointField().setText(String.valueOf(figure.getCenter().getY()));
         }
     }
 
     private void updateWidth(CanvasViewController canvasController) {
-        if(canvasController.getCurrentFigure().isPresent()) {
-            Figure figure = canvasController.getCurrentFigure().get();
+        if(canvasController.getCurrentFigureController().isPresent()) {
+            Figure figure = canvasController.getCurrentFigureController().get().getFigure();
             double width = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(1));
             mainController.getWidthField().setText(String.valueOf(width));
         }
     }
     private void updateWidth() {
-        if(mainController.getCurrentCanvasController().getCurrentFigure().isPresent()) {
-            Figure figure = mainController.getCurrentCanvasController().getCurrentFigure().get();
+        if(mainController.getCurrentCanvasController().getCurrentFigureController().isPresent()) {
+            Figure figure = mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure();
             double width = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(1));
             mainController.getWidthField().setText(String.valueOf(width));
         }
     }
 
     private void updateHeight(CanvasViewController canvasController) {
-        if(canvasController.getCurrentFigure().isPresent()) {
-            Figure figure = canvasController.getCurrentFigure().get();
+        if(canvasController.getCurrentFigureController().isPresent()) {
+            Figure figure = canvasController.getCurrentFigureController().get().getFigure();
             double height = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(3));
             mainController.getHeightField().setText(String.valueOf(height));
         }
     }
     private void updateHeight() {
-        if(mainController.getCurrentCanvasController().getCurrentFigure().isPresent()) {
-            Figure figure = mainController.getCurrentCanvasController().getCurrentFigure().get();
+        if(mainController.getCurrentCanvasController().getCurrentFigureController().isPresent()) {
+            Figure figure = mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure();
             double height = PointListUtils.calcDist(figure.getBoardsPoints().get(0), figure.getBoardsPoints().get(3));
             mainController.getHeightField().setText(String.valueOf(height));
         }

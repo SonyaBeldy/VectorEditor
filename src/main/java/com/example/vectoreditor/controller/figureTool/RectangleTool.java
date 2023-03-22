@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class RectangleTool extends Tool implements ITool {
 
+    private FigureItemController drawingFigure;
 
     private Rectangle rectangle;
     public RectangleTool(MainController mainController) {
@@ -23,7 +24,9 @@ public class RectangleTool extends Tool implements ITool {
         for (int i = 0; i < 4; i++) {
             rectangle.addPoint(new Point(event.getX(), event.getY()));
         }
-        mainController.getCurrentCanvasController().addFigure(rectangle);
+        FigureItemController figureController = mainController.getCurrentCanvasController().getCurrentLayer().addFigure(rectangle);
+        drawingFigure = figureController;
+        //mainController.getCurrentCanvasController().setCurrentFigureController(Optional.of(figureController));
     }
 
     @Override
@@ -42,7 +45,7 @@ public class RectangleTool extends Tool implements ITool {
     public void mouseReleased(MouseEvent event) {
         rectangle.calcBoardsPoints();
         rectangle.calcCenter();
-        mainController.getCurrentCanvasController().setCurrentFigure(Optional.of(rectangle));
+        mainController.getCurrentCanvasController().setCurrentFigureController(Optional.of(drawingFigure));
     }
 
     @Override

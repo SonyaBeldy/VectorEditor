@@ -179,10 +179,10 @@ public class MainController {
 
     @FXML
     private void move() {
-        if(currentCanvasController.getCurrentFigure().isEmpty()) {
+        if(currentCanvasController.getCurrentFigureController().isEmpty()) {
             return;
         }
-        Figure figure = currentCanvasController.getCurrentFigure().get();
+        Figure figure = currentCanvasController.getCurrentFigureController().get().getFigure();
 
         Point newCenter = new Point(Double.parseDouble(xPointField.getText()), Double.parseDouble(yPointField.getText()));
         Point center = figure.getCenter();
@@ -193,12 +193,12 @@ public class MainController {
 
     @FXML
     private void rotate() {
-        if(currentCanvasController.getCurrentFigure().isEmpty()) {
+        if(currentCanvasController.getCurrentFigureController().isEmpty()) {
             return;
         }
         double angle = Double.parseDouble(rotateField.getText());
         angle = Math.toRadians(angle);
-        Figure figure = currentCanvasController.getCurrentFigure().get();
+        Figure figure = currentCanvasController.getCurrentFigureController().get().getFigure();
 
         double angleDiff = angle - figure.getAngle();
         figure.rotate(figure, figure.getCenter(), angleDiff);

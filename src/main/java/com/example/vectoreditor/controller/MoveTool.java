@@ -20,7 +20,7 @@ public class MoveTool extends Tool implements ITool{
     public MoveTool(MainController mainController, Point pressPoint) {
         super(mainController);
         this.pressPoint = pressPoint;
-        beforeMoveFigure = mainController.getCurrentCanvasController().getCurrentFigure().orElseThrow().clone();
+        beforeMoveFigure = mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().clone();
         bordersPainter = new BordersPainter(mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D());
     }
 
@@ -31,13 +31,13 @@ public class MoveTool extends Tool implements ITool{
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        if(mainController.getCurrentCanvasController().getCurrentFigure().isEmpty()) {
+        if(mainController.getCurrentCanvasController().getCurrentFigureController().isEmpty()) {
             return;
         }
         double shiftX =  event.getX() - pressPoint.getX();
         double shiftY =  event.getY() - pressPoint.getY();
 
-        mainController.getCurrentCanvasController().getCurrentFigure().get().move(new Point(shiftX, shiftY));
+        mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure().move(new Point(shiftX, shiftY));
         mainController.getCurrentCanvasController().redrawAllFigures();
 
         pressPoint.setX(event.getX());
@@ -48,7 +48,7 @@ public class MoveTool extends Tool implements ITool{
     public void mouseReleased(MouseEvent event) {
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         currentCanvasController.redrawAllFigures();
-        bordersPainter.drawBoards(currentCanvasController.getCurrentFigure().orElseThrow(), mainController.getCurrentCanvasController().getCurrentLayer().getColor());
+        bordersPainter.drawBoards(currentCanvasController.getCurrentFigureController().orElseThrow().getFigure(), mainController.getCurrentCanvasController().getCurrentLayer().getColor());
 
         mainController.setCurrentTool(new SelectTool(mainController));
     }

@@ -12,6 +12,11 @@ public class LayerBox extends VBox {
 
     private final ArrayList<LayerItemController> layers = new ArrayList<>();
     private LayerItemController currentLayer;
+    private MainController mainController;
+
+    public LayerBox(MainController mainController) {
+        this.mainController = mainController;
+    }
 
     protected void createLayer() {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -87,6 +92,10 @@ public class LayerBox extends VBox {
 
     public void setCurrentLayer(LayerItemController currentLayer) {
         this.currentLayer = currentLayer;
+    }
+
+    public MainController getMainController() {
+        return mainController;
     }
 
     public ArrayList<LayerItemController> getLayers() {

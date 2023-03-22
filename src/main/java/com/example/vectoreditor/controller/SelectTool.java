@@ -28,7 +28,7 @@ public class SelectTool extends Tool implements ITool {
     @Override
     public void mousePressed(MouseEvent event) {
         selectFigure(event);
-        if (mainController.getCurrentCanvasController().getCurrentFigure().isEmpty()) {
+        if (mainController.getCurrentCanvasController().getCurrentFigureController().isEmpty()) {
             return;
         }
         mainController.getCurrentCanvasController().redrawAllFigures();
@@ -42,7 +42,7 @@ public class SelectTool extends Tool implements ITool {
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        if (mainController.getCurrentCanvasController().getCurrentFigure().isEmpty()) {
+        if (mainController.getCurrentCanvasController().getCurrentFigureController().isEmpty()) {
             return;
         }
         mainController.getCurrentCanvasController().redrawAllFigures();
@@ -56,9 +56,11 @@ public class SelectTool extends Tool implements ITool {
         for (int i = layerBox.getLayers().size() - 1; i >= 0; i--) {
             LayerItemController layer = layerBox.getLayers().get(i);
             for (int j = 0; j < layer.getFiguresCount(); j++) {
-                Figure figure = layer.getFigure(j);
-                if(figure.isClickedOn(x, y)) {
-                    mainController.getCurrentCanvasController().selectFigure(layerBox.getLayers().get(i), figure);
+                FigureItemController figureController = layer.getFigureController(j);
+                if(figureController.getFigure().isClickedOn(x, y)) {
+                    mainController.getCurrentCanvasController().selectFigure(layerBox.getLayers().get(i), figureController);
+                    layer.layerItemClick();//сделать ли это в методе контроллера или мейна? Или оставить тут?
+                    figureController.figureItemClick(); //сделать ли это в методе контроллера или мейна? Или оставить тут?
                     return;
                 }
             }
@@ -73,7 +75,7 @@ public class SelectTool extends Tool implements ITool {
         for (int i = layerBox.getLayers().size() - 1; i >= 0; i--) {
             LayerItemController layer = layerBox.getLayers().get(i);
             for (int j = 0; j < layer.getFiguresCount(); j++) {
-                Figure figure = layer.getFigure(j);
+                Figure figure = layer.getFigureController(j).getFigure();
                 if(figure.isClickedOn(x, y)) {
                     return Optional.of(figure);
                 }
@@ -85,10 +87,10 @@ public class SelectTool extends Tool implements ITool {
     private void bordersControlsEntered(MouseEvent event) {
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         Point point = new Point(event.getX(), event.getY());
-        if (currentCanvasController.getCurrentFigure().isEmpty()) {
+        if (currentCanvasController.getCurrentFigureController().isEmpty()) {
             return;
         }
-        Figure currentFigure = currentCanvasController.getCurrentFigure().get();
+        Figure currentFigure = currentCanvasController.getCurrentFigureController().get().getFigure();
         Cursor cursor = Cursor.DEFAULT;
         Point dragPoint = new Point(0,0);
         Point oppositePoint = new Point(0,0);
@@ -163,10 +165,10 @@ public class SelectTool extends Tool implements ITool {
 
                 final Scene scene = currentCanvasController.getDrawCanvas().getScene();
                 switch (i) {
-                    case 0 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW, currentCanvasController.getCurrentFigure().get().getAngle()));
-                    case 1 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW, currentCanvasController.getCurrentFigure().get().getAngle()));
-                    case 2 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SE, currentCanvasController.getCurrentFigure().get().getAngle()));
-                    case 3 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NE, currentCanvasController.getCurrentFigure().get().getAngle()));
+                    case 0 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW, currentCanvasController.getCurrentFigureController().get().getFigure().getAngle()));
+                    case 1 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW, currentCanvasController.getCurrentFigureController().get().getFigure().getAngle()));
+                    case 2 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SE, currentCanvasController.getCurrentFigureController().get().getFigure().getAngle()));
+                    case 3 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NE, currentCanvasController.getCurrentFigureController().get().getFigure().getAngle()));
                 }
                 mainController.setCurrentTool(new RotateTool(mainController));
                 return;

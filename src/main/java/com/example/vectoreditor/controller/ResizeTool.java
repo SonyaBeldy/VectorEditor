@@ -18,7 +18,7 @@ public class ResizeTool extends SelectTool implements ITool {
 
     public ResizeTool(MainController mainController, Point dragPoint, Point oppositePoint, ResizeDirection direction) {
         super(mainController);
-        currentFigure = mainController.getCurrentCanvasController().getCurrentFigure().orElseThrow();
+        currentFigure = mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure();
         this.direction = direction;
 
         copyCurrentFigure = currentFigure.clone();

@@ -1,6 +1,5 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Layer;
 import com.example.vectoreditor.model.figure.Figure;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,8 +25,6 @@ public class LayerItemController implements Initializable {
 
 
     //private Layer layer;
-    private String name;
-
     private ArrayList<FigureItemController> figureControllers;
     private LayerBox layerBoxController;
     @FXML
@@ -87,7 +84,7 @@ public class LayerItemController implements Initializable {
     }
 
     @FXML
-    void layerItemClick(MouseEvent event) {
+    void layerItemClick() {
         layerBoxController.setCurrentLayer(this);
         highlight();
     }
@@ -123,7 +120,7 @@ public class LayerItemController implements Initializable {
         return layerItem;
     }
 
-    public void addFigure(Figure figure) {
+    public FigureItemController addFigure(Figure figure) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/figure_item.fxml"));
         HBox figureBox;
@@ -132,10 +129,12 @@ public class LayerItemController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        FigureItemController figureItem = fxmlLoader.getController();
-        figureItem.setFigure(figure);
-        figureControllers.add(figureItem);
+        FigureItemController figureController = fxmlLoader.getController();
+        figureController.setFigure(figure);
+        figureController.init(layerBoxController.getMainController(), this);
+        figureControllers.add(figureController);
         figuresBox.getChildren().add(figureBox);
+        return figureController;
     }
 
     public void setLayerNameField(String name) {
@@ -146,7 +145,7 @@ public class LayerItemController implements Initializable {
         return (Color) layerColor.getFill();
     }
 
-    public Figure getFigure(int ind) {
-        return figureControllers.get(ind).getFigure();
+    public FigureItemController getFigureController(int ind) {
+        return figureControllers.get(ind);
     }
 }

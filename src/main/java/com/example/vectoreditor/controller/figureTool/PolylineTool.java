@@ -2,6 +2,7 @@ package com.example.vectoreditor.controller.figureTool;
 
 import com.example.vectoreditor.controller.*;
 import com.example.vectoreditor.model.*;
+import com.example.vectoreditor.model.figure.Polygon;
 import com.example.vectoreditor.model.figure.Polyline;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -11,6 +12,7 @@ import java.util.Optional;
 public class PolylineTool extends Tool implements ITool {
 
     private boolean isDrawing;
+    private FigureItemController drawingFigure;
 
     public PolylineTool(MainController mainController) {
         super(mainController);
@@ -21,7 +23,13 @@ public class PolylineTool extends Tool implements ITool {
 
     public void createFigure() {
         figure = new Polyline(mainController.getCurrentCanvasController().getStrokeColor());
+
     }
+
+    private void createFigureController() {
+
+    }
+
     @Override
     public void mousePressed(MouseEvent event) {
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
@@ -32,8 +40,11 @@ public class PolylineTool extends Tool implements ITool {
                 figure.addPoint(new Point(event.getX(), event.getY()));
                 figure.calcBoardsPoints();
                 figure.calcCenter();
-                currentCanvasController.addFigure(figure);
-                currentCanvasController.setCurrentFigure(Optional.empty());
+//                currentCanvasController.addFigure(figure);
+                FigureItemController figureController = currentCanvasController.getCurrentLayer().addFigure(figure);
+                currentCanvasController.setCurrentFigureController(Optional.empty());
+                drawingFigure = figureController;
+//                currentCanvasController.setCurrentFigureController(Optional.of(figureController));
             }
             figure.addPoint(new Point(event.getX(), event.getY()));
         }
@@ -43,12 +54,14 @@ public class PolylineTool extends Tool implements ITool {
             if (figure.getPoints().size() > 2){
                 figure.getPoints().remove(figure.getPoints().size() - 1);
 
-                currentCanvasController.redrawAllFigures();
                 figure.calcBoardsPoints();
                 figure.calcCenter();
-                currentCanvasController.setCurrentFigure(Optional.of(figure));
+                currentCanvasController.setCurrentFigureController(Optional.of(drawingFigure));
+                currentCanvasController.redrawAllFigures();
+                //currentCanvasController.setCurrentFigureController(Optional.of(figure));
             } else {
                 currentCanvasController.getCurrentLayer().removeFigure(currentCanvasController.getCurrentLayer().getFiguresCount() - 1);
+                currentCanvasController.setCurrentFigureController(Optional.empty());
                 currentCanvasController.redrawAllFigures();
             }
         }
