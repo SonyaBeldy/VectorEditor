@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -98,6 +99,14 @@ public class MainController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+//        NodeController<CanvasViewController> canvasView = MyFXMLLoader.loadCanvasView();
+//        Scene scene = new Scene((Parent) canvasView.node);
+//        Stage stage = new Stage();
+//        stage.setTitle("Create file");
+//        stage.setScene(scene);
+//
+//        canvasView.controller.init(this);
+//        stage.show();
     }
 
     public void createNewCanvasView() {

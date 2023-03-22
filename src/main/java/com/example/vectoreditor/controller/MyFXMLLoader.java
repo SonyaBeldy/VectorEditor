@@ -14,6 +14,10 @@ public class MyFXMLLoader {
         return loadFxml("/com/example/vectoreditor/layer_item.fxml");
     }
 
+    public static NodeController<CanvasViewController> loadCanvasView() {
+        return loadFxml("/com/example/vectoreditor/canvas-view.fxml");
+    }
+
     public static <T> NodeController<T> loadFxml(String fxmlPath) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(MyFXMLLoader.class.getResource(fxmlPath));

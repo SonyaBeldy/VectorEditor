@@ -19,15 +19,7 @@ public class LayerBox extends VBox {
     }
 
     protected void createLayer() {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/com/example/vectoreditor/layer_item.fxml"));
-        VBox layerItem;
-        try {
-            layerItem = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        LayerItemController layerItemController = fxmlLoader.getController();
+        NodeController<LayerItemController> layerItem = MyFXMLLoader.loadLayerItem();
 
         Color color;
         if (layers.size() < 1) {
@@ -37,12 +29,12 @@ public class LayerBox extends VBox {
             color = layers.get(layers.size() - 1).getColor();
             color = nextLayerColor(color);
         }
-        layerItemController.init(this, generateDefaultLayerName(), color);
+        layerItem.controller.init(this, generateDefaultLayerName(), color);
 
-        getChildren().add(0, layerItem);
-        layers.add(layerItemController);
-        layerItemController.highlight();
-        currentLayer = layerItemController;
+        getChildren().add(0, layerItem.node);
+        layers.add(layerItem.controller);
+        layerItem.controller.highlight();
+        currentLayer = layerItem.controller;
 
     }
 
