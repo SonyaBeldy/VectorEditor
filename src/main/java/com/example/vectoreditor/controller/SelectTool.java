@@ -27,11 +27,17 @@ public class SelectTool extends Tool implements ITool {
 
     @Override
     public void mousePressed(MouseEvent event) {
-        selectFigure(event);
-        if (mainController.getCurrentCanvasController().getCurrentFigureController().isEmpty()) {
+        Optional <FigureItemController> figureController = selectFigure(event);
+
+        if (figureController.isEmpty()) {
+            //снимаем выделение с текущей фигуры
+            //selectionFrame tool (или в драге)
+            mainController.setCurrentTool(new SelectionFrameTool(mainController, new Point(event.getX(), event.getY())));
             return;
         }
-        mainController.getCurrentCanvasController().redrawAllFigures();
+        //нашли фигуру
+        //выделили ее
+        mainController.getCurrentCanvasController().redrawAllFigures(); //убрать перерисовку
         mainController.setCurrentTool(new MoveTool(mainController, new Point(event.getX(), event.getY())));
     }
 
@@ -48,7 +54,7 @@ public class SelectTool extends Tool implements ITool {
         mainController.getCurrentCanvasController().redrawAllFigures();
     }
 
-    private void selectFigure(MouseEvent event) {
+    private Optional<FigureItemController> selectFigure(MouseEvent event) {
         LayerBox layerBox = mainController.getCurrentCanvasController().getLayerBox();
         double x = event.getX();
         double y = event.getY();
@@ -61,11 +67,13 @@ public class SelectTool extends Tool implements ITool {
                     mainController.getCurrentCanvasController().selectFigure(layerBox.getLayers().get(i), figureController);
                     layer.layerItemClick();//сделать ли это в методе контроллера или мейна? Или оставить тут?
                     figureController.figureItemClick(); //сделать ли это в методе контроллера или мейна? Или оставить тут?
-                    return;
+                    return Optional.of(figureController);
                 }
             }
         }
-        mainController.getCurrentCanvasController().removeFigureSelection();
+        mainController.getCurrentCanvasController().removeFigureSelection(); //излишнее действие, метод только определяет, по
+        //какому элементу кликнули, перенести это действие в pressed
+        return Optional.empty();
     }
     private Optional<Figure> enteredFigure(MouseEvent event) {
         LayerBox layerBox = mainController.getCurrentCanvasController().getLayerBox();
