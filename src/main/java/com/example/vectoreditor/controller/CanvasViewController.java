@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.util.Optional;
@@ -14,6 +15,10 @@ public class CanvasViewController extends ScrollPane {
 
     private Optional<FigureItemController> currentFigureController = Optional.empty();
     private LayerBox layerBox;
+
+    private VBox propertiesBox;
+
+    private PropertiesBoxController propertiesBoxController;
     private Color strokeColor;
     private BordersPainter bordersPainter;
     private MainController mainController;
@@ -28,7 +33,9 @@ public class CanvasViewController extends ScrollPane {
         bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
         mainController.setCurrentCanvasController(this);
         layerBox.createLayer();
-        mainController.changeLayerBox(layerBox);
+        mainController.swapLayerBox(layerBox);
+
+        propertiesBox = mainController.getPropertiesBox();
     }
 
     @FXML
@@ -42,12 +49,12 @@ public class CanvasViewController extends ScrollPane {
     @FXML
     private void onCanvasMouseDragged(MouseEvent event) {
         mainController.getCurrentTool().mouseDragged(event);
-        mainController.changeLayerBox(layerBox);
+        mainController.swapLayerBox(layerBox);
     }
     @FXML
     private void onCanvasMouseReleased(MouseEvent event) {
         mainController.getCurrentTool().mouseReleased(event);
-        mainController.changeLayerBox(layerBox);
+        mainController.swapLayerBox(layerBox);
     }
 
     public void addFigure(Figure figure) {

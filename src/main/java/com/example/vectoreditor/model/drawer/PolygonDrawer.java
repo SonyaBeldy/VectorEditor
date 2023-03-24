@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public class PolygonDrawer implements IDrawer{
+public class PolygonDrawer implements Drawer {
 
     private final ArrayList<Point> points;
 

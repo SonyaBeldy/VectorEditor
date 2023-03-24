@@ -4,19 +4,17 @@ import com.example.vectoreditor.controller.figureTool.PolygonTool;
 import com.example.vectoreditor.controller.figureTool.PolylineTool;
 import com.example.vectoreditor.controller.figureTool.RectangleTool;
 import com.example.vectoreditor.model.figure.Figure;
-import com.example.vectoreditor.model.Point;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class MainController {
 
@@ -30,19 +28,6 @@ public class MainController {
     private Button rectangleButton;
     @FXML
     private Button polygonButton;
-    @FXML
-    private ColorPicker colorPicker;
-
-    @FXML
-    private TextField rotateField;
-    @FXML
-    private TextField xPointField;
-    @FXML
-    private TextField yPointField;
-    @FXML
-    private TextField widthField;
-    @FXML
-    private TextField heightField;
 
     @FXML
     private Button deleteLayerButton;
@@ -52,34 +37,51 @@ public class MainController {
 
     @FXML
     private TabPane workspaceTabPane;
+    @FXML
+    private ScrollPane propScrollPane;
 
     private CurrentFigureParamsDisplay paramsDisplay;
     private LayerBox layerBox;
     private CanvasViewController currentCanvasController;
     private ITool currentTool = new SelectTool(this);
+    private PropertiesBoxController propertiesBoxController;
+    private PropertiesBox propertiesBox;
 
     @FXML
     private void initialize() {
-        paramsDisplay = new CurrentFigureParamsDisplay(this);
+        //paramsDisplay = new CurrentFigureParamsDisplay(this);
+        propertiesBox = new PropertiesBox();
 
         NewFileViewController newFileViewController = new NewFileViewController();
         newFileViewController.init(this);
         newFileViewController.createNewView();
 
+        loadPropertiesPane();
+
         selectButton.setDisable(true);
-        colorPicker.setValue(Color.BLACK);
+
 
         deleteLayerButton.setDisable(true);
     }
 
-    public void changeLayerBox(LayerBox layerBox) {
+    public void swapLayerBox(LayerBox layerBox) {
         this.layerBox = layerBox;
         layerBoxContainer.getChildren().clear();
         layerBoxContainer.getChildren().add(layerBox);
-        paramsDisplay.update(currentCanvasController);
         if (layerBox.getLayers().size() < 2) {
             deleteLayerButton.setDisable(true);
         }
+    }
+
+    public void updatePropertiesBox(Optional<FigureItemController> figureItemController) {
+        propertiesBox.update(figureItemController);
+    }
+
+    private void loadPropertiesPane() {
+        NodeController<PropertiesBoxController> propBox = MyFXMLLoader.loadPropertiesBox();
+        propScrollPane.setContent(propBox.node);
+        propertiesBoxController = propBox.controller;
+        propBox.controller.init(currentCanvasController);
     }
 
     @FXML
@@ -128,7 +130,8 @@ public class MainController {
         newCanvasView.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 currentCanvasController = canvasViewController;
-                changeLayerBox(canvasViewController.getLayerBox());
+                swapLayerBox(canvasViewController.getLayerBox());
+                updatePropertiesBox(canvasViewController.getCurrentFigureController());
             }
         });
     }
@@ -159,7 +162,7 @@ public class MainController {
 
     @FXML
     protected void onPolylineButtonClick(ActionEvent event) {
-        currentCanvasController.setStrokeColor(colorPicker.getValue());
+//        currentCanvasController.setStrokeColor(colorPicker.getValue());
         currentTool = new PolylineTool(this);
         enabledAllButtons();
         polylineButton.setDisable(true);
@@ -167,7 +170,7 @@ public class MainController {
 
     @FXML
     protected void onRectangleButtonClick(ActionEvent event) {
-        currentCanvasController.setStrokeColor(colorPicker.getValue());
+//        currentCanvasController.setStrokeColor(colorPicker.getValue());
         currentTool = new RectangleTool(this);
         enabledAllButtons();
         rectangleButton.setDisable(true);
@@ -175,44 +178,10 @@ public class MainController {
 
     @FXML
     protected void onPolygonButtonClick(ActionEvent event) {
-        currentCanvasController.setStrokeColor(colorPicker.getValue());
+//        currentCanvasController.setStrokeColor(colorPicker.getValue());
         currentTool = new PolygonTool(this);
         enabledAllButtons();
         polygonButton.setDisable(true);
-    }
-
-    @FXML
-    protected void chooseColor() {
-        currentCanvasController.setStrokeColor(colorPicker.getValue());
-    }
-
-    @FXML
-    private void move() {
-        if(currentCanvasController.getCurrentFigureController().isEmpty()) {
-            return;
-        }
-        Figure figure = currentCanvasController.getCurrentFigureController().get().getFigure();
-
-        Point newCenter = new Point(Double.parseDouble(xPointField.getText()), Double.parseDouble(yPointField.getText()));
-        Point center = figure.getCenter();
-        Point shift = new Point(newCenter.getX() - center.getX(), newCenter.getY() - center.getY());
-        figure.move(shift);
-        currentCanvasController.redrawAllFigures();
-    }
-
-    @FXML
-    private void rotate() {
-        if(currentCanvasController.getCurrentFigureController().isEmpty()) {
-            return;
-        }
-        double angle = Double.parseDouble(rotateField.getText());
-        angle = Math.toRadians(angle);
-        Figure figure = currentCanvasController.getCurrentFigureController().get().getFigure();
-
-        double angleDiff = angle - figure.getAngle();
-        figure.rotate(figure, figure.getCenter(), angleDiff);
-        figure.setAngle(angle);
-        currentCanvasController.redrawAllFigures();
     }
 
     private Tab createTab(Node content) {
@@ -230,6 +199,14 @@ public class MainController {
         polygonButton.setDisable(false);
     }
 
+    public VBox getPropertiesBox() {
+        return propertiesBox;
+    }
+
+    public PropertiesBoxController getPropertiesBoxController() {
+        return propertiesBoxController;
+    }
+
     public CanvasViewController getCurrentCanvasController() {
         return currentCanvasController;
     }
@@ -244,26 +221,6 @@ public class MainController {
 
     public void setCurrentTool(ITool currentTool) {
         this.currentTool = currentTool;
-    }
-
-    public TextField getXPointField() {
-        return xPointField;
-    }
-
-    public TextField getYPointField() {
-        return yPointField;
-    }
-
-    public TextField getWidthField() {
-        return widthField;
-    }
-
-    public TextField getHeightField() {
-        return heightField;
-    }
-
-    public TextField getRotate() {
-        return rotateField;
     }
 
 }

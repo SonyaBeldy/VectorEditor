@@ -32,7 +32,8 @@ public class SelectTool extends Tool implements ITool {
         if (figureController.isEmpty()) {
             //снимаем выделение с текущей фигуры
             //selectionFrame tool (или в драге)
-            mainController.setCurrentTool(new SelectionFrameTool(mainController, new Point(event.getX(), event.getY())));
+            mainController.setCurrentTool(new SelectionFrameTool(mainController));
+            mainController.getCurrentTool().mousePressed(event);
             return;
         }
         //нашли фигуру

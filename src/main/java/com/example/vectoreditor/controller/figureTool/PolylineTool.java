@@ -14,6 +14,7 @@ public class PolylineTool extends Tool implements ITool {
     private boolean isDrawing;
     private FigureItemController drawingFigure;
 
+
     public PolylineTool(MainController mainController) {
         super(mainController);
         isDrawing = false;

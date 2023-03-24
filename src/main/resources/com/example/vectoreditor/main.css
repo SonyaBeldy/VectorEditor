@@ -1,3 +1,7 @@
+#propVBox {
+    -fx-background-color: #36363C;
+}
+
 #hBoxLayerItem {
     -fx-background-color: #3F3E44;
 }

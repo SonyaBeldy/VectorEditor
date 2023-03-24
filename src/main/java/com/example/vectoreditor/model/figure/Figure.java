@@ -3,7 +3,7 @@ package com.example.vectoreditor.model.figure;
 import com.example.vectoreditor.model.Cloneable;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.PointListUtils;
-import com.example.vectoreditor.model.drawer.IDrawer;
+import com.example.vectoreditor.model.drawer.Drawer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -13,6 +13,7 @@ public abstract class Figure implements Cloneable<Figure> {
 
     String name;
     ArrayList<Point> points;
+    FigureProperties params;
     protected final ArrayList<Point> boardsPoints;
     protected final ArrayList<Point> rotatePoints;
     protected final ArrayList<Point> resizePoints;
@@ -22,7 +23,7 @@ public abstract class Figure implements Cloneable<Figure> {
     protected double angle;
     protected Color strokeColor;
 
-    IDrawer drawer;
+    Drawer drawer;
 
     public Figure(String name, Color strokeColor) {
         this.name = name;
@@ -33,6 +34,10 @@ public abstract class Figure implements Cloneable<Figure> {
         rotatePoints = new ArrayList<>();
         resizePoints = new ArrayList<>();
         center = new Point(0,0);
+    }
+
+    public void initParams() {
+        //params.setFill();
     }
 
     public String getName() {

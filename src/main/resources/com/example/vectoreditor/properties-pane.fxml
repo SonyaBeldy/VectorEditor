@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+
+
+<VBox id="propVBox" prefWidth="200.0" spacing="4.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.PropertiesBoxController">
+   <children>
+      <Separator prefWidth="200.0" stylesheets="@main.css" />
+      <Label id="optionsTitle" stylesheets="@main.css" text="Transforming" textFill="#c4c0c4">
+         <VBox.margin>
+            <Insets bottom="4.0" top="4.0" />
+         </VBox.margin>
+      </Label>
+      <Separator prefWidth="200.0" stylesheets="@main.css" />
+      <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
+         <children>
+            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="X" />
+            <TextField maxHeight="21.0" maxWidth="-Infinity" onAction="#move" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" fx:id="xPointField" />
+            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="W" />
+            <TextField fx:id="widthField" maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
+         </children>
+         <VBox.margin>
+            <Insets top="4.0" />
+         </VBox.margin>
+         <padding>
+            <Insets left="12.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
+         <children>
+            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="Y" />
+            <TextField fx:id="yPointField" maxHeight="21.0" maxWidth="-Infinity" onAction="#move" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="H" />
+            <TextField fx:id="heightField" maxHeight="21.0" maxWidth="-Infinity" prefHeight="20.0" prefWidth="43.0" styleClass="textField" stylesheets="@main.css" />
+         </children>
+         <padding>
+            <Insets left="12.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0" spacing="4.0" styleClass="hBox" stylesheets="@main.css">
+         <children>
+            <Label id="propertiesText" prefHeight="25.0" prefWidth="15.0" stylesheets="@main.css" text="R" />
+            <TextField fx:id="rotateField" maxHeight="21.0" maxWidth="-Infinity" onAction="#rotate" prefHeight="20.0" prefWidth="42.0" styleClass="textField" stylesheets="@main.css" />
+         </children>
+         <padding>
+            <Insets left="12.0" />
+         </padding>
+         <VBox.margin>
+            <Insets bottom="4.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" stylesheets="@main.css" />
+      <HBox>
+         <VBox.margin>
+            <Insets bottom="2.0" top="2.0" />
+         </VBox.margin>
+         <children>
+            <Label id="optionsTitle" graphicTextGap="0.0" prefHeight="24.0" prefWidth="154.0" stylesheets="@main.css" text="Stroke" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="4.0">
+         <children>
+            <ColorPicker fx:id="strokeColor" onAction="#chooseStrokeColor" prefWidth="125.0" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="14.0" />
+         </padding>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" stylesheets="@main.css" />
+      <Label id="optionsTitle" prefHeight="24.0" prefWidth="45.0" stylesheets="@main.css" text="Fill" />
+      <HBox spacing="4.0">
+         <children>
+            <ColorPicker fx:id="fillColor" onAction="#chooseFillColor">
+               <value>
+                  <Color />
+               </value>
+            </ColorPicker>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets bottom="4.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="10.0" left="14.0" />
+         </padding>
+      </HBox>
+      <Separator prefWidth="200.0" stylesheets="@main.css" />
+   </children>
+</VBox>

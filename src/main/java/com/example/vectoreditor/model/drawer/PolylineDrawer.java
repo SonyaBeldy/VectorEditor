@@ -1,14 +1,16 @@
 package com.example.vectoreditor.model.drawer;
 
 import com.example.vectoreditor.model.Point;
+import com.example.vectoreditor.model.figure.Figure;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public class PolylineDrawer implements IDrawer {
+public class PolylineDrawer implements Drawer {
 
     private final ArrayList<Point> points;
+    private Figure figure;
 
     public PolylineDrawer(ArrayList<Point> points) {
         this.points = points;

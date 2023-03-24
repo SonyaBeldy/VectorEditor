@@ -1,7 +1,6 @@
 package com.example.vectoreditor.controller;
 
 import javafx.fxml.FXMLLoader;
-import org.w3c.dom.Node;
 
 import java.io.IOException;
 
@@ -16,6 +15,10 @@ public class MyFXMLLoader {
 
     public static NodeController<CanvasViewController> loadCanvasView() {
         return loadFxml("/com/example/vectoreditor/canvas-view.fxml");
+    }
+
+    public static NodeController<PropertiesBoxController> loadPropertiesBox() {
+        return loadFxml("/com/example/vectoreditor/properties-pane.fxml");
     }
 
     public static <T> NodeController<T> loadFxml(String fxmlPath) {
