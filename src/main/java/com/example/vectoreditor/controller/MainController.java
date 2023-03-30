@@ -3,7 +3,9 @@ package com.example.vectoreditor.controller;
 import com.example.vectoreditor.controller.figureTool.PolygonTool;
 import com.example.vectoreditor.controller.figureTool.PolylineTool;
 import com.example.vectoreditor.controller.figureTool.RectangleTool;
-import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.controller.unused.CurrentFigureParamsDisplay;
+import com.example.vectoreditor.controller.unused.PropertiesBox;
+import com.example.vectoreditor.model.figure.FigureDecorationData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +48,8 @@ public class MainController {
     private ITool currentTool = new SelectTool(this);
     private PropertiesBoxController propertiesBoxController;
     private PropertiesBox propertiesBox;
+
+    private FigureDecorationData properties;
 
     @FXML
     private void initialize() {
@@ -101,14 +105,7 @@ public class MainController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        NodeController<CanvasViewController> canvasView = MyFXMLLoader.loadCanvasView();
-//        Scene scene = new Scene((Parent) canvasView.node);
-//        Stage stage = new Stage();
-//        stage.setTitle("Create file");
-//        stage.setScene(scene);
-//
-//        canvasView.controller.init(this);
-//        stage.show();
+
     }
 
     public void createNewCanvasView() {
@@ -197,10 +194,6 @@ public class MainController {
         polylineButton.setDisable(false);
         rectangleButton.setDisable(false);
         polygonButton.setDisable(false);
-    }
-
-    public VBox getPropertiesBox() {
-        return propertiesBox;
     }
 
     public PropertiesBoxController getPropertiesBoxController() {

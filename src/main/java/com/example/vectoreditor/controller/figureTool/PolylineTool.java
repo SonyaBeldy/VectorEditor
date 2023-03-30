@@ -18,34 +18,26 @@ public class PolylineTool extends Tool implements ITool {
     public PolylineTool(MainController mainController) {
         super(mainController);
         isDrawing = false;
-        figure = new Polyline(Color.BLACK);
-
+        figure = new Polyline(mainController.getPropertiesBoxController().getDecorationProperties());
     }
-
-    public void createFigure() {
-        figure = new Polyline(mainController.getCurrentCanvasController().getStrokeColor());
-
-    }
-
     private void createFigureController() {
 
     }
 
     @Override
     public void mousePressed(MouseEvent event) {
+
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         if (event.isPrimaryButtonDown()) {
             if (!isDrawing) {
+
                 isDrawing = true;
-                createFigure();
                 figure.addPoint(new Point(event.getX(), event.getY()));
                 figure.calcBoardsPoints();
                 figure.calcCenter();
-//                currentCanvasController.addFigure(figure);
                 FigureItemController figureController = currentCanvasController.getCurrentLayer().addFigure(figure);
                 currentCanvasController.setCurrentFigureController(Optional.empty());
                 drawingFigure = figureController;
-//                currentCanvasController.setCurrentFigureController(Optional.of(figureController));
             }
             figure.addPoint(new Point(event.getX(), event.getY()));
         }
@@ -58,6 +50,7 @@ public class PolylineTool extends Tool implements ITool {
                 figure.calcBoardsPoints();
                 figure.calcCenter();
                 currentCanvasController.setCurrentFigureController(Optional.of(drawingFigure));
+                mainController.getPropertiesBoxController().update();
                 currentCanvasController.redrawAllFigures();
                 //currentCanvasController.setCurrentFigureController(Optional.of(figure));
             } else {
@@ -88,7 +81,6 @@ public class PolylineTool extends Tool implements ITool {
         getLastPoint().setY(event.getY());
 
         figure.calcBoardsPoints();
-        mainController.getCurrentCanvasController().redrawAllFigures();
     }
 
     @Override

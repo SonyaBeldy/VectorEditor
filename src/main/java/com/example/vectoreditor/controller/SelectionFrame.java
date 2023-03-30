@@ -3,11 +3,14 @@ package com.example.vectoreditor.controller;
 import com.example.vectoreditor.controller.figureTool.RectangleTool;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.drawer.RectangleDrawer;
+import com.example.vectoreditor.model.figure.FigureDecorationData;
+import com.example.vectoreditor.model.figure.Rectangle;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class SelectionFrame {
     GraphicsContext graphicsContext;
@@ -19,12 +22,14 @@ public class SelectionFrame {
 
     public void draw(MainController mainController, Point pressPoint, Point dragPoint) {
         Canvas drawCanvas = mainController.getCurrentCanvasController().getDrawCanvas();
-        drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
+        //drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
 
         mainController.getCurrentCanvasController().redrawAllFigures();
 
-        RectangleDrawer drawer = new RectangleDrawer(points);
-        drawer.draw(graphicsContext, Color.LIGHTGRAY);
+        FigureDecorationData figureDecorationData = new FigureDecorationData(Optional.of(Color.GRAY), Optional.empty(), 1);
+        Rectangle rectangle = new Rectangle(figureDecorationData);
+
+        rectangle.draw(graphicsContext);
     }
 
     public void addPoint(Point point) {

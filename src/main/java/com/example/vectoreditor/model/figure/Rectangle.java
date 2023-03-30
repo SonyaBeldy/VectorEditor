@@ -1,25 +1,29 @@
 package com.example.vectoreditor.model.figure;
 
+import com.example.vectoreditor.controller.FigureTransformData;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.drawer.RectangleDrawer;
-import javafx.scene.paint.Color;
 
 import java.util.List;
 
 public class Rectangle extends Polyline {
 
-    private Point leftTop;
-    private Point rightTop;
-    private Point rightBot;
-    private Point leftBot;
-    public Rectangle(Color strokeColor) {
-        super(strokeColor);
+    private Point leftTop = new Point();
+    private Point rightTop = new Point();
+    private Point rightBot = new Point();
+    private Point leftBot = new Point();
+    public Rectangle(FigureDecorationData figureDecorationData) {
+        super(figureDecorationData);
         name = "Rectangle";
         drawer = new RectangleDrawer(points);
+        points.addAll(List.of(leftTop, rightTop, rightBot, leftBot));
     }
 
-    public Rectangle(Color strokeColor, Point pressPoint) {
-        super(strokeColor);
+    public Rectangle(FigureDecorationData figureDecorationData, Point pressPoint) {
+        super(figureDecorationData);
+        name = "Rectangle";
+        drawer = new RectangleDrawer(points);
+
         this.leftTop = pressPoint.clone();
         this.rightTop = pressPoint.clone();
         this.rightBot = pressPoint.clone();

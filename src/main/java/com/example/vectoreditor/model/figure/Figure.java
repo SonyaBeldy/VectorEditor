@@ -1,5 +1,6 @@
 package com.example.vectoreditor.model.figure;
 
+import com.example.vectoreditor.controller.FigureTransformData;
 import com.example.vectoreditor.model.Cloneable;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.PointListUtils;
@@ -13,47 +14,54 @@ public abstract class Figure implements Cloneable<Figure> {
 
     String name;
     ArrayList<Point> points;
-    FigureProperties params;
+    FigureDecorationData figureDecorationData;
+    FigureTransformData transformProperties;
     protected final ArrayList<Point> boardsPoints;
     protected final ArrayList<Point> rotatePoints;
     protected final ArrayList<Point> resizePoints;
     protected final ArrayList<Point> hitboxPoints;
 
     protected final Point center;
-    protected double angle;
-    protected Color strokeColor;
 
     Drawer drawer;
 
-    public Figure(String name, Color strokeColor) {
+    public Figure(String name, FigureDecorationData properties) {
         this.name = name;
-        this.strokeColor = strokeColor;
+        this.figureDecorationData = properties;
         points = new ArrayList<>();
         boardsPoints = new ArrayList<>();
         hitboxPoints = new ArrayList<>();
         rotatePoints = new ArrayList<>();
         resizePoints = new ArrayList<>();
         center = new Point(0,0);
+        transformProperties = new FigureTransformData();
+
     }
 
     public void initParams() {
         //params.setFill();
     }
 
+    public void draw(GraphicsContext graphicsContext) {
+        drawer.draw(graphicsContext, transformProperties, figureDecorationData);
+    }
+
     public String getName() {
         return name;
     }
 
-    public void draw(GraphicsContext graphicsContext) {
-        drawer.draw(graphicsContext, strokeColor);
+    public void highlight(GraphicsContext graphicsContext) {
+        drawer.draw(graphicsContext, transformProperties, figureDecorationData);
     }
 
-    public void highlight(GraphicsContext graphicsContext) {
-        drawer.draw(graphicsContext, Color.MEDIUMSLATEBLUE);
+
+    public FigureTransformData getTransformProperties() {
+        return transformProperties;
     }
 
     public void rotate(Figure beforeRotateFigure, Point center, double angle) {
-        setAngle(beforeRotateFigure.getAngle() + angle);
+        transformProperties.setAngle(beforeRotateFigure.getTransformProperties().getAngle() + angle);
+        System.out.println(beforeRotateFigure.getTransformProperties().getAngle() + angle);
         rotate(getPoints(), beforeRotateFigure.getPoints(), center, angle);
         rotate(getBoardsPoints(), beforeRotateFigure.getBoardsPoints(), center, angle);
         rotate(getRotatePoints(), beforeRotateFigure.getRotatePoints(), center, angle);
@@ -63,7 +71,6 @@ public abstract class Figure implements Cloneable<Figure> {
         for (int i = 0; i < points.size(); i++) {
             Point rotatedPoint = beforeRotatePoints.get(i).clone();
             rotatedPoint.rotate(center, angle);
-            points.set(i, rotatedPoint);
         }
     }
 
@@ -135,25 +142,14 @@ public abstract class Figure implements Cloneable<Figure> {
         return  (x < PointListUtils.calcMaxX(getBoardsPoints())) && (x > PointListUtils.calcMinX(getBoardsPoints())) && (y < PointListUtils.calcMaxY(getBoardsPoints())) && (y > PointListUtils.calcMinY(getBoardsPoints()));
     }
 
-    public double getAngle() {
-        return angle;
-    }
-    public void setAngle(double angle) {
-        this.angle = angle;
-    }
-
-    public double getWidth() {
-        double x1 = getBoardsPoints().get(0).getX();
-        double y1 = getBoardsPoints().get(0).getY();
-        double x2 = getBoardsPoints().get(2).getX();
-        double y2 = getBoardsPoints().get(2).getY();
-        double width = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        return Math.round(width);
-    }
-
-    public void setWidth(double width) {
-        //resize
-    }
+//    public double getWidth() {
+//        double x1 = getBoardsPoints().get(0).getX();
+//        double y1 = getBoardsPoints().get(0).getY();
+//        double x2 = getBoardsPoints().get(2).getX();
+//        double y2 = getBoardsPoints().get(2).getY();
+//        double width = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+//        return Math.round(width);
+//    }
 
     public void calcCenter(){
         Point newCenter = PointListUtils.calcCenter(getBoardsPoints());
@@ -166,19 +162,16 @@ public abstract class Figure implements Cloneable<Figure> {
         points.add(point);
     }
 
-    public Point getCenter() {
-        return center;
-    }
-
     public ArrayList<Point> getPoints() {
         return points;
     }
-    public Color getStrokeColor() {
-        return strokeColor;
+
+    public FigureDecorationData getFigureDecorationData() {
+        return figureDecorationData;
     }
 
-    public void setStrokeColor(Color strokeColor) {
-        this.strokeColor = strokeColor;
+    public Point getCenter() {
+        return center;
     }
 
     public abstract Figure clone();

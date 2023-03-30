@@ -9,11 +9,8 @@ public class PolygonTool extends PolylineTool implements ITool {
 
     public PolygonTool(MainController mainController) {
         super(mainController);
-        figure = new Polygon(Color.BLACK);
-    }
-    @Override
-    public void createFigure() {
-        figure = new Polygon(mainController.getCurrentCanvasController().getStrokeColor());
+        figure = new Polygon(mainController.getPropertiesBoxController().getDecorationProperties());
+
     }
 
 }

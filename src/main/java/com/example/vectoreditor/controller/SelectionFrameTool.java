@@ -2,12 +2,15 @@ package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.drawer.RectangleDrawer;
-import com.example.vectoreditor.model.figure.Polygon;
+import com.example.vectoreditor.model.figure.FigureDecorationData;
 import com.example.vectoreditor.model.figure.Rectangle;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
+
+import java.util.List;
+import java.util.Optional;
 
 public class SelectionFrameTool extends Tool implements ITool {
 
@@ -15,13 +18,17 @@ public class SelectionFrameTool extends Tool implements ITool {
     RectangleDrawer drawer;
     public SelectionFrameTool(MainController mainController) {
         super(mainController);
-
+        frame = new Rectangle(mainController.getPropertiesBoxController().getDecorationProperties());
     }
 
     @Override
     public void mousePressed(MouseEvent event) {
-        frame = new Rectangle(Color.GRAY, new Point(event.getX(), event.getY()));
-        drawer = new RectangleDrawer(frame.getPoints());
+        frame.getLeftTop().setX(event.getX());
+        frame.getLeftTop().setY(event.getY());
+
+        frame.getRightTop().setY(event.getY());
+
+        frame.getLeftBot().setX(event.getX());
     }
 
     @Override
@@ -33,10 +40,11 @@ public class SelectionFrameTool extends Tool implements ITool {
         frame.getLeftBot().setY(event.getY());
         GraphicsContext graphicsContext = mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D();
         graphicsContext.setStroke(Color.LIGHTGRAY);
-
+        graphicsContext.setLineDashes(0.3);
         graphicsContext.setLineCap(StrokeLineCap.BUTT);
 
-        drawer.draw(mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D(), Color.GRAY, 6);
+
+        frame.draw(graphicsContext);
     }
 
     @Override
@@ -47,9 +55,5 @@ public class SelectionFrameTool extends Tool implements ITool {
     @Override
     public void mouseEntered(MouseEvent event) {
 
-    }
-
-    public void setLineDashes(double dash){
-       // mainController
     }
 }

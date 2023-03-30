@@ -7,6 +7,7 @@ public class Point implements Cloneable<Point>{
         this.x = x;
         this.y = y;
     }
+    public Point() {}
 
     public void rotate(Point center, double angle) {
         double x0 = center.getX() + (x - center.getX())*Math.cos(angle) - (y - center.getY())*Math.sin(angle);

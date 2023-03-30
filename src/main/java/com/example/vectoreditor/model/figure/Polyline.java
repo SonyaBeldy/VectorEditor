@@ -2,20 +2,17 @@ package com.example.vectoreditor.model.figure;
 
 import com.example.vectoreditor.model.Cloneable;
 import com.example.vectoreditor.model.drawer.PolylineDrawer;
-import javafx.scene.paint.Color;
 
 public class Polyline extends Figure implements Cloneable<Figure> {
 
-    public Polyline(Color strokeColor) {
-        super("Polyline", strokeColor);
+    public Polyline(FigureDecorationData properties) {
+        super("Polyline", properties);
         drawer = new PolylineDrawer(points);
     }
 
     public Polyline clone() {
-        Polyline newPolyline = new Polyline(getStrokeColor());
+        Polyline newPolyline = new Polyline(getFigureDecorationData().clone());
 
-        newPolyline.setAngle(getAngle());
-        newPolyline.setStrokeColor(getStrokeColor());
         newPolyline.getCenter().setX(getCenter().getX());
         newPolyline.getCenter().setY(getCenter().getY());
 

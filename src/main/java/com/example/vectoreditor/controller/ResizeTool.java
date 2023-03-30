@@ -49,7 +49,7 @@ public class ResizeTool extends SelectTool implements ITool {
     }
 
     private void resize(MouseEvent event, Point dragPoint, Point oppositePoint) {
-        double angle = currentFigure.getAngle();
+        double angle = currentFigure.getTransformProperties().getAngle();
 
         dragPoint = dragPoint.clone();
         oppositePoint = oppositePoint.clone();
@@ -91,7 +91,7 @@ public class ResizeTool extends SelectTool implements ITool {
 
     private void resizeBorders() {
         Figure copyCurrentFigure = currentFigure.clone();
-        double angle = copyCurrentFigure.getAngle();
+        double angle = copyCurrentFigure.getTransformProperties().getAngle();
         Point center = copyCurrentFigure.getCenter().clone();
         copyCurrentFigure.rotate(copyCurrentFigure.clone(), center, -angle);
         copyCurrentFigure.calcBoardsPoints();
@@ -108,7 +108,7 @@ public class ResizeTool extends SelectTool implements ITool {
     }
 
     private void resizeX(MouseEvent event, Point dragPoint, Point oppositePoint) {
-        double angle = currentFigure.getAngle();
+        double angle = currentFigure.getTransformProperties().getAngle();
 
         dragPoint = dragPoint.clone();
         oppositePoint = oppositePoint.clone();
@@ -138,7 +138,7 @@ public class ResizeTool extends SelectTool implements ITool {
     }
 
     private void resizeY(MouseEvent event, Point dragPoint, Point oppositePoint) {
-        double angle = currentFigure.getAngle();
+        double angle = currentFigure.getTransformProperties().getAngle();
 
         dragPoint = dragPoint.clone();
         oppositePoint = oppositePoint.clone();

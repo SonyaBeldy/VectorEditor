@@ -1,12 +1,12 @@
-package com.example.vectoreditor.controller;
+package com.example.vectoreditor.controller.unused;
 
+import com.example.vectoreditor.controller.FigureItemController;
+import com.example.vectoreditor.controller.PropertiesBoxController;
 import com.example.vectoreditor.model.PointListUtils;
-import com.example.vectoreditor.model.figure.Figure;
-import javafx.scene.layout.VBox;
 
 import java.util.Optional;
 
-public class PropertiesBox extends VBox {
+public class PropertiesBox {
 
     PropertiesBoxController controller;
 
@@ -23,7 +23,7 @@ public class PropertiesBox extends VBox {
             controller.getRotateField().setText("");
             return;
         }
-            double angle = Math.round(Math.toDegrees(figureItemController.get().getFigure().getAngle()));
+            double angle = Math.round(Math.toDegrees(figureItemController.get().getFigure().getTransformProperties().getAngle()));
             if (angle < 0) {
                 angle+= 360;
             }
@@ -34,7 +34,7 @@ public class PropertiesBox extends VBox {
     }
 
     private void updateXPointField(Optional<FigureItemController> figureItemController) {
-        if(figureItemController.isEmpty()) {
+        if (figureItemController.isEmpty()) {
             controller.getXPointField().setText("");
         } else {
             controller.getXPointField().setText(String.valueOf(figureItemController.get().getFigure().getCenter().getX()));

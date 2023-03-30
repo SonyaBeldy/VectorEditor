@@ -2,6 +2,7 @@ package com.example.vectoreditor.model.unused;
 
 import com.example.vectoreditor.model.figure.Figure;
 import com.example.vectoreditor.model.Point;
+import com.example.vectoreditor.model.figure.FigureDecorationData;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -12,8 +13,8 @@ public class Line extends Figure {
 
     Point[] hitBoxEdgePoints;
 
-    public Line(Color strokeColor) {
-        super("Line", strokeColor);
+    public Line(FigureDecorationData figureDecorationData) {
+        super("Line", figureDecorationData);
         //startPoint = new Point(startX, startY);
         //endPoint = new Point(endX, endY);
         this.strokeColor = strokeColor;

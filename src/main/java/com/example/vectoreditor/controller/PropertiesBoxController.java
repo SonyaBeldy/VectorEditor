@@ -1,13 +1,13 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Point;
+import com.example.vectoreditor.model.PointListUtils;
 import com.example.vectoreditor.model.figure.Figure;
-import com.example.vectoreditor.model.figure.FigureProperties;
+import com.example.vectoreditor.model.figure.FigureDecorationData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class PropertiesBoxController implements Initializable {
 
-    private FigureProperties properties;
+    private FigureDecorationData properties;
     private CanvasViewController canvasViewController;
     @FXML
     private ColorPicker strokeColor;
@@ -27,9 +27,6 @@ public class PropertiesBoxController implements Initializable {
 
     @FXML
     private TextField heightField;
-
-    @FXML
-    private ScrollPane propScrollPane;
 
     @FXML
     private TextField rotateField;
@@ -46,6 +43,7 @@ public class PropertiesBoxController implements Initializable {
 
     public void init(CanvasViewController canvasViewController) {
         this.canvasViewController = canvasViewController;
+        widthField.setText("1");
     }
     @FXML
     void chooseFillColor(ActionEvent event) {
@@ -54,7 +52,11 @@ public class PropertiesBoxController implements Initializable {
 
     @FXML
     void chooseStrokeColor(ActionEvent event) {
-        canvasViewController.setStrokeColor(strokeColor.getValue());
+        if(canvasViewController.getCurrentFigureController().isEmpty()) {
+            return;
+        }
+        Figure figure = canvasViewController.getCurrentFigureController().get().getFigure();
+        figure.getFigureDecorationData().setStrokeColor(Optional.of(strokeColor.getValue()));
     }
 
     @FXML
@@ -76,22 +78,20 @@ public class PropertiesBoxController implements Initializable {
         if(canvasViewController.getCurrentFigureController().isEmpty()) {
             return;
         }
+
         double angle = Double.parseDouble(rotateField.getText());
         angle = Math.toRadians(angle);
         Figure figure = canvasViewController.getCurrentFigureController().get().getFigure();
 
-        double angleDiff = angle - figure.getAngle();
+        double angleDiff = angle - figure.getTransformProperties().getAngle();
         figure.rotate(figure, figure.getCenter(), angleDiff);
-        figure.setAngle(angle);
+        figure.getTransformProperties().setAngle(angle);
         canvasViewController.redrawAllFigures();
     }
 
-    public void update() {
 
-    }
-
-    public void initProperties(FigureProperties properties) {
-        properties.setFill(Optional.of(fillColor.getValue()));
+    public void initProperties(FigureDecorationData properties) {
+        properties.setFillColor(Optional.of(fillColor.getValue()));
         properties.setStrokeColor(Optional.of(strokeColor.getValue()));
 //        properties.setStrokeWidth();
     }
@@ -100,8 +100,74 @@ public class PropertiesBoxController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         fillColor.setValue(Color.BLACK);
         strokeColor.setValue(Color.BLACK);
+    }
 
-        widthField.setText("hello");
+    public FigureDecorationData getDecorationProperties() {
+        FigureDecorationData figureDecorationData = new FigureDecorationData(Optional.of(strokeColor.getValue()),
+                Optional.of(fillColor.getValue()), 1);
+        return figureDecorationData;
+    }
+
+    public void update() {
+        updateRotateField(canvasViewController.getCurrentFigureController());
+        updateXPointField(canvasViewController.getCurrentFigureController());
+        updateYPointField(canvasViewController.getCurrentFigureController());
+        updateWidth(canvasViewController.getCurrentFigureController());
+        updateHeight(canvasViewController.getCurrentFigureController());
+    }
+
+    private void updateRotateField(Optional<FigureItemController> figureItemController) {
+        if(figureItemController.isEmpty()) {
+            rotateField.setText("");
+            return;
+        }
+        double angle = Math.round(Math.toDegrees(figureItemController.get().getFigure().getTransformProperties().getAngle()));
+        if (angle < 0) {
+            angle+= 360;
+        }
+        if (angle > 360) {
+            angle-= 360;
+        }
+       rotateField.setText(String.valueOf(angle));
+    }
+
+    private void updateXPointField(Optional<FigureItemController> figureItemController) {
+        if (figureItemController.isEmpty()) {
+            xPointField.setText("");
+        } else {
+            xPointField.setText(String.valueOf(figureItemController.get().getFigure().getCenter().getX()));
+        }
+    }
+
+    private void updateYPointField(Optional<FigureItemController> figureItemController) {
+        if(figureItemController.isEmpty()) {
+            yPointField.setText("");
+        } else {
+           yPointField.setText(String.valueOf(figureItemController.get().getFigure().getCenter().getY()));
+        }
+    }
+
+    private void updateWidth(Optional<FigureItemController> figureItemController) {
+        if(figureItemController.isEmpty()) {
+            widthField.setText("");
+        } else {
+            double width = PointListUtils.calcDist(figureItemController.get().getFigure().getBoardsPoints().get(0), figureItemController.get().getFigure().getBoardsPoints().get(1));
+            widthField.setText(String.valueOf(width));
+        }
+
+    }
+
+    private void updateHeight(Optional<FigureItemController> figureItemController) {
+        if(figureItemController.isEmpty()) {
+            heightField.setText("");
+        } else {
+            double height = PointListUtils.calcDist(figureItemController.get().getFigure().getBoardsPoints().get(0), figureItemController.get().getFigure().getBoardsPoints().get(3));
+            heightField.setText(String.valueOf(height));
+        }
+    }
+
+    public void getProperties() {
+
     }
 
     public void setCanvasViewController(CanvasViewController canvasViewController) {
@@ -117,12 +183,12 @@ public class PropertiesBoxController implements Initializable {
         fillColor.setValue(color);
     }
 
-    public ColorPicker getStrokeColor() {
-        return strokeColor;
+    public Color getStrokeColor() {
+        return strokeColor.getValue();
     }
 
-    public ColorPicker getFillColor() {
-        return fillColor;
+    public Color getFillColor() {
+        return fillColor.getValue();
     }
 
     public TextField getHeightField() {

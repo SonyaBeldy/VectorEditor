@@ -35,7 +35,7 @@ public class CanvasViewController extends ScrollPane {
         layerBox.createLayer();
         mainController.swapLayerBox(layerBox);
 
-        propertiesBox = mainController.getPropertiesBox();
+//        propertiesBox = mainController.getPropertiesBox();
     }
 
     @FXML

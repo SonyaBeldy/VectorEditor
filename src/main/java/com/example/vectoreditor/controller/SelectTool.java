@@ -38,6 +38,7 @@ public class SelectTool extends Tool implements ITool {
         }
         //нашли фигуру
         //выделили ее
+        mainController.getPropertiesBoxController().update();
         mainController.getCurrentCanvasController().redrawAllFigures(); //убрать перерисовку
         mainController.setCurrentTool(new MoveTool(mainController, new Point(event.getX(), event.getY())));
     }
@@ -174,10 +175,10 @@ public class SelectTool extends Tool implements ITool {
 
                 final Scene scene = currentCanvasController.getDrawCanvas().getScene();
                 switch (i) {
-                    case 0 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW, currentCanvasController.getCurrentFigureController().get().getFigure().getAngle()));
-                    case 1 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW, currentCanvasController.getCurrentFigureController().get().getFigure().getAngle()));
-                    case 2 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SE, currentCanvasController.getCurrentFigureController().get().getFigure().getAngle()));
-                    case 3 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NE, currentCanvasController.getCurrentFigureController().get().getFigure().getAngle()));
+                    case 0 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW, currentCanvasController.getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
+                    case 1 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW, currentCanvasController.getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
+                    case 2 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SE, currentCanvasController.getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
+                    case 3 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NE, currentCanvasController.getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
                 }
                 mainController.setCurrentTool(new RotateTool(mainController));
                 return;
