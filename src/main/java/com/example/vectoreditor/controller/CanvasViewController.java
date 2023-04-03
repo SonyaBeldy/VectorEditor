@@ -1,7 +1,9 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.BordersPainter;
+import com.example.vectoreditor.model.Frame2;
 import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.model.unused.FrameDrawer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
@@ -20,7 +22,8 @@ public class CanvasViewController extends ScrollPane {
 
     private PropertiesBoxController propertiesBoxController;
     private Color strokeColor;
-    private BordersPainter bordersPainter;
+//    private BordersPainter bordersPainter;
+    private FrameDrawer frameDrawer;
     private MainController mainController;
 
     @FXML
@@ -30,12 +33,11 @@ public class CanvasViewController extends ScrollPane {
         this.mainController = mainController;
         layerBox = new LayerBox(mainController);
         strokeColor = Color.BLACK;
-        bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
+        frameDrawer = new FrameDrawer(drawCanvas.getGraphicsContext2D());
+        //bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
         mainController.setCurrentCanvasController(this);
         layerBox.createLayer();
         mainController.swapLayerBox(layerBox);
-
-//        propertiesBox = mainController.getPropertiesBox();
     }
 
     @FXML
@@ -74,7 +76,20 @@ public class CanvasViewController extends ScrollPane {
                 layer.getFigureController(j).getFigure().draw(drawCanvas.getGraphicsContext2D());
             }
         }
-        currentFigureController.ifPresent(figureController -> bordersPainter.drawBoards(figureController.getFigure(), currentFigureController.get().getLayerController().getColor()));
+//        currentFigureController.ifPresent(figureController -> bordersPainter.drawBoards(figureController.getFigure(), currentFigureController.get().getLayerController().getColor()));
+
+        if (currentFigureController.isPresent()) {
+            Frame2 frame2 = new Frame2(currentFigureController.orElseThrow().getFigure());
+
+//            frameDrawer.draw(frame2, currentFigureController.get().getLayerController().getColor()); t
+        }
+
+
+//        currentFigureController.ifPresent(figureItemController -> frameDrawer.draw(figureItemController.getFigure().getFrame(), figureItemController.getLayerController().getColor()));
+//
+//        if(currentFigureController.isPresent()) {
+//            frameDrawer.draw(currentFigureController.get().getFigure().getFrame(), currentFigureController.get().getLayerController().getColor());
+//        }
 
 //        currentFigure.ifPresent(bordersPainter::drawBoards);
     }
@@ -107,7 +122,9 @@ public class CanvasViewController extends ScrollPane {
             return;
         }
         redrawAllFigures();
-        bordersPainter.drawBoards(currentFigureController.get().getFigure(), layerBox.getCurrentLayer().getColor());
+//        bordersPainter.drawBoards(currentFigureController.get().getFigure(), layerBox.getCurrentLayer().getColor());
+        Frame2 frame2 = new Frame2(currentFigureController.orElseThrow().getFigure());
+//        frameDrawer.draw(frame2, layerBox.getCurrentLayer().getColor());
     }
 
     public void selectFigure(LayerItemController layerItemController, FigureItemController figureController) {

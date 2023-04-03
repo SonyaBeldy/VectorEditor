@@ -13,7 +13,7 @@ public class PolylineTool extends Tool implements ITool {
 
     private boolean isDrawing;
     private FigureItemController drawingFigure;
-
+    //что-то не так, почему раньше работало, выделение неправильное
 
     public PolylineTool(MainController mainController) {
         super(mainController);
@@ -26,14 +26,13 @@ public class PolylineTool extends Tool implements ITool {
 
     @Override
     public void mousePressed(MouseEvent event) {
-
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         if (event.isPrimaryButtonDown()) {
             if (!isDrawing) {
 
                 isDrawing = true;
                 figure.addPoint(new Point(event.getX(), event.getY()));
-                figure.calcBoardsPoints();
+
                 figure.calcCenter();
                 FigureItemController figureController = currentCanvasController.getCurrentLayer().addFigure(figure);
                 currentCanvasController.setCurrentFigureController(Optional.empty());
@@ -47,7 +46,8 @@ public class PolylineTool extends Tool implements ITool {
             if (figure.getPoints().size() > 2){
                 figure.getPoints().remove(figure.getPoints().size() - 1);
 
-                figure.calcBoardsPoints();
+//                figure.calcBoardsPoints();
+
                 figure.calcCenter();
                 currentCanvasController.setCurrentFigureController(Optional.of(drawingFigure));
                 mainController.getPropertiesBoxController().update();
@@ -80,7 +80,7 @@ public class PolylineTool extends Tool implements ITool {
         getLastPoint().setX(event.getX());
         getLastPoint().setY(event.getY());
 
-        figure.calcBoardsPoints();
+//        figure.calcBoardsPoints();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.Frame2;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.PointListUtils;
 import com.example.vectoreditor.model.figure.Figure;
@@ -151,7 +152,9 @@ public class PropertiesBoxController implements Initializable {
         if(figureItemController.isEmpty()) {
             widthField.setText("");
         } else {
-            double width = PointListUtils.calcDist(figureItemController.get().getFigure().getBoardsPoints().get(0), figureItemController.get().getFigure().getBoardsPoints().get(1));
+            Frame2 frame2 = new Frame2(figureItemController.orElseThrow().getFigure());
+
+            double width = PointListUtils.calcDist(frame2.getEdgesPoints().get(0), frame2.getEdgesPoints().get(1));
             widthField.setText(String.valueOf(width));
         }
 
@@ -161,7 +164,9 @@ public class PropertiesBoxController implements Initializable {
         if(figureItemController.isEmpty()) {
             heightField.setText("");
         } else {
-            double height = PointListUtils.calcDist(figureItemController.get().getFigure().getBoardsPoints().get(0), figureItemController.get().getFigure().getBoardsPoints().get(3));
+            Frame2 frame2 = new Frame2(figureItemController.orElseThrow().getFigure());
+
+            double height = PointListUtils.calcDist(frame2.getEdgesPoints().get(0), frame2.getEdgesPoints().get(3));
             heightField.setText(String.valueOf(height));
         }
     }

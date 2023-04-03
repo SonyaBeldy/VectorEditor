@@ -2,6 +2,8 @@ package com.example.vectoreditor.model.figure;
 
 import com.example.vectoreditor.controller.FigureTransformData;
 import com.example.vectoreditor.model.Cloneable;
+import com.example.vectoreditor.model.Frame2;
+import com.example.vectoreditor.model.unused.Frame;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.PointListUtils;
 import com.example.vectoreditor.model.drawer.Drawer;
@@ -9,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public abstract class Figure implements Cloneable<Figure> {
 
@@ -16,10 +19,10 @@ public abstract class Figure implements Cloneable<Figure> {
     ArrayList<Point> points;
     FigureDecorationData figureDecorationData;
     FigureTransformData transformProperties;
-    protected final ArrayList<Point> boardsPoints;
-    protected final ArrayList<Point> rotatePoints;
-    protected final ArrayList<Point> resizePoints;
-    protected final ArrayList<Point> hitboxPoints;
+//    protected final ArrayList<Point> boardsPoints;
+//    protected final ArrayList<Point> rotatePoints;
+//    protected final ArrayList<Point> resizePoints;
+//    protected final ArrayList<Point> hitboxPoints;
 
     protected final Point center;
 
@@ -29,31 +32,24 @@ public abstract class Figure implements Cloneable<Figure> {
         this.name = name;
         this.figureDecorationData = properties;
         points = new ArrayList<>();
-        boardsPoints = new ArrayList<>();
-        hitboxPoints = new ArrayList<>();
-        rotatePoints = new ArrayList<>();
-        resizePoints = new ArrayList<>();
+//        boardsPoints = new ArrayList<>();
+//        hitboxPoints = new ArrayList<>();
+//        rotatePoints = new ArrayList<>();
+//        resizePoints = new ArrayList<>();
         center = new Point(0,0);
+
         transformProperties = new FigureTransformData();
 
-    }
-
-    public void initParams() {
-        //params.setFill();
+//        frame = new Frame2(this);
     }
 
     public void draw(GraphicsContext graphicsContext) {
         drawer.draw(graphicsContext, transformProperties, figureDecorationData);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void highlight(GraphicsContext graphicsContext) {
         drawer.draw(graphicsContext, transformProperties, figureDecorationData);
     }
-
 
     public FigureTransformData getTransformProperties() {
         return transformProperties;
@@ -61,43 +57,55 @@ public abstract class Figure implements Cloneable<Figure> {
 
     public void rotate(Figure beforeRotateFigure, Point center, double angle) {
         transformProperties.setAngle(beforeRotateFigure.getTransformProperties().getAngle() + angle);
-        System.out.println(beforeRotateFigure.getTransformProperties().getAngle() + angle);
-        rotate(getPoints(), beforeRotateFigure.getPoints(), center, angle);
-        rotate(getBoardsPoints(), beforeRotateFigure.getBoardsPoints(), center, angle);
-        rotate(getRotatePoints(), beforeRotateFigure.getRotatePoints(), center, angle);
-        rotate(getResizePoints(), beforeRotateFigure.getResizePoints(), center, angle);
+//        rotate(getPoints(), beforeRotateFigure.getPoints(), center, angle);
+//        rotate(getBoardsPoints(), beforeRotateFigure.getBoardsPoints(), center, angle);
+//        rotate(getRotatePoints(), beforeRotateFigure.getRotatePoints(), center, angle);
+//        rotate(getResizePoints(), beforeRotateFigure.getResizePoints(), center, angle);
     }
+
     private void rotate(ArrayList<Point> points, ArrayList<Point> beforeRotatePoints, Point center, double angle) {
         for (int i = 0; i < points.size(); i++) {
             Point rotatedPoint = beforeRotatePoints.get(i).clone();
             rotatedPoint.rotate(center, angle);
+            points.set(i, rotatedPoint);
         }
     }
-
-    public void calcBoardsPoints() {
-        boardsPoints.clear();
-
-        double minX = PointListUtils.calcMinX(points);
-        double minY = PointListUtils.calcMinY(points);
-        double maxX = PointListUtils.calcMaxX(points);
-        double maxY = PointListUtils.calcMaxY(points);
-
-        boardsPoints.add(new Point(minX, minY));
-        boardsPoints.add(new Point(maxX, minY));
-        boardsPoints.add(new Point(maxX, maxY));
-        boardsPoints.add(new Point(minX, maxY));
-
-        calcResizePoints();
-        calcRotatePoints();
-        calcCenter();
-    }
+//    public void calcBoardsPoints() {
+//        boardsPoints.clear();
+//
+//        double minX = PointListUtils.calcMinX(points);
+//        double minY = PointListUtils.calcMinY(points);
+//        double maxX = PointListUtils.calcMaxX(points);
+//        double maxY = PointListUtils.calcMaxY(points);
+//
+////        frame.getLeftTop().setX(minX);
+////        frame.getLeftTop().setY(minY);
+////
+////        frame.getRightTop().setX(maxX);
+////        frame.getRightTop().setY(minY);
+////
+////        frame.getRightBot().setX(maxX);
+////        frame.getRightBot().setY(maxY);
+////
+////        frame.getLeftBot().setX(minX);
+////        frame.getLeftBot().setY(maxY);
+//
+//        boardsPoints.add(new Point(minX, minY));
+//        boardsPoints.add(new Point(maxX, minY));
+//        boardsPoints.add(new Point(maxX, maxY));
+//        boardsPoints.add(new Point(minX, maxY));
+//
+//        calcResizePoints();
+//        calcRotatePoints();
+//        calcCenter();
+//    }
 
     public void move(Point difference) {
         Figure beforeMoveFigure = clone();
         movePoints(beforeMoveFigure.getPoints(), getPoints(), difference);
-        movePoints(beforeMoveFigure.getBoardsPoints(), getBoardsPoints(), difference);
-        movePoints(beforeMoveFigure.getRotatePoints(), getRotatePoints(), difference);
-        movePoints(beforeMoveFigure.getResizePoints(), getResizePoints(), difference);
+//        movePoints(beforeMoveFigure.getBoardsPoints(), getBoardsPoints(), difference);
+//        movePoints(beforeMoveFigure.getRotatePoints(), getRotatePoints(), difference);
+//        movePoints(beforeMoveFigure.getResizePoints(), getResizePoints(), difference);
         calcCenter();
     }
 
@@ -110,36 +118,44 @@ public abstract class Figure implements Cloneable<Figure> {
             points.get(i).setY(beforeMoveY + difference.getY());
         }
     }
-    private void calcRotatePoints() {
-        rotatePoints.clear();
-        double hitbox = 10;
 
-        rotatePoints.add(new Point(boardsPoints.get(0).getX() - hitbox, boardsPoints.get(0).getY() - hitbox));
-        rotatePoints.add(new Point(boardsPoints.get(1).getX() + hitbox, boardsPoints.get(1).getY() - hitbox));
-        rotatePoints.add(new Point(boardsPoints.get(2).getX() + hitbox, boardsPoints.get(2).getY() + hitbox));
-        rotatePoints.add(new Point(boardsPoints.get(3).getX() - hitbox, boardsPoints.get(3).getY() + hitbox));
-    }
-    private void calcResizePoints() {
-        resizePoints.clear();
+//    private void calcRotatePoints() {
+//        rotatePoints.clear();
+//        double hitbox = 10;
+//
+//        rotatePoints.add(new Point(boardsPoints.get(0).getX() - hitbox, boardsPoints.get(0).getY() - hitbox));
+//        rotatePoints.add(new Point(boardsPoints.get(1).getX() + hitbox, boardsPoints.get(1).getY() - hitbox));
+//        rotatePoints.add(new Point(boardsPoints.get(2).getX() + hitbox, boardsPoints.get(2).getY() + hitbox));
+//        rotatePoints.add(new Point(boardsPoints.get(3).getX() - hitbox, boardsPoints.get(3).getY() + hitbox));
+//    }
+//    private void calcResizePoints() {
+//        resizePoints.clear();
+//
+//        resizePoints.add(new Point((boardsPoints.get(1).getX() - boardsPoints.get(0).getX())/2 + boardsPoints.get(0).getX(), boardsPoints.get(0).getY()));
+//        resizePoints.add(new Point(boardsPoints.get(1).getX(), (boardsPoints.get(1).getY() - boardsPoints.get(2).getY())/2 + boardsPoints.get(2).getY()));
+//        resizePoints.add(new Point((boardsPoints.get(2).getX() - boardsPoints.get(3).getX())/2 + boardsPoints.get(3).getX(), boardsPoints.get(2).getY()));
+//        resizePoints.add(new Point(boardsPoints.get(3).getX(), (boardsPoints.get(0).getY() - boardsPoints.get(3).getY())/2 + boardsPoints.get(3).getY()));
+//    }
 
-        resizePoints.add(new Point((boardsPoints.get(1).getX() - boardsPoints.get(0).getX())/2 + boardsPoints.get(0).getX(), boardsPoints.get(0).getY()));
-        resizePoints.add(new Point(boardsPoints.get(1).getX(), (boardsPoints.get(1).getY() - boardsPoints.get(2).getY())/2 + boardsPoints.get(2).getY()));
-        resizePoints.add(new Point((boardsPoints.get(2).getX() - boardsPoints.get(3).getX())/2 + boardsPoints.get(3).getX(), boardsPoints.get(2).getY()));
-        resizePoints.add(new Point(boardsPoints.get(3).getX(), (boardsPoints.get(0).getY() - boardsPoints.get(3).getY())/2 + boardsPoints.get(3).getY()));
+    public String getName() {
+        return name;
     }
-    public ArrayList<Point> getBoardsPoints() {
-        return boardsPoints;
-    }
-    public ArrayList<Point> getResizePoints() {
-        return resizePoints;
-    }
-    public ArrayList<Point> getRotatePoints() {
-        return rotatePoints;
-    }
+//    public ArrayList<Point> getBoardsPoints() {
+//        return boardsPoints;
+//    }
+//    public ArrayList<Point> getResizePoints() {
+//        return resizePoints;
+//    }
+//    public ArrayList<Point> getRotatePoints() {
+//        return rotatePoints;
+//    }
 
 
     public boolean isClickedOn(double x, double y) {
-        return  (x < PointListUtils.calcMaxX(getBoardsPoints())) && (x > PointListUtils.calcMinX(getBoardsPoints())) && (y < PointListUtils.calcMaxY(getBoardsPoints())) && (y > PointListUtils.calcMinY(getBoardsPoints()));
+//        return  (x < PointListUtils.calcMaxX(getBoardsPoints())) && (x > PointListUtils.calcMinX(getBoardsPoints())) && (y < PointListUtils.calcMaxY(getBoardsPoints())) && (y > PointListUtils.calcMinY(getBoardsPoints()));
+//        return  (x < PointListUtils.calcMaxX(getFrame().getEdgesPoints())) && (x > PointListUtils.calcMinX(getFrame().getEdgesPoints()))
+//                && (y < PointListUtils.calcMaxY(getFrame().getEdgesPoints())) && (y > PointListUtils.calcMinY(getFrame().getEdgesPoints()));
+        return false;
     }
 
 //    public double getWidth() {
@@ -152,7 +168,8 @@ public abstract class Figure implements Cloneable<Figure> {
 //    }
 
     public void calcCenter(){
-        Point newCenter = PointListUtils.calcCenter(getBoardsPoints());
+        Frame2 frame2 = new Frame2(this);
+        Point newCenter = PointListUtils.calcCenter(frame2.getEdgesPoints());
 
         center.setX(newCenter.getX());
         center.setY(newCenter.getY());

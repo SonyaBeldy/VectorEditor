@@ -1,7 +1,7 @@
 package com.example.vectoreditor.controller;
 
 public class FigureTransformData {
-    private double angle;
+    private double angle = 0.0;
 
     public double getAngle() {
         return angle;

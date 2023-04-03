@@ -14,8 +14,8 @@ public class PropertiesBox {
         updateRotateField(figureItemController);
         updateXPointField(figureItemController);
         updateYPointField(figureItemController);
-        updateWidth(figureItemController);
-        updateHeight(figureItemController);
+//        updateWidth(figureItemController);
+//        updateHeight(figureItemController);
     }
 
     private void updateRotateField(Optional<FigureItemController> figureItemController) {
@@ -49,23 +49,23 @@ public class PropertiesBox {
         }
     }
 
-    private void updateWidth(Optional<FigureItemController> figureItemController) {
-        if(figureItemController.isEmpty()) {
-            controller.getWidthField().setText("");
-        } else {
-            double width = PointListUtils.calcDist(figureItemController.get().getFigure().getBoardsPoints().get(0), figureItemController.get().getFigure().getBoardsPoints().get(1));
-            controller.getWidthField().setText(String.valueOf(width));
-        }
-
-    }
-
-    private void updateHeight(Optional<FigureItemController> figureItemController) {
-        if(figureItemController.isEmpty()) {
-            controller.getHeightField().setText("");
-        } else {
-            double height = PointListUtils.calcDist(figureItemController.get().getFigure().getBoardsPoints().get(0), figureItemController.get().getFigure().getBoardsPoints().get(3));
-            controller.getHeightField().setText(String.valueOf(height));
-        }
-    }
+//    private void updateWidth(Optional<FigureItemController> figureItemController) {
+//        if(figureItemController.isEmpty()) {
+//            controller.getWidthField().setText("");
+//        } else {
+//            double width = PointListUtils.calcDist(figureItemController.get().getFigure().getFrame().getEdgesPoints().get(0), figureItemController.get().getFigure().getFrame().getEdgesPoints().get(1));
+//            controller.getWidthField().setText(String.valueOf(width));
+//        }
+//
+//    }
+//
+//    private void updateHeight(Optional<FigureItemController> figureItemController) {
+//        if(figureItemController.isEmpty()) {
+//            controller.getHeightField().setText("");
+//        } else {
+//            double height = PointListUtils.calcDist(figureItemController.get().getFigure().getFrame().getEdgesPoints().get(0), figureItemController.get().getFigure().getFrame().getEdgesPoints().get(3));
+//            controller.getHeightField().setText(String.valueOf(height));
+//        }
+//    }
 
 }

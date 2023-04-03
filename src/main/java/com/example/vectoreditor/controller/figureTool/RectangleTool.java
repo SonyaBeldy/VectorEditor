@@ -1,6 +1,7 @@
 package com.example.vectoreditor.controller.figureTool;
 
 import com.example.vectoreditor.controller.*;
+import com.example.vectoreditor.model.Frame2;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.figure.Rectangle;
 import javafx.scene.input.MouseEvent;
@@ -14,12 +15,13 @@ public class RectangleTool extends Tool implements ITool {
     private Rectangle rectangle;
     public RectangleTool(MainController mainController) {
         super(mainController);
-
+//        rectangle = new Rectangle(mainController.getPropertiesBoxController().getDecorationProperties());
     }
 
     @Override
     public void mousePressed(MouseEvent event) {
         rectangle = new Rectangle(mainController.getPropertiesBoxController().getDecorationProperties());
+
         rectangle.getLeftTop().setX(event.getX());
         rectangle.getLeftTop().setY(event.getY());
 
@@ -44,7 +46,7 @@ public class RectangleTool extends Tool implements ITool {
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        rectangle.calcBoardsPoints();
+//        rectangle.calcBoardsPoints();
         rectangle.calcCenter();
         mainController.getCurrentCanvasController().setCurrentFigureController(Optional.of(drawingFigure));
         mainController.getPropertiesBoxController().update();

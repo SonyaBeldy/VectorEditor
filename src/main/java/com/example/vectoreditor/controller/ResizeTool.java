@@ -48,63 +48,65 @@ public class ResizeTool extends SelectTool implements ITool {
         mainController.getCurrentCanvasController().redrawAllFigures();
     }
 
-    private void resize(MouseEvent event, Point dragPoint, Point oppositePoint) {
-        double angle = currentFigure.getTransformProperties().getAngle();
-
-        dragPoint = dragPoint.clone();
-        oppositePoint = oppositePoint.clone();
-
-        dragPoint.rotate(currentFigure.getCenter(), -angle);
-        oppositePoint.rotate(currentFigure.getCenter(), -angle);
-
-        double dragX = dragPoint.getX();
-        double oppositeX = oppositePoint.getX();
-
-        double dragY = dragPoint.getY();
-        double oppositeY = oppositePoint.getY();
-
-
-        Point e = new Point(event.getX(), event.getY());
-        e.rotate(currentFigure.getCenter(), -angle);
-
-        double ratioX = (e.getX() - oppositeX) / (dragX - oppositeX);
-        double ratioY = (e.getY() - oppositeY) / (dragY - oppositeY);
-
-        Point b = currentFigure.getBoardsPoints().get(2).clone();
-        b.rotate(currentFigure.getCenter(), -angle);
-        for (int i = 0; i < currentFigure.getPoints().size(); i++) {
-
-            copyCurrentFigure.getPoints().get(i).rotate(copyCurrentFigure.getCenter(), -angle);
-            double lengthX = copyCurrentFigure.getPoints().get(i).getX() - oppositeX;
-            double lengthY = copyCurrentFigure.getPoints().get(i).getY() - oppositeY;
-
-            currentFigure.getPoints().get(i).rotate(currentFigure.getCenter(), -angle);
-
-            currentFigure.getPoints().get(i).setX(oppositePoint.getX() + lengthX * ratioX);
-            currentFigure.getPoints().get(i).setY(oppositePoint.getY() + lengthY * ratioY);
-
-            currentFigure.getPoints().get(i).rotate(currentFigure.getCenter(), angle);
-            copyCurrentFigure.getPoints().get(i).rotate(copyCurrentFigure.getCenter(), angle);
-
-        }
-    }
+    //no
+//    private void resize(MouseEvent event, Point dragPoint, Point oppositePoint) {
+//        double angle = currentFigure.getTransformProperties().getAngle();
+//
+//        dragPoint = dragPoint.clone();
+//        oppositePoint = oppositePoint.clone();
+//
+//        dragPoint.rotate(currentFigure.getCenter(), -angle);
+//        oppositePoint.rotate(currentFigure.getCenter(), -angle);
+//
+//        double dragX = dragPoint.getX();
+//        double oppositeX = oppositePoint.getX();
+//
+//        double dragY = dragPoint.getY();
+//        double oppositeY = oppositePoint.getY();
+//
+//
+//        Point e = new Point(event.getX(), event.getY());
+//        e.rotate(currentFigure.getCenter(), -angle);
+//
+//        double ratioX = (e.getX() - oppositeX) / (dragX - oppositeX);
+//        double ratioY = (e.getY() - oppositeY) / (dragY - oppositeY);
+//
+//        Point b = currentFigure.getFrame().getEdgesPoints().get(2).clone();
+//        b.rotate(currentFigure.getCenter(), -angle);
+//        for (int i = 0; i < currentFigure.getPoints().size(); i++) {
+//
+//            copyCurrentFigure.getPoints().get(i).rotate(copyCurrentFigure.getCenter(), -angle);
+//            double lengthX = copyCurrentFigure.getPoints().get(i).getX() - oppositeX;
+//            double lengthY = copyCurrentFigure.getPoints().get(i).getY() - oppositeY;
+//
+//            currentFigure.getPoints().get(i).rotate(currentFigure.getCenter(), -angle);
+//
+//            currentFigure.getPoints().get(i).setX(oppositePoint.getX() + lengthX * ratioX);
+//            currentFigure.getPoints().get(i).setY(oppositePoint.getY() + lengthY * ratioY);
+//
+//            currentFigure.getPoints().get(i).rotate(currentFigure.getCenter(), angle);
+//            copyCurrentFigure.getPoints().get(i).rotate(copyCurrentFigure.getCenter(), angle);
+//
+//        }
+//    }
 
     private void resizeBorders() {
         Figure copyCurrentFigure = currentFigure.clone();
         double angle = copyCurrentFigure.getTransformProperties().getAngle();
         Point center = copyCurrentFigure.getCenter().clone();
         copyCurrentFigure.rotate(copyCurrentFigure.clone(), center, -angle);
-        copyCurrentFigure.calcBoardsPoints();
+//        copyCurrentFigure.calcBoardsPoints();
+//        copyCurrentFigure.getFrame().update();
         copyCurrentFigure.rotate(copyCurrentFigure.clone(), center, angle);
 
-        currentFigure.getBoardsPoints().clear();
-        currentFigure.getBoardsPoints().addAll(copyCurrentFigure.getBoardsPoints());
-
-        currentFigure.getRotatePoints().clear();
-        currentFigure.getRotatePoints().addAll(copyCurrentFigure.getRotatePoints());
-
-        currentFigure.getResizePoints().clear();
-        currentFigure.getResizePoints().addAll(copyCurrentFigure.getResizePoints());
+//        currentFigure.getBoardsPoints().clear();
+//        currentFigure.getBoardsPoints().addAll(copyCurrentFigure.getBoardsPoints());
+//
+//        currentFigure.getRotatePoints().clear();
+//        currentFigure.getRotatePoints().addAll(copyCurrentFigure.getRotatePoints());
+//
+//        currentFigure.getResizePoints().clear();
+//        currentFigure.getResizePoints().addAll(copyCurrentFigure.getResizePoints());
     }
 
     private void resizeX(MouseEvent event, Point dragPoint, Point oppositePoint) {

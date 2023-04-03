@@ -1,6 +1,7 @@
 package com.example.vectoreditor.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PointListUtils {
 
@@ -12,7 +13,7 @@ public class PointListUtils {
         double dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         return Math.round(dist);
     }
-    public static Point calcCenter(ArrayList<Point> points) {
+    public static Point calcCenter(List<Point> points) {
         double centerX = (calcMaxX(points) - calcMinX(points))/2 + calcMinX(points);
         double centerY = (calcMaxY(points) - calcMinY(points))/2 + calcMinY(points);
         centerY = Math.floor(centerY);
@@ -20,7 +21,7 @@ public class PointListUtils {
         return new Point(centerX, centerY);
     }
 
-    public static double calcMinX(ArrayList<Point> points) {
+    public static double calcMinX(List<Point> points) {
         double minX = points.get(0).getX();
         for (Point point : points) {
             if (point.getX() < minX) {
@@ -30,7 +31,7 @@ public class PointListUtils {
         return minX;
     }
 
-    public static double calcMinY(ArrayList<Point> points) {
+    public static double calcMinY(List<Point> points) {
         double minY = points.get(0).getY();
         for (Point point : points) {
             if (point.getY() < minY) {
@@ -40,7 +41,7 @@ public class PointListUtils {
         return minY;
     }
 
-    public static double calcMaxX(ArrayList<Point> points) {
+    public static double calcMaxX(List<Point> points) {
         double maxX = points.get(0).getX();
         for (Point point : points) {
             if (point.getX() > maxX) {
@@ -50,7 +51,7 @@ public class PointListUtils {
         return maxX;
     }
 
-    public static double calcMaxY(ArrayList<Point> points) {
+    public static double calcMaxY(List<Point> points) {
         double maxY = points.get(0).getY();
         for (Point point : points) {
             if (point.getY() > maxY) {

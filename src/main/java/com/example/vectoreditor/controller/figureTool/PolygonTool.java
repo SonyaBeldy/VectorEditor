@@ -10,7 +10,6 @@ public class PolygonTool extends PolylineTool implements ITool {
     public PolygonTool(MainController mainController) {
         super(mainController);
         figure = new Polygon(mainController.getPropertiesBoxController().getDecorationProperties());
-
     }
 
 }

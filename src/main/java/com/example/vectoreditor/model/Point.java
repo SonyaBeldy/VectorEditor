@@ -16,6 +16,11 @@ public class Point implements Cloneable<Point>{
         y = y0;
     }
 
+    public void change(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public double getX() {
         return x;
     }
