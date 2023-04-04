@@ -1,9 +1,9 @@
-package com.example.vectoreditor.model.drawer;
+package com.example.vectoreditor.model.drawers;
 
 import com.example.vectoreditor.controller.FigureTransformData;
 import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.figure.Figure;
-import com.example.vectoreditor.model.figure.FigureDecorationData;
+import com.example.vectoreditor.model.figures.Figure;
+import com.example.vectoreditor.model.figures.FigureDecorationData;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;

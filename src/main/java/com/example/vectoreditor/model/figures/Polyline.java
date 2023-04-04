@@ -1,7 +1,7 @@
-package com.example.vectoreditor.model.figure;
+package com.example.vectoreditor.model.figures;
 
 import com.example.vectoreditor.model.Cloneable;
-import com.example.vectoreditor.model.drawer.PolylineDrawer;
+import com.example.vectoreditor.model.drawers.PolylineDrawer;
 
 public class Polyline extends Figure implements Cloneable<Figure> {
 

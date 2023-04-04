@@ -1,11 +1,10 @@
 package com.example.vectoreditor.model.unused;
 
 import com.example.vectoreditor.controller.FigureTransformData;
-import com.example.vectoreditor.model.Frame2;
-import com.example.vectoreditor.model.Layer;
+import com.example.vectoreditor.model.Frame;
 import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.drawer.Drawer;
-import com.example.vectoreditor.model.figure.FigureDecorationData;
+import com.example.vectoreditor.model.drawers.Drawer;
+import com.example.vectoreditor.model.figures.FigureDecorationData;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -21,13 +20,12 @@ public class FrameDrawer extends Drawer {
     @Override
     public void draw(GraphicsContext graphicsContext, FigureTransformData figureTransformData, FigureDecorationData figureDecorationData) {
         super.draw(graphicsContext, figureTransformData, figureDecorationData);
-
     }
 
-    public void draw(Frame2 frame, Color layerColor) {
+    public void draw(Frame frame, Color layerColor) {
         drawEdges(frame.getEdgesPoints(), layerColor);
         drawPivots(frame.getPivotsPoints(), layerColor);
-//        drawCenter(frame.);
+        drawCenter(frame.getCenter(), layerColor);
     }
 
     private void drawPivots(List<Point> points, Color layerColor) {
@@ -44,13 +42,14 @@ public class FrameDrawer extends Drawer {
     private void drawEdges(List<Point> points, Color layerColor) {
         graphicsContext.setStroke(layerColor);
 
-        for (int i = 0; i < points.size(); i++) {
+        for (int i = 0; i < points.size() - 1; i++) {
             graphicsContext.strokeLine(points.get(i).getX(), points.get(i).getY(), points.get(i + 1).getX(), points.get(i + 1).getY());
         }
-        graphicsContext.strokeLine(points.get(0).getX(), points.get(0).getY(), points.get(3).getX(), points.get(3).getY());
+        graphicsContext.strokeLine(points.get(0).getX(), points.get(0).getY(), points.get(points.size() - 1).getX(), points.get(points.size() - 1).getY());
     }
 
-    private void drawCenter(Point point) {
-
+    private void drawCenter(Point center, Color layerColor) {
+        graphicsContext.setFill(layerColor);
+        graphicsContext.fillOval(center.getX(), center.getY(), 3,3);
     }
 }

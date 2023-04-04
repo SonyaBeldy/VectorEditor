@@ -1,8 +1,7 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.BordersPainter;
-import com.example.vectoreditor.model.Frame2;
-import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.model.Frame;
+import com.example.vectoreditor.model.figures.Figure;
 import com.example.vectoreditor.model.unused.FrameDrawer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -18,11 +17,6 @@ public class CanvasViewController extends ScrollPane {
     private Optional<FigureItemController> currentFigureController = Optional.empty();
     private LayerBox layerBox;
 
-    private VBox propertiesBox;
-
-    private PropertiesBoxController propertiesBoxController;
-    private Color strokeColor;
-//    private BordersPainter bordersPainter;
     private FrameDrawer frameDrawer;
     private MainController mainController;
 
@@ -32,9 +26,7 @@ public class CanvasViewController extends ScrollPane {
     public void init(MainController mainController) {
         this.mainController = mainController;
         layerBox = new LayerBox(mainController);
-        strokeColor = Color.BLACK;
         frameDrawer = new FrameDrawer(drawCanvas.getGraphicsContext2D());
-        //bordersPainter = new BordersPainter(drawCanvas.getGraphicsContext2D());
         mainController.setCurrentCanvasController(this);
         layerBox.createLayer();
         mainController.swapLayerBox(layerBox);
@@ -59,15 +51,9 @@ public class CanvasViewController extends ScrollPane {
         mainController.swapLayerBox(layerBox);
     }
 
-    public void addFigure(Figure figure) {
-        LayerItemController currentLayerController = layerBox.getCurrentLayer();
-        FigureItemController figureController = currentLayerController.addFigure(figure);
-        figureController.init(mainController, currentLayerController);
-        currentFigureController = Optional.of(figureController);
-
-        //addFigureToCurrentLayerItemsList(figure);
+    private Frame createFrame(Figure figure) {
+        return new Frame(figure);
     }
-
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
         for (int i = 0; i < layerBox.getLayers().size(); i++) {
@@ -76,22 +62,7 @@ public class CanvasViewController extends ScrollPane {
                 layer.getFigureController(j).getFigure().draw(drawCanvas.getGraphicsContext2D());
             }
         }
-//        currentFigureController.ifPresent(figureController -> bordersPainter.drawBoards(figureController.getFigure(), currentFigureController.get().getLayerController().getColor()));
-
-        if (currentFigureController.isPresent()) {
-            Frame2 frame2 = new Frame2(currentFigureController.orElseThrow().getFigure());
-
-//            frameDrawer.draw(frame2, currentFigureController.get().getLayerController().getColor()); t
-        }
-
-
-//        currentFigureController.ifPresent(figureItemController -> frameDrawer.draw(figureItemController.getFigure().getFrame(), figureItemController.getLayerController().getColor()));
-//
-//        if(currentFigureController.isPresent()) {
-//            frameDrawer.draw(currentFigureController.get().getFigure().getFrame(), currentFigureController.get().getLayerController().getColor());
-//        }
-
-//        currentFigure.ifPresent(bordersPainter::drawBoards);
+        currentFigureController.ifPresent(figureController -> frameDrawer.draw(createFrame(figureController.getFigure()), figureController.getLayerController().getColor()));
     }
 
 
@@ -122,9 +93,6 @@ public class CanvasViewController extends ScrollPane {
             return;
         }
         redrawAllFigures();
-//        bordersPainter.drawBoards(currentFigureController.get().getFigure(), layerBox.getCurrentLayer().getColor());
-        Frame2 frame2 = new Frame2(currentFigureController.orElseThrow().getFigure());
-//        frameDrawer.draw(frame2, layerBox.getCurrentLayer().getColor());
     }
 
     public void selectFigure(LayerItemController layerItemController, FigureItemController figureController) {
@@ -138,14 +106,6 @@ public class CanvasViewController extends ScrollPane {
 
     public LayerItemController getCurrentLayer() {
         return layerBox.getCurrentLayer();
-    }
-
-    public Color getStrokeColor() {
-        return strokeColor;
-    }
-
-    public void setStrokeColor(Color strokeColor) {
-        this.strokeColor = strokeColor;
     }
 
 }

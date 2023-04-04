@@ -1,11 +1,11 @@
 package com.example.vectoreditor.model;
 
-import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.model.figures.Figure;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frame2 {
+public class Frame {
     private final Point leftTop = new Point();
     private final Point leftBot = new Point();
     private final Point rightTop = new Point();
@@ -18,7 +18,7 @@ public class Frame2 {
     List<Point> rotateHitboxPoints = new ArrayList<>();
     private final Figure figure;
 
-    public Frame2(Figure figure) {
+    public Frame(Figure figure) {
         this.figure = figure;
         update();
     }
@@ -135,13 +135,16 @@ public class Frame2 {
     }
 
     public List<Point> getEdgesPoints() {
-        return List.of(leftTop, rightTop, rightBot, leftTop);
+        return List.of(leftTop, rightTop, rightBot, leftBot);
     }
 
     public List<Point> getPivotsPoints() {
-        return List.of(leftTop, centerTop, rightTop, centerRight, rightBot, centerBot, leftBot, centerRight);
+        return List.of(leftTop, centerTop, rightTop, centerRight, rightBot, centerBot, leftBot, centerLeft);
     }
 
+    public Point getCenter() {
+        return new Point(centerBot.getX(), centerLeft.getY());
+    }
     public Point getPointHitbox(Point point, double angle) {
         double hitbox = 10;
         return new Point(hitbox * Math.sin(angle), hitbox * Math.cos(angle));

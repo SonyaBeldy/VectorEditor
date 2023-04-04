@@ -1,11 +1,11 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.controller.figureTool.PolygonTool;
-import com.example.vectoreditor.controller.figureTool.PolylineTool;
-import com.example.vectoreditor.controller.figureTool.RectangleTool;
+import com.example.vectoreditor.controller.figureTools.PolygonTool;
+import com.example.vectoreditor.controller.figureTools.PolylineTool;
+import com.example.vectoreditor.controller.figureTools.RectangleTool;
 import com.example.vectoreditor.controller.unused.CurrentFigureParamsDisplay;
 import com.example.vectoreditor.controller.unused.PropertiesBox;
-import com.example.vectoreditor.model.figure.FigureDecorationData;
+import com.example.vectoreditor.model.figures.FigureDecorationData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

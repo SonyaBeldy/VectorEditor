@@ -1,7 +1,7 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.*;
-import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.model.figures.Figure;
 import javafx.scene.input.MouseEvent;
 
 public class RotateTool extends SelectTool  implements ITool{

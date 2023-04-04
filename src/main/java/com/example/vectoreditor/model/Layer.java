@@ -1,7 +1,6 @@
 package com.example.vectoreditor.model;
 
-import com.example.vectoreditor.controller.LayerItemController;
-import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.model.figures.Figure;
 
 import java.util.ArrayList;
 

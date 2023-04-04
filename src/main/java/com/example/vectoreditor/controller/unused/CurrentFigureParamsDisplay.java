@@ -1,12 +1,6 @@
 package com.example.vectoreditor.controller.unused;
 
 import com.example.vectoreditor.controller.MainController;
-import com.example.vectoreditor.model.figure.Figure;
-import com.example.vectoreditor.model.PointListUtils;
-import javafx.fxml.Initializable;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class CurrentFigureParamsDisplay {
 

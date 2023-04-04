@@ -1,11 +1,9 @@
-package com.example.vectoreditor.controller.figureTool;
+package com.example.vectoreditor.controller.figureTools;
 
 import com.example.vectoreditor.controller.*;
 import com.example.vectoreditor.model.*;
-import com.example.vectoreditor.model.figure.Polygon;
-import com.example.vectoreditor.model.figure.Polyline;
+import com.example.vectoreditor.model.figures.Polyline;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 import java.util.Optional;
 
@@ -13,23 +11,21 @@ public class PolylineTool extends Tool implements ITool {
 
     private boolean isDrawing;
     private FigureItemController drawingFigure;
-    //что-то не так, почему раньше работало, выделение неправильное
 
     public PolylineTool(MainController mainController) {
         super(mainController);
         isDrawing = false;
+    }
+
+    protected void createFigure() {
         figure = new Polyline(mainController.getPropertiesBoxController().getDecorationProperties());
     }
-    private void createFigureController() {
-
-    }
-
     @Override
     public void mousePressed(MouseEvent event) {
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         if (event.isPrimaryButtonDown()) {
             if (!isDrawing) {
-
+                createFigure();
                 isDrawing = true;
                 figure.addPoint(new Point(event.getX(), event.getY()));
 
@@ -46,13 +42,10 @@ public class PolylineTool extends Tool implements ITool {
             if (figure.getPoints().size() > 2){
                 figure.getPoints().remove(figure.getPoints().size() - 1);
 
-//                figure.calcBoardsPoints();
-
                 figure.calcCenter();
                 currentCanvasController.setCurrentFigureController(Optional.of(drawingFigure));
                 mainController.getPropertiesBoxController().update();
                 currentCanvasController.redrawAllFigures();
-                //currentCanvasController.setCurrentFigureController(Optional.of(figure));
             } else {
                 currentCanvasController.getCurrentLayer().removeFigure(currentCanvasController.getCurrentLayer().getFiguresCount() - 1);
                 currentCanvasController.setCurrentFigureController(Optional.empty());

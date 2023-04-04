@@ -1,10 +1,8 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.controller.figureTool.RectangleTool;
 import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.drawer.RectangleDrawer;
-import com.example.vectoreditor.model.figure.FigureDecorationData;
-import com.example.vectoreditor.model.figure.Rectangle;
+import com.example.vectoreditor.model.figures.FigureDecorationData;
+import com.example.vectoreditor.model.figures.Rectangle;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

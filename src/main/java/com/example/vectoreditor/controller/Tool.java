@@ -1,8 +1,6 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.figure.Figure;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
+import com.example.vectoreditor.model.figures.Figure;
 
 public class Tool {
     protected final MainController mainController;

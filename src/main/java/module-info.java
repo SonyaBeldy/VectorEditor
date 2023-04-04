@@ -19,10 +19,10 @@ module com.example.vectoreditor {
     opens com.example.vectoreditor.model.unused to javafx.fxml;
     exports com.example.vectoreditor.controller.unused;
     opens com.example.vectoreditor.controller.unused to javafx.fxml;
-    exports com.example.vectoreditor.model.drawer;
-    opens com.example.vectoreditor.model.drawer to javafx.fxml;
-    exports com.example.vectoreditor.controller.figureTool;
-    opens com.example.vectoreditor.controller.figureTool to javafx.fxml;
-    exports com.example.vectoreditor.model.figure;
-    opens com.example.vectoreditor.model.figure to javafx.fxml;
+    exports com.example.vectoreditor.model.drawers;
+    opens com.example.vectoreditor.model.drawers to javafx.fxml;
+    exports com.example.vectoreditor.controller.figureTools;
+    opens com.example.vectoreditor.controller.figureTools to javafx.fxml;
+    exports com.example.vectoreditor.model.figures;
+    opens com.example.vectoreditor.model.figures to javafx.fxml;
 }

@@ -1,8 +1,7 @@
-package com.example.vectoreditor.model.figure;
+package com.example.vectoreditor.model.figures;
 
-import com.example.vectoreditor.controller.FigureTransformData;
 import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.drawer.RectangleDrawer;
+import com.example.vectoreditor.model.drawers.RectangleDrawer;
 
 import java.util.List;
 

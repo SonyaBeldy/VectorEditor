@@ -1,6 +1,6 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.model.figures.Figure;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

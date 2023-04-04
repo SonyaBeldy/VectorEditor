@@ -1,16 +1,11 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.drawer.RectangleDrawer;
-import com.example.vectoreditor.model.figure.FigureDecorationData;
-import com.example.vectoreditor.model.figure.Rectangle;
+import com.example.vectoreditor.model.drawers.RectangleDrawer;
+import com.example.vectoreditor.model.figures.Rectangle;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
-
-import java.util.List;
-import java.util.Optional;
 
 public class SelectionFrameTool extends Tool implements ITool {
 

@@ -1,9 +1,7 @@
-package com.example.vectoreditor.controller.figureTool;
+package com.example.vectoreditor.controller.figureTools;
 
 import com.example.vectoreditor.controller.*;
-import com.example.vectoreditor.model.Frame2;
-import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.figure.Rectangle;
+import com.example.vectoreditor.model.figures.Rectangle;
 import javafx.scene.input.MouseEvent;
 
 import java.util.Optional;

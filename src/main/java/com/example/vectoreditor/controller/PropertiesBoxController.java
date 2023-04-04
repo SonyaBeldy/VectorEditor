@@ -1,10 +1,10 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Frame2;
+import com.example.vectoreditor.model.Frame;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.PointListUtils;
-import com.example.vectoreditor.model.figure.Figure;
-import com.example.vectoreditor.model.figure.FigureDecorationData;
+import com.example.vectoreditor.model.figures.Figure;
+import com.example.vectoreditor.model.figures.FigureDecorationData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -152,7 +152,7 @@ public class PropertiesBoxController implements Initializable {
         if(figureItemController.isEmpty()) {
             widthField.setText("");
         } else {
-            Frame2 frame2 = new Frame2(figureItemController.orElseThrow().getFigure());
+            Frame frame2 = new Frame(figureItemController.orElseThrow().getFigure());
 
             double width = PointListUtils.calcDist(frame2.getEdgesPoints().get(0), frame2.getEdgesPoints().get(1));
             widthField.setText(String.valueOf(width));
@@ -164,7 +164,7 @@ public class PropertiesBoxController implements Initializable {
         if(figureItemController.isEmpty()) {
             heightField.setText("");
         } else {
-            Frame2 frame2 = new Frame2(figureItemController.orElseThrow().getFigure());
+            Frame frame2 = new Frame(figureItemController.orElseThrow().getFigure());
 
             double height = PointListUtils.calcDist(frame2.getEdgesPoints().get(0), frame2.getEdgesPoints().get(3));
             heightField.setText(String.valueOf(height));

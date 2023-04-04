@@ -1,7 +1,6 @@
-package com.example.vectoreditor.model.figure;
+package com.example.vectoreditor.model.figures;
 
-import com.example.vectoreditor.model.drawer.PolygonDrawer;
-import javafx.scene.paint.Color;
+import com.example.vectoreditor.model.drawers.PolygonDrawer;
 
 public class Polygon extends Polyline {
     public Polygon(FigureDecorationData figureDecorationData) {

@@ -1,7 +1,7 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.*;
-import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.model.figures.Figure;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -128,7 +128,7 @@ public class SelectTool extends Tool implements ITool {
 //        Point oppositePoint = new Point(0,0);
 
 //        hitResizePivot(figure, new Point(event.getX(), event.getY()));
-        hitRotate(figure, new Point(event.getX(), event.getY()));
+//        hitRotate(figure, new Point(event.getX(), event.getY()));
 
 //        for (int i = 0; i < currentFigure.getFrame().getPivotsPoints().size(); i++) {
 //            Point boardCorner = currentFigure.getFrame().getPivotsPoints().get(i);
@@ -221,7 +221,7 @@ public class SelectTool extends Tool implements ITool {
 
     private void hitRotate(Figure figure, Point eventPoint) {
         final Scene scene = mainController.getCurrentCanvasController().getDrawCanvas().getScene();
-        Frame2 frame2 = new Frame2(figure);
+        Frame frame2 = new Frame(figure);
         if(frame2.hitCenterLeftRotate(eventPoint)) {
             scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW,  mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
         }

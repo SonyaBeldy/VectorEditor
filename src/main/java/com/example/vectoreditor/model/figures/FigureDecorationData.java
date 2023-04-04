@@ -1,4 +1,4 @@
-package com.example.vectoreditor.model.figure;
+package com.example.vectoreditor.model.figures;
 
 import com.example.vectoreditor.model.Cloneable;
 import javafx.scene.paint.Color;

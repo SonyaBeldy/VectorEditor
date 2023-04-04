@@ -1,8 +1,8 @@
 package com.example.vectoreditor.model.unused;
 
-import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.model.figures.Figure;
 import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.figure.FigureDecorationData;
+import com.example.vectoreditor.model.figures.FigureDecorationData;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;

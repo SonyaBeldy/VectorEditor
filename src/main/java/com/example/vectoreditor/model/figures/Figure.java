@@ -1,17 +1,14 @@
-package com.example.vectoreditor.model.figure;
+package com.example.vectoreditor.model.figures;
 
 import com.example.vectoreditor.controller.FigureTransformData;
 import com.example.vectoreditor.model.Cloneable;
-import com.example.vectoreditor.model.Frame2;
-import com.example.vectoreditor.model.unused.Frame;
+import com.example.vectoreditor.model.Frame;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.PointListUtils;
-import com.example.vectoreditor.model.drawer.Drawer;
+import com.example.vectoreditor.model.drawers.Drawer;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public abstract class Figure implements Cloneable<Figure> {
 
@@ -40,7 +37,7 @@ public abstract class Figure implements Cloneable<Figure> {
 
         transformProperties = new FigureTransformData();
 
-//        frame = new Frame2(this);
+//        Frame2 frame = new Frame2(this);
     }
 
     public void draw(GraphicsContext graphicsContext) {
@@ -168,7 +165,7 @@ public abstract class Figure implements Cloneable<Figure> {
 //    }
 
     public void calcCenter(){
-        Frame2 frame2 = new Frame2(this);
+        Frame frame2 = new Frame(this);
         Point newCenter = PointListUtils.calcCenter(frame2.getEdgesPoints());
 
         center.setX(newCenter.getX());

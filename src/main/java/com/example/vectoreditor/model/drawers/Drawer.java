@@ -1,9 +1,8 @@
-package com.example.vectoreditor.model.drawer;
+package com.example.vectoreditor.model.drawers;
 
 import com.example.vectoreditor.controller.FigureTransformData;
-import com.example.vectoreditor.model.figure.FigureDecorationData;
+import com.example.vectoreditor.model.figures.FigureDecorationData;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 public abstract class Drawer {
     public void draw(GraphicsContext graphicsContext, FigureTransformData figureTransformData, FigureDecorationData figureDecorationData) {

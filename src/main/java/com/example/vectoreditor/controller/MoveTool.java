@@ -1,7 +1,7 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.BordersPainter;
-import com.example.vectoreditor.model.figure.Figure;
+import com.example.vectoreditor.model.figures.Figure;
 import com.example.vectoreditor.model.Point;
 import javafx.scene.input.MouseEvent;
 
