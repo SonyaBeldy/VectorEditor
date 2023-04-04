@@ -148,11 +148,33 @@ public abstract class Figure implements Cloneable<Figure> {
 //    }
 
 
-    public boolean isClickedOn(double x, double y) {
-//        return  (x < PointListUtils.calcMaxX(getBoardsPoints())) && (x > PointListUtils.calcMinX(getBoardsPoints())) && (y < PointListUtils.calcMaxY(getBoardsPoints())) && (y > PointListUtils.calcMinY(getBoardsPoints()));
-//        return  (x < PointListUtils.calcMaxX(getFrame().getEdgesPoints())) && (x > PointListUtils.calcMinX(getFrame().getEdgesPoints()))
-//                && (y < PointListUtils.calcMaxY(getFrame().getEdgesPoints())) && (y > PointListUtils.calcMinY(getFrame().getEdgesPoints()));
-        return false;
+    private boolean isCross(Point eventPoint, Point firstEdgePoint, Point secondEdgePoint) {
+        double screenWidth = 1000;
+
+        double x1 = eventPoint.getX();
+        double y1 = eventPoint.getY();
+        double x2 = screenWidth;
+        double y2 = y1;
+        if (((x2 - x1) * (firstEdgePoint.getY() - y1) - (y2 - y1) * (firstEdgePoint.getX() - x1)) *
+                ((x2 - x1) * (secondEdgePoint.getY() - y1) - (y2 - y1) * (secondEdgePoint.getX() - x1)) < 0 &&
+                ((secondEdgePoint.getX() - firstEdgePoint.getX()) * (y1 - firstEdgePoint.getY()) - (secondEdgePoint.getY() - firstEdgePoint.getY()) * (x1 - secondEdgePoint.getX())) *
+                        ((secondEdgePoint.getX() - firstEdgePoint.getX()) * (y2 - firstEdgePoint.getY()) - (secondEdgePoint.getY() - firstEdgePoint.getY()) * (x2 - firstEdgePoint.getX())) < 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean isClickedOn(Point eventPoint) {
+        double crossCount = 0;
+        for (int i = 0; i < points.size() - 1; i++) {
+            if (isCross(eventPoint, points.get(i), points.get(i + 1))) {
+                crossCount++;
+            }
+        }
+        if (isCross(eventPoint, points.get(0), points.get(points.size() - 1))) {
+            crossCount++;
+        }
+        return crossCount % 2 != 0;
     }
 
 //    public double getWidth() {

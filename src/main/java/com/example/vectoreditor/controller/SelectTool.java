@@ -63,9 +63,9 @@ public class SelectTool extends Tool implements ITool {
 
         for (int i = layerBox.getLayers().size() - 1; i >= 0; i--) {
             LayerItemController layer = layerBox.getLayers().get(i);
-            for (int j = 0; j < layer.getFiguresCount(); j++) {
+            for (int j = layer.getFiguresCount() - 1; j >= 0; j--) {
                 FigureItemController figureController = layer.getFigureController(j);
-                if(figureController.getFigure().isClickedOn(x, y)) {
+                if(figureController.getFigure().isClickedOn(new Point(x, y))) {
                     mainController.getCurrentCanvasController().selectFigure(layerBox.getLayers().get(i), figureController);
                     layer.layerItemClick();//сделать ли это в методе контроллера или мейна? Или оставить тут?
                     figureController.figureItemClick(); //сделать ли это в методе контроллера или мейна? Или оставить тут?
@@ -84,9 +84,9 @@ public class SelectTool extends Tool implements ITool {
 
         for (int i = layerBox.getLayers().size() - 1; i >= 0; i--) {
             LayerItemController layer = layerBox.getLayers().get(i);
-            for (int j = 0; j < layer.getFiguresCount(); j++) {
+            for (int j = layer.getFiguresCount() - 1; j >= 0; j--) {
                 Figure figure = layer.getFigureController(j).getFigure();
-                if(figure.isClickedOn(x, y)) {
+                if(figure.isClickedOn(new Point(x, y))) {
                     return Optional.of(figure);
                 }
             }
