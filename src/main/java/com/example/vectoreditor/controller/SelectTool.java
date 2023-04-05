@@ -30,8 +30,6 @@ public class SelectTool extends Tool implements ITool {
         Optional <FigureItemController> figureController = selectFigure(event);
 
         if (figureController.isEmpty()) {
-            //снимаем выделение с текущей фигуры
-            //selectionFrame tool (или в драге)
             mainController.setCurrentTool(new SelectionFrameTool(mainController));
             mainController.getCurrentTool().mousePressed(event);
             return;
@@ -94,136 +92,111 @@ public class SelectTool extends Tool implements ITool {
         return Optional.empty();
     }
 
-//    private void hitResizePivot(Figure figure, Point eventPoint) {
-//        Cursor cursor = Cursor.DEFAULT;
-//        Point dragPoint = new Point(0,0);
-//        Point oppositePoint = new Point(0,0);
-//
-//
-//        if(figure.getFrame().hitLeftTop(new Point(eventPoint.getX(), eventPoint.getY()))) {
-//            cursor = Cursor.NW_RESIZE;
-//            dragPoint = figure.getFrame().getLeftTop();
-//            oppositePoint = figure.getFrame().getRightBot();
-//        } else if (figure.getFrame().hitRightTop(new Point(eventPoint.getX(), eventPoint.getY()))) {
-//            cursor = Cursor.NE_RESIZE;
-//            dragPoint = figure.getFrame().getRightTop();
-//            oppositePoint = figure.getFrame().getLeftBot();
-//        }
-//
-//        mainController.getCurrentCanvasController().getDrawCanvas().getScene().setCursor(cursor);
-//        if (cursor != Cursor.DEFAULT) {
-//            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.XY));
-//        }
-//    }
+    private void changeCursor(Cursor cursor) {
+        mainController.getCurrentCanvasController().getDrawCanvas().getScene().setCursor(cursor);
+    }
+    private boolean hitResizePivot(Figure figure, Point eventPoint) {
+        Point dragPoint;
+        Point oppositePoint;
+
+        Frame frame = new Frame(figure);
+        if (frame.hitLeftTop(new Point(eventPoint.getX(), eventPoint.getY()))) {
+            dragPoint = frame.getLeftTop();
+            oppositePoint = frame.getRightBot();
+
+            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.XY));
+            changeCursor(Cursor.NW_RESIZE);
+            return true;
+
+        } else if (frame.hitRightTop(new Point(eventPoint.getX(), eventPoint.getY()))) {
+            dragPoint = frame.getRightTop();
+            oppositePoint = frame.getLeftBot();
+
+            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.XY));
+            changeCursor(Cursor.NE_RESIZE);
+            return true;
+
+        } else if (frame.hitRightBot(new Point(eventPoint.getX(), eventPoint.getY()))) {
+            dragPoint = frame.getRightBot();
+            oppositePoint = frame.getLeftTop();
+
+            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.XY));
+            changeCursor(Cursor.SE_RESIZE);
+            return true;
+
+        } else if (frame.hitLeftBot(new Point(eventPoint.getX(), eventPoint.getY()))) {
+            dragPoint = frame.getLeftBot();
+            oppositePoint = frame.getRightTop();
+
+            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.XY));
+            changeCursor(Cursor.SW_RESIZE);
+            return true;
+        } else if (frame.hitCenterTop(new Point(eventPoint.getX(), eventPoint.getY()))) {
+            dragPoint = frame.getCenterTop();
+            oppositePoint = frame.getCenterBot();
+
+            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.Y));
+            changeCursor(Cursor.N_RESIZE);
+            return true;
+        } else if (frame.hitCenterRight(new Point(eventPoint.getX(), eventPoint.getY()))) {
+            dragPoint = frame.getCenterRight();
+            oppositePoint = frame.getCenterLeft();
+
+            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.X));
+            changeCursor(Cursor.E_RESIZE);
+            return true;
+        } else if (frame.hitCenterBot(new Point(eventPoint.getX(), eventPoint.getY()))) {
+            dragPoint = frame.getCenterBot();
+            oppositePoint = frame.getCenterTop();
+
+            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.Y));
+            changeCursor(Cursor.S_RESIZE);
+            return true;
+        } else if (frame.hitCenterLeft(new Point(eventPoint.getX(), eventPoint.getY()))) {
+            dragPoint = frame.getCenterLeft();
+            oppositePoint = frame.getCenterRight();
+
+            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.X));
+            changeCursor(Cursor.W_RESIZE);
+            return true;
+        }
+        return false;
+    }
     private void bordersControlsEntered(MouseEvent event) {
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
-        Point point = new Point(event.getX(), event.getY());
         if (currentCanvasController.getCurrentFigureController().isEmpty()) {
             return;
         }
         Figure currentFigure = currentCanvasController.getCurrentFigureController().get().getFigure();
 
-        Cursor cursor = Cursor.DEFAULT;
-//        Point dragPoint = new Point(0,0);
-//        Point oppositePoint = new Point(0,0);
-
-//        hitResizePivot(figure, new Point(event.getX(), event.getY()));
-//        hitRotate(figure, new Point(event.getX(), event.getY()));
-
-//        for (int i = 0; i < currentFigure.getFrame().getPivotsPoints().size(); i++) {
-//            Point boardCorner = currentFigure.getFrame().getPivotsPoints().get(i);
-
-
-//            currentCanvasController.getDrawCanvas().getScene().setCursor(cursor);
-//            mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.XY));
-
-//            if (Math.pow(boardCorner.getX() - point.getX(), 2) + Math.pow(boardCorner.getY() - point.getY(), 2) <= 20) {
-//                switch (i) {
-//                    case 0 -> {
-//                        cursor = Cursor.NW_RESIZE;
-//                        dragPoint = currentFigure.getBoardsPoints().get(0);
-//                        oppositePoint = currentFigure.getBoardsPoints().get(2);
-//                    }
-//                    case 1 -> {
-//                        cursor = Cursor.NE_RESIZE;
-//                        dragPoint = currentFigure.getBoardsPoints().get(1);
-//                        oppositePoint = currentFigure.getBoardsPoints().get(3);
-//                    }
-//                    case 2 -> {
-//                        cursor = Cursor.SE_RESIZE;
-//                        dragPoint = currentFigure.getBoardsPoints().get(2);
-//                        oppositePoint = currentFigure.getBoardsPoints().get(0);
-//                    }
-//                    case 3 -> {
-//                        cursor = Cursor.SW_RESIZE;
-//                        dragPoint = currentFigure.getBoardsPoints().get(3);
-//                        oppositePoint = currentFigure.getBoardsPoints().get(1);
-//                    }
-//                }
-//                currentCanvasController.getDrawCanvas().getScene().setCursor(cursor);
-//                mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.XY));
-//                return;
-//            }
-//        }
-//        mainController.setCurrentTool(new SelectTool(mainController));
-//        for (int i = 0; i < currentFigure.getResizePoints().size(); i++) {
-//            Point boardCorner = currentFigure.getResizePoints().get(i);
-//            if (Math.pow(boardCorner.getX() - point.getX(), 2) + Math.pow(boardCorner.getY() - point.getY(), 2) <= Values.RESIZE_HITBOX) {
-//                switch (i) {
-//                    case 0 -> {
-//                        cursor = Cursor.N_RESIZE;
-//                        dragPoint = currentFigure.getResizePoints().get(0);
-//                        oppositePoint = currentFigure.getResizePoints().get(2);
-//                        mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.Y));
-//                    }
-//                    case 1 -> {
-//                        cursor = Cursor.E_RESIZE;
-//                        dragPoint = currentFigure.getResizePoints().get(1);
-//                        oppositePoint = currentFigure.getResizePoints().get(3);
-//                        mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint , ResizeDirection.X));
-//                    }
-//                    case 2 -> {
-//                        cursor = Cursor.S_RESIZE;
-//                        dragPoint = currentFigure.getResizePoints().get(2);
-//                        oppositePoint = currentFigure.getResizePoints().get(0);
-//                        mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.Y));
-//                    }
-//                    case 3 -> {
-//                        cursor = Cursor.W_RESIZE;
-//                        dragPoint = currentFigure.getResizePoints().get(3);
-//                        oppositePoint = currentFigure.getResizePoints().get(1);
-//                        mainController.setCurrentTool(new ResizeTool(mainController, dragPoint, oppositePoint, ResizeDirection.X));
-//                    }
-//                }
-//                currentCanvasController.getDrawCanvas().getScene().setCursor(cursor);
-//                return;
-//            }
-//        }
-//        for (int i = 0; i < currentFigure.getRotatePoints().size(); i++) {
-//            Point rotatePoint = currentFigure.getRotatePoints().get(i);
-//
-//            if (Math.pow(rotatePoint.getX() - point.getX(), 2) + Math.pow(rotatePoint.getY() - point.getY(), 2) <= 80) {
-//
-//                final Scene scene = currentCanvasController.getDrawCanvas().getScene();
-//                switch (i) {
-//                    case 0 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW, currentCanvasController.getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
-//                    case 1 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW, currentCanvasController.getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
-//                    case 2 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SE, currentCanvasController.getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
-//                    case 3 -> scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NE, currentCanvasController.getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
-//                }
-//                mainController.setCurrentTool(new RotateTool(mainController));
-//                return;
-//            }
-//        }
-        mainController.setCurrentTool(new SelectTool(mainController));
-        currentCanvasController.getDrawCanvas().getScene().setCursor(Cursor.DEFAULT);
+        if (!hitResizePivot(currentFigure, new Point(event.getX(), event.getY())) && !hitRotate(currentFigure, new Point(event.getX(), event.getY()))) {
+            changeCursor(Cursor.DEFAULT);
+            mainController.setCurrentTool(new SelectTool(mainController));
+        }
     }
 
-    private void hitRotate(Figure figure, Point eventPoint) {
+    private boolean hitRotate(Figure figure, Point eventPoint) {
         final Scene scene = mainController.getCurrentCanvasController().getDrawCanvas().getScene();
-        Frame frame2 = new Frame(figure);
-        if(frame2.hitCenterLeftRotate(eventPoint)) {
-            scene.setCursor(CursorImage.rotateCursor(BorderPointInd.NW,  mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
+        Frame frame = new Frame(figure);
+
+        int borderPointInd = -1;
+
+        if (frame.hitLeftTopRotate(eventPoint)) {
+            borderPointInd = BorderPointInd.NW;
+        } else if (frame.hitRightTop(eventPoint)) {
+            borderPointInd = BorderPointInd.NE;
+        } else if (frame.hitRightBotRotate(eventPoint)) {
+            borderPointInd = BorderPointInd.SE;
+        } else if (frame.hitLeftBotRotate(eventPoint)) {
+            borderPointInd = BorderPointInd.SW;
         }
+
+        if (borderPointInd != -1) {
+            mainController.setCurrentTool(new RotateTool(mainController));
+            scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW,  mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
+            return true;
+        }
+        return false;
+
     }
 }
