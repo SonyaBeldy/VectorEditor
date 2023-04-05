@@ -39,7 +39,7 @@ public class SelectionFrameTool extends Tool implements ITool {
         frame.getRightBot().setY(event.getY());
         frame.getLeftBot().setY(event.getY());
         GraphicsContext graphicsContext = mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D();
-        graphicsContext.setLineCap(StrokeLineCap.BUTT);
+//        graphicsContext.setLineCap(StrokeLineCap.BUTT);
 
         frame.draw(graphicsContext);
     }
@@ -51,6 +51,10 @@ public class SelectionFrameTool extends Tool implements ITool {
 
     @Override
     public void mouseEntered(MouseEvent event) {
+
+    }
+
+    private void selectFigures() {
 
     }
 }

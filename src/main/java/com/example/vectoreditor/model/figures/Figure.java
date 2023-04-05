@@ -53,11 +53,8 @@ public abstract class Figure implements Cloneable<Figure> {
     }
 
     public void rotate(Figure beforeRotateFigure, Point center, double angle) {
-        transformProperties.setAngle(beforeRotateFigure.getTransformProperties().getAngle() + angle);
-//        rotate(getPoints(), beforeRotateFigure.getPoints(), center, angle);
-//        rotate(getBoardsPoints(), beforeRotateFigure.getBoardsPoints(), center, angle);
-//        rotate(getRotatePoints(), beforeRotateFigure.getRotatePoints(), center, angle);
-//        rotate(getResizePoints(), beforeRotateFigure.getResizePoints(), center, angle);
+        transformProperties.setAngle(beforeRotateFigure.transformProperties.getAngle() + angle);
+        rotate(getPoints(), beforeRotateFigure.getPoints(), center, angle);
     }
 
     private void rotate(ArrayList<Point> points, ArrayList<Point> beforeRotatePoints, Point center, double angle) {
@@ -67,42 +64,10 @@ public abstract class Figure implements Cloneable<Figure> {
             points.set(i, rotatedPoint);
         }
     }
-//    public void calcBoardsPoints() {
-//        boardsPoints.clear();
-//
-//        double minX = PointListUtils.calcMinX(points);
-//        double minY = PointListUtils.calcMinY(points);
-//        double maxX = PointListUtils.calcMaxX(points);
-//        double maxY = PointListUtils.calcMaxY(points);
-//
-////        frame.getLeftTop().setX(minX);
-////        frame.getLeftTop().setY(minY);
-////
-////        frame.getRightTop().setX(maxX);
-////        frame.getRightTop().setY(minY);
-////
-////        frame.getRightBot().setX(maxX);
-////        frame.getRightBot().setY(maxY);
-////
-////        frame.getLeftBot().setX(minX);
-////        frame.getLeftBot().setY(maxY);
-//
-//        boardsPoints.add(new Point(minX, minY));
-//        boardsPoints.add(new Point(maxX, minY));
-//        boardsPoints.add(new Point(maxX, maxY));
-//        boardsPoints.add(new Point(minX, maxY));
-//
-//        calcResizePoints();
-//        calcRotatePoints();
-//        calcCenter();
-//    }
 
     public void move(Point difference) {
         Figure beforeMoveFigure = clone();
         movePoints(beforeMoveFigure.getPoints(), getPoints(), difference);
-//        movePoints(beforeMoveFigure.getBoardsPoints(), getBoardsPoints(), difference);
-//        movePoints(beforeMoveFigure.getRotatePoints(), getRotatePoints(), difference);
-//        movePoints(beforeMoveFigure.getResizePoints(), getResizePoints(), difference);
         calcCenter();
     }
 

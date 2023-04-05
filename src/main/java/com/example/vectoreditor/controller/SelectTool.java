@@ -95,11 +95,10 @@ public class SelectTool extends Tool implements ITool {
     private void changeCursor(Cursor cursor) {
         mainController.getCurrentCanvasController().getDrawCanvas().getScene().setCursor(cursor);
     }
-    private boolean hitResizePivot(Figure figure, Point eventPoint) {
+    private boolean hitResizePivot(Frame frame, Point eventPoint) {
         Point dragPoint;
         Point oppositePoint;
 
-        Frame frame = new Frame(figure);
         if (frame.hitLeftTop(new Point(eventPoint.getX(), eventPoint.getY()))) {
             dragPoint = frame.getLeftTop();
             oppositePoint = frame.getRightBot();
@@ -168,16 +167,16 @@ public class SelectTool extends Tool implements ITool {
             return;
         }
         Figure currentFigure = currentCanvasController.getCurrentFigureController().get().getFigure();
+        Frame frame = new Frame(currentFigure);
 
-        if (!hitResizePivot(currentFigure, new Point(event.getX(), event.getY())) && !hitRotate(currentFigure, new Point(event.getX(), event.getY()))) {
+        if (!hitResizePivot(frame, new Point(event.getX(), event.getY())) && !hitRotate(frame, new Point(event.getX(), event.getY()))) {
             changeCursor(Cursor.DEFAULT);
             mainController.setCurrentTool(new SelectTool(mainController));
         }
     }
 
-    private boolean hitRotate(Figure figure, Point eventPoint) {
+    private boolean hitRotate(Frame frame, Point eventPoint) {
         final Scene scene = mainController.getCurrentCanvasController().getDrawCanvas().getScene();
-        Frame frame = new Frame(figure);
 
         int borderPointInd = -1;
 
@@ -193,7 +192,7 @@ public class SelectTool extends Tool implements ITool {
 
         if (borderPointInd != -1) {
             mainController.setCurrentTool(new RotateTool(mainController));
-            scene.setCursor(CursorImage.rotateCursor(BorderPointInd.SW,  mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
+            scene.setCursor(CursorImage.rotateCursor(borderPointInd,  mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
             return true;
         }
         return false;

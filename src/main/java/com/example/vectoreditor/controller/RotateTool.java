@@ -31,6 +31,7 @@ public class RotateTool extends SelectTool  implements ITool{
             angle = 2 * Math.PI + angle;
         }
         mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().rotate(copyCurrentFigure, center, angle);
+        mainController.getPropertiesBoxController().update();
         mainController.getCurrentCanvasController().redrawAllFigures();
     }
 

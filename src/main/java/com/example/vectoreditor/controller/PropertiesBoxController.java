@@ -122,6 +122,7 @@ public class PropertiesBoxController implements Initializable {
             rotateField.setText("");
             return;
         }
+        System.out.println("figureItemController.get().getFigure().getTransformProperties().getAngle() " + figureItemController.get().getFigure().getTransformProperties().getAngle());
         double angle = Math.round(Math.toDegrees(figureItemController.get().getFigure().getTransformProperties().getAngle()));
         if (angle < 0) {
             angle+= 360;
@@ -129,6 +130,7 @@ public class PropertiesBoxController implements Initializable {
         if (angle > 360) {
             angle-= 360;
         }
+        System.out.println(angle);
        rotateField.setText(String.valueOf(angle));
     }
 

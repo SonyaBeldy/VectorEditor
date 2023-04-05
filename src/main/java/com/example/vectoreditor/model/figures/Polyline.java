@@ -16,6 +16,8 @@ public class Polyline extends Figure implements Cloneable<Figure> {
         newPolyline.getCenter().setX(getCenter().getX());
         newPolyline.getCenter().setY(getCenter().getY());
 
+        newPolyline.getTransformProperties().setAngle(transformProperties.getAngle());
+
         for (int i = 0; i < getPoints().size(); i++) {
             newPolyline.addPoint(getPoints().get(i).clone());
         }
