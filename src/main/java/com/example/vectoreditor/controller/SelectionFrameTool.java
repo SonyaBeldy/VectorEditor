@@ -1,19 +1,24 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.drawers.RectangleDrawer;
+import com.example.vectoreditor.model.figures.FigureDecorationData;
 import com.example.vectoreditor.model.figures.Rectangle;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 
+import java.util.Optional;
+
 public class SelectionFrameTool extends Tool implements ITool {
 
     Rectangle frame;
-    RectangleDrawer drawer;
     public SelectionFrameTool(MainController mainController) {
         super(mainController);
-        frame = new Rectangle(mainController.getPropertiesBoxController().getDecorationProperties());
+        FigureDecorationData decorationData = new FigureDecorationData(Optional.of(Color.GRAY), Optional.empty(), 1);
+        decorationData.setLineDashes(4);
+//        frame = new Rectangle(mainController.getPropertiesBoxController().getDecorationProperties());
+        frame = new Rectangle(decorationData);
     }
 
     @Override
@@ -34,10 +39,7 @@ public class SelectionFrameTool extends Tool implements ITool {
         frame.getRightBot().setY(event.getY());
         frame.getLeftBot().setY(event.getY());
         GraphicsContext graphicsContext = mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D();
-        graphicsContext.setStroke(Color.LIGHTGRAY);
-        graphicsContext.setLineDashes(0.3);
         graphicsContext.setLineCap(StrokeLineCap.BUTT);
-
 
         frame.draw(graphicsContext);
     }

@@ -19,10 +19,12 @@ public class PolylineDrawer extends Drawer {
 
     @Override
     public void draw(GraphicsContext graphicsContext, FigureTransformData figureTransformData, FigureDecorationData figureDecorationData) {
-        if (figureDecorationData.getStrokeColor().isPresent()) {
-            graphicsContext.setStroke(figureDecorationData.getStrokeColor().get());
-        }
-        graphicsContext.setLineDashes(figureDecorationData.getLineDashes());
+//        if (figureDecorationData.getLineColor().isPresent()) {
+//            graphicsContext.setStroke(figureDecorationData.getLineColor().get());
+//        }
+//        graphicsContext.setLineDashes(figureDecorationData.getLineDashes());
+        super.draw(graphicsContext, figureTransformData, figureDecorationData);
+
         for (int i = 0; i < points.size() - 1; i++) {
             graphicsContext.strokeLine(points.get(i).getX(), points.get(i).getY(), points.get(i + 1).getX(), points.get(i + 1).getY());
         }

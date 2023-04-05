@@ -34,7 +34,7 @@ public class FigureDecorationData implements Cloneable<FigureDecorationData> {
         this.fillColor = fillColor;
     }
 
-    public Optional<Color> getStrokeColor() {
+    public Optional<Color> getLineColor() {
         return strokeColor;
     }
 
