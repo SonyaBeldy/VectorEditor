@@ -5,55 +5,24 @@ import com.example.vectoreditor.model.figures.Figure;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frame {
-    private final Point leftTop = new Point();
-    private final Point leftBot = new Point();
-    private final Point rightTop = new Point();
-    private final Point rightBot = new Point();
-    private final Point centerTop = new Point();
-    private final Point centerRight = new Point();
-    private final Point centerBot = new Point();
-    private final Point centerLeft = new Point();
-
-    List<Point> rotateHitboxPoints = new ArrayList<>();
+public abstract class Frame {
+    protected final Point leftTop = new Point();
+    protected final Point leftBot = new Point();
+    protected final Point rightTop = new Point();
+    protected final Point rightBot = new Point();
+    protected final Point centerTop = new Point();
+    protected final Point centerRight = new Point();
+    protected final Point centerBot = new Point();
+    protected final Point centerLeft = new Point();
 
     private int rotateShift = 10;
-    private final Figure figure;
+    protected final Point center = new Point();
 
-    private final Point center = new Point();
+    public abstract void update();
 
-    public Frame(Figure figure) {
-        this.figure = figure;
-        update();
-    }
-
-    public void update() {
-        Figure notRotatedFigure = figure.clone();
-        notRotatedFigure.rotate(figure.clone(), figure.getCenter(), -figure.getTransformProperties().getAngle());
-
-        double minX = PointListUtils.calcMinX(notRotatedFigure.getPoints());
-        double minY = PointListUtils.calcMinY(notRotatedFigure.getPoints());
-        double maxX = PointListUtils.calcMaxX(notRotatedFigure.getPoints());
-        double maxY = PointListUtils.calcMaxY(notRotatedFigure.getPoints());
-
-        leftTop.change(minX, minY);
-        leftBot.change(minX, maxY);
-        rightTop.change(maxX, minY);
-        rightBot.change(maxX, maxY);
-
-        centerTop.change((maxX + minX)/2, minY);
-        centerBot.change((maxX + minX)/2, maxY);
-        centerRight.change(maxX, (maxY + minY)/2);
-        centerLeft.change(minX, (maxY + minY)/2);
-
-        center.change((maxX + minX)/2, (maxY + minY)/2);
-
-        rotate(figure.getTransformProperties().getAngle());
-    }
-
-    private void rotate(double angle) {
+    protected void rotate(double angle) {
         for (Point point : List.of(leftTop, leftBot, rightTop, rightBot, centerTop, centerBot, centerLeft, centerRight)) {
-            point.rotate(figure.getCenter(), angle);
+            point.rotate(center, angle);
         }
     }
 //    private void calcRotateHitboxPoints() {
@@ -134,13 +103,9 @@ public class Frame {
         return hitRotatePoint(eventPoint, centerLeft, -rotateShift, 0);
     }
 
-    private boolean hitRotatePoint(Point eventPoint, Point framePoint, int shiftX, int shiftY) {
-        Point point = new Point(framePoint.getX() + shiftX, framePoint.getY() + shiftY);
-        point.rotate(framePoint, figure.getTransformProperties().getAngle());
-        return in(eventPoint, point);
-    }
+    public abstract boolean hitRotatePoint(Point eventPoint, Point framePoint, int shiftX, int shiftY);
 
-    private boolean in(Point eventPoint, Point framePoint) {
+    protected boolean in(Point eventPoint, Point framePoint) {
         double POINT_HITBOX = 40;
         return Math.pow(framePoint.getX() - eventPoint.getX(), 2) + Math.pow(framePoint.getY() - eventPoint.getY(), 2) <= POINT_HITBOX;
     }
@@ -167,19 +132,19 @@ public class Frame {
 //        }
 //    }
 
-    public void move(Point difference) {
-        Figure beforeMoveFigure = figure.clone();
-        figure.calcCenter();
-    }
-    private void movePoints(List<Point> beforeMovePoints, List<Point> points, Point difference) {
-        for (int i = 0; i < getPivotsPoints().size(); i++) {
-            double beforeMoveX = beforeMovePoints.get(i).getX();
-            double beforeMoveY = beforeMovePoints.get(i).getY();
-
-            points.get(i).setX(beforeMoveX + difference.getX());
-            points.get(i).setY(beforeMoveY + difference.getY());
-        }
-    }
+//    public void move(Point difference) {
+//        Figure beforeMoveFigure = figure.clone();
+//        figure.calcCenter();
+//    }
+//    private void movePoints(List<Point> beforeMovePoints, List<Point> points, Point difference) {
+//        for (int i = 0; i < getPivotsPoints().size(); i++) {
+//            double beforeMoveX = beforeMovePoints.get(i).getX();
+//            double beforeMoveY = beforeMovePoints.get(i).getY();
+//
+//            points.get(i).setX(beforeMoveX + difference.getX());
+//            points.get(i).setY(beforeMoveY + difference.getY());
+//        }
+//    }
     public Point getLeftTop() {
         return leftTop;
     }
