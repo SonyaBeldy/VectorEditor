@@ -10,11 +10,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class CanvasViewController extends ScrollPane {
 
     private Optional<FigureItemController> currentFigureController = Optional.empty();
+    private List<FigureItemController> currentFigures;
     private LayerBox layerBox;
 
     private FrameDrawer frameDrawer;
@@ -25,6 +28,8 @@ public class CanvasViewController extends ScrollPane {
 
     public void init(MainController mainController) {
         this.mainController = mainController;
+        currentFigures = new ArrayList<>();
+
         layerBox = new LayerBox(mainController);
         frameDrawer = new FrameDrawer(drawCanvas.getGraphicsContext2D());
         mainController.setCurrentCanvasController(this);
@@ -58,8 +63,16 @@ public class CanvasViewController extends ScrollPane {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
         for (int i = 0; i < layerBox.getLayers().size(); i++) {
             LayerItemController layer = layerBox.getLayers().get(i);
+
             for (int j = 0; j < layer.getFiguresCount(); j++) {
-                layer.getFigureController(j).getFigure().draw(drawCanvas.getGraphicsContext2D());
+                FigureItemController figureItem = layer.getFigureController(j);
+                Figure figure = figureItem.getFigure();
+
+                figure.draw(drawCanvas.getGraphicsContext2D());
+//                if(figure.isSelected()) {
+//                    frameDrawer.draw(createFrame(figure), figureItem.getLayerController().getColor());
+//                }
+
             }
         }
         currentFigureController.ifPresent(figureController -> frameDrawer.draw(createFrame(figureController.getFigure()), figureController.getLayerController().getColor()));
@@ -106,6 +119,13 @@ public class CanvasViewController extends ScrollPane {
 
     public LayerItemController getCurrentLayer() {
         return layerBox.getCurrentLayer();
+    }
+
+    public void addCurrentFigure(FigureItemController figure) {
+        currentFigures.add(figure);
+    }
+    public List<FigureItemController> getCurrentFigures() {
+        return currentFigures;
     }
 
 }

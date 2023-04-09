@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public class MainController {
@@ -41,19 +42,13 @@ public class MainController {
     private TabPane workspaceTabPane;
     @FXML
     private ScrollPane propScrollPane;
-
-    private CurrentFigureParamsDisplay paramsDisplay;
     private LayerBox layerBox;
     private CanvasViewController currentCanvasController;
     private ITool currentTool = new SelectTool(this);
     private PropertiesBoxController propertiesBoxController;
     private PropertiesBox propertiesBox;
-
-    private FigureDecorationData properties;
-
     @FXML
     private void initialize() {
-        //paramsDisplay = new CurrentFigureParamsDisplay(this);
         propertiesBox = new PropertiesBox();
 
         NewFileViewController newFileViewController = new NewFileViewController();
@@ -159,7 +154,6 @@ public class MainController {
 
     @FXML
     protected void onPolylineButtonClick(ActionEvent event) {
-//        currentCanvasController.setStrokeColor(colorPicker.getValue());
         currentTool = new PolylineTool(this);
         enabledAllButtons();
         polylineButton.setDisable(true);
@@ -167,7 +161,6 @@ public class MainController {
 
     @FXML
     protected void onRectangleButtonClick(ActionEvent event) {
-//        currentCanvasController.setStrokeColor(colorPicker.getValue());
         currentTool = new RectangleTool(this);
         enabledAllButtons();
         rectangleButton.setDisable(true);
@@ -175,7 +168,6 @@ public class MainController {
 
     @FXML
     protected void onPolygonButtonClick(ActionEvent event) {
-//        currentCanvasController.setStrokeColor(colorPicker.getValue());
         currentTool = new PolygonTool(this);
         enabledAllButtons();
         polygonButton.setDisable(true);
@@ -216,4 +208,11 @@ public class MainController {
         this.currentTool = currentTool;
     }
 
+    public int getLayersCount() {
+        return layerBox.getLayers().size();
+    }
+
+    public List<LayerItemController> getLayers() {
+        return layerBox.getLayers();
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.vectoreditor.controller.figureTools;
 
 import com.example.vectoreditor.controller.*;
-import com.example.vectoreditor.model.figures.Polyline;
 import com.example.vectoreditor.model.figures.Rectangle;
 import javafx.scene.input.MouseEvent;
 
@@ -29,7 +28,7 @@ public class RectangleTool extends Tool implements ITool {
         rectangle.getRightTop().setY(event.getY());
 
         rectangle.getLeftBot().setX(event.getX());
-        drawingFigure = mainController.getCurrentCanvasController().getCurrentLayer().addFigure(rectangle);
+        drawingFigure = mainController.getCurrentCanvasController().getCurrentLayer().addFigureItemController(rectangle);
         //mainController.getCurrentCanvasController().setCurrentFigureController(Optional.of(figureController));
     }
 
@@ -48,6 +47,7 @@ public class RectangleTool extends Tool implements ITool {
     @Override
     public void mouseReleased(MouseEvent event) {
         rectangle.calcCenter();
+        rectangle.setSelected(true);
         mainController.getCurrentCanvasController().setCurrentFigureController(Optional.of(drawingFigure));
         mainController.getPropertiesBoxController().update();
     }

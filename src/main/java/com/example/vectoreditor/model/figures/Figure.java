@@ -16,10 +16,8 @@ public abstract class Figure implements Cloneable<Figure> {
     ArrayList<Point> points;
     FigureDecorationData figureDecorationData;
     FigureTransformData transformProperties;
-//    protected final ArrayList<Point> boardsPoints;
-//    protected final ArrayList<Point> rotatePoints;
-//    protected final ArrayList<Point> resizePoints;
-//    protected final ArrayList<Point> hitboxPoints;
+
+    boolean isSelected = false;
 
     protected final Point center;
 
@@ -29,15 +27,9 @@ public abstract class Figure implements Cloneable<Figure> {
         this.name = name;
         this.figureDecorationData = properties;
         points = new ArrayList<>();
-//        boardsPoints = new ArrayList<>();
-//        hitboxPoints = new ArrayList<>();
-//        rotatePoints = new ArrayList<>();
-//        resizePoints = new ArrayList<>();
         center = new Point(0,0);
 
         transformProperties = new FigureTransformData();
-
-//        Frame2 frame = new Frame2(this);
     }
 
     public void draw(GraphicsContext graphicsContext) {
@@ -81,39 +73,11 @@ public abstract class Figure implements Cloneable<Figure> {
         }
     }
 
-//    private void calcRotatePoints() {
-//        rotatePoints.clear();
-//        double hitbox = 10;
-//
-//        rotatePoints.add(new Point(boardsPoints.get(0).getX() - hitbox, boardsPoints.get(0).getY() - hitbox));
-//        rotatePoints.add(new Point(boardsPoints.get(1).getX() + hitbox, boardsPoints.get(1).getY() - hitbox));
-//        rotatePoints.add(new Point(boardsPoints.get(2).getX() + hitbox, boardsPoints.get(2).getY() + hitbox));
-//        rotatePoints.add(new Point(boardsPoints.get(3).getX() - hitbox, boardsPoints.get(3).getY() + hitbox));
-//    }
-//    private void calcResizePoints() {
-//        resizePoints.clear();
-//
-//        resizePoints.add(new Point((boardsPoints.get(1).getX() - boardsPoints.get(0).getX())/2 + boardsPoints.get(0).getX(), boardsPoints.get(0).getY()));
-//        resizePoints.add(new Point(boardsPoints.get(1).getX(), (boardsPoints.get(1).getY() - boardsPoints.get(2).getY())/2 + boardsPoints.get(2).getY()));
-//        resizePoints.add(new Point((boardsPoints.get(2).getX() - boardsPoints.get(3).getX())/2 + boardsPoints.get(3).getX(), boardsPoints.get(2).getY()));
-//        resizePoints.add(new Point(boardsPoints.get(3).getX(), (boardsPoints.get(0).getY() - boardsPoints.get(3).getY())/2 + boardsPoints.get(3).getY()));
-//    }
-
     public String getName() {
         return name;
     }
-//    public ArrayList<Point> getBoardsPoints() {
-//        return boardsPoints;
-//    }
-//    public ArrayList<Point> getResizePoints() {
-//        return resizePoints;
-//    }
-//    public ArrayList<Point> getRotatePoints() {
-//        return rotatePoints;
-//    }
 
-
-    private boolean isCross(Point eventPoint, Point firstEdgePoint, Point secondEdgePoint) {
+    public boolean isCross(Point eventPoint, Point firstEdgePoint, Point secondEdgePoint) {
         double screenWidth = 1000;
 
         double x1 = eventPoint.getX();
@@ -142,15 +106,6 @@ public abstract class Figure implements Cloneable<Figure> {
         return crossCount % 2 != 0;
     }
 
-//    public double getWidth() {
-//        double x1 = getBoardsPoints().get(0).getX();
-//        double y1 = getBoardsPoints().get(0).getY();
-//        double x2 = getBoardsPoints().get(2).getX();
-//        double y2 = getBoardsPoints().get(2).getY();
-//        double width = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-//        return Math.round(width);
-//    }
-
     public void calcCenter(){
         Frame frame2 = new Frame(this);
         Point newCenter = PointListUtils.calcCenter(frame2.getEdgesPoints());
@@ -173,6 +128,14 @@ public abstract class Figure implements Cloneable<Figure> {
 
     public Point getCenter() {
         return center;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public abstract Figure clone();

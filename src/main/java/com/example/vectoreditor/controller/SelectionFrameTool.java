@@ -1,6 +1,8 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.drawers.RectangleDrawer;
+import com.example.vectoreditor.model.figures.Figure;
 import com.example.vectoreditor.model.figures.FigureDecorationData;
 import com.example.vectoreditor.model.figures.Rectangle;
 import javafx.scene.canvas.GraphicsContext;
@@ -47,6 +49,7 @@ public class SelectionFrameTool extends Tool implements ITool {
     @Override
     public void mouseReleased(MouseEvent event) {
         mainController.setCurrentTool(new SelectTool(mainController));
+        selectFigures();
     }
 
     @Override
@@ -55,6 +58,30 @@ public class SelectionFrameTool extends Tool implements ITool {
     }
 
     private void selectFigures() {
+        Point min = frame.getLeftTop();
+        Point max = frame.getRightBot();
 
+        for (int i = 0; i < mainController.getLayersCount(); i++) {
+            LayerItemController layer = mainController.getLayers().get(i);
+            for (int j = 0; j < layer.getFiguresCount(); j++) {
+                if (isInside(layer.getFigureController(i).getFigure())) {
+                    mainController.getCurrentCanvasController().getCurrentFigures().add(layer.getFigureController(i));
+                }
+            }
+        }
+    }
+
+    private boolean isInside(Figure figure) {
+        for (int i = 0; i < figure.getPoints().size(); i++) {
+            Point point = figure.getPoints().get(i);
+            if (!((point.getX() < frame.getRightBot().getX()) &&
+                    (point.getY() < frame.getRightBot().getY()) &&
+                    (point.getX() > frame.getLeftTop().getX()) &&
+                    (point.getY() > frame.getLeftTop().getY()))
+            ) {
+                return false;
+            }
+        }
+        return true;
     }
 }

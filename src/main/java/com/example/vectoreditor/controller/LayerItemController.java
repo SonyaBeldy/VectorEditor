@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LayerItemController implements Initializable {
@@ -117,7 +118,7 @@ public class LayerItemController implements Initializable {
         return layerItem;
     }
 
-    public FigureItemController addFigure(Figure figure) {
+    public FigureItemController addFigureItemController(Figure figure) {
         NodeController<FigureItemController> figureItem = MyFXMLLoader.loadFigureItem();
 
         figureItem.controller.setFigure(figure);
@@ -138,4 +139,16 @@ public class LayerItemController implements Initializable {
     public FigureItemController getFigureController(int ind) {
         return figureControllers.get(ind);
     }
+
+    public void updateOthers(List<FigureItemController> list) { //deselect unselected
+        for (int i = 0; i < list.size(); i++) {
+            //if (figureControllers.get(i).getFigure().)
+
+            int ind = figureControllers.indexOf(list.get(i));
+            if (ind != -1) {
+                figureControllers.get(i).getFigureItem().setStyle("-fx-background-color: transparent");
+            }
+        }
+    }
+
 }

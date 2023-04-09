@@ -45,6 +45,7 @@ public class FigureItemController implements Initializable {
     @FXML
     void figureItemClick() {
         mainController.getCurrentCanvasController().setCurrentFigureController(Optional.of(this));
+        figure.setSelected(true);
         highlight();
     }
     @FXML
@@ -63,11 +64,13 @@ public class FigureItemController implements Initializable {
     }
 
     public void highlight() {
-        ObservableList<Node> childrenUnmodifiable = figureItem.getParent().getParent().getChildrenUnmodifiable();
-        for (Node node : childrenUnmodifiable) {
-            node.setStyle("-fx-background-color: transparent");
-        }
-        figureItem.getParent().setStyle("-fx-background-color: dodgerblue");
+//        ObservableList<Node> childrenUnmodifiable = figureItem.getParent().getParent().getChildrenUnmodifiable();
+//        for (Node node : childrenUnmodifiable) {
+//            node.setStyle("-fx-background-color: transparent");
+//        }
+//        figureItem.getParent().setStyle("-fx-background-color: dodgerblue");
+        layerItemController.updateOthers(mainController.getCurrentCanvasController().getCurrentFigures());
+        figureItem.setStyle("-fx-background-color: dodgerblue");
     }
 
     public LayerItemController getLayerController() {
@@ -87,4 +90,7 @@ public class FigureItemController implements Initializable {
         figureName.setText("<" + figure.getName() + ">");
     }
 
+    public HBox getFigureItem() {
+        return figureItem;
+    }
 }

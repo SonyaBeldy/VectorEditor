@@ -1,18 +1,15 @@
 package com.example.vectoreditor.controller;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class LayerBox extends VBox {
 
     private final ArrayList<LayerItemController> layers = new ArrayList<>();
     private LayerItemController currentLayer;
-    private MainController mainController;
+    private final MainController mainController;
 
     public LayerBox(MainController mainController) {
         this.mainController = mainController;
@@ -74,6 +71,7 @@ public class LayerBox extends VBox {
                 currentLayerInd = 0;
             }
             currentLayer = layers.get(currentLayerInd);
+            System.out.println("layer " + currentLayerInd);
             currentLayer.highlight();
         }
     }

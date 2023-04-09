@@ -30,7 +30,7 @@ public class PolylineTool extends Tool implements ITool {
                 figure.addPoint(new Point(event.getX(), event.getY()));
 
                 figure.calcCenter();
-                FigureItemController figureController = currentCanvasController.getCurrentLayer().addFigure(figure);
+                FigureItemController figureController = currentCanvasController.getCurrentLayer().addFigureItemController(figure);
                 currentCanvasController.setCurrentFigureController(Optional.empty());
                 drawingFigure = figureController;
             }
@@ -73,6 +73,7 @@ public class PolylineTool extends Tool implements ITool {
         getLastPoint().setX(event.getX());
         getLastPoint().setY(event.getY());
 
+        figure.setSelected(true);
 //        figure.calcBoardsPoints();
     }
 
