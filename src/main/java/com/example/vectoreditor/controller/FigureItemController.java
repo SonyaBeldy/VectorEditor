@@ -1,12 +1,10 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.figures.Figure;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
@@ -69,7 +67,7 @@ public class FigureItemController implements Initializable {
 //            node.setStyle("-fx-background-color: transparent");
 //        }
 //        figureItem.getParent().setStyle("-fx-background-color: dodgerblue");
-        layerItemController.updateOthers(mainController.getCurrentCanvasController().getCurrentFigures());
+        layerItemController.updateOthers(mainController.getCurrentCanvasController().getSelectedFiguresList());
         figureItem.setStyle("-fx-background-color: dodgerblue");
     }
 

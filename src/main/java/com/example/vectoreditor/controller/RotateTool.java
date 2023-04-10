@@ -4,9 +4,13 @@ import com.example.vectoreditor.model.*;
 import com.example.vectoreditor.model.figures.Figure;
 import javafx.scene.input.MouseEvent;
 
+import java.util.List;
+
 public class RotateTool extends SelectTool  implements ITool{
 
-    private Figure copyCurrentFigure;
+//    private Figure copyCurrentFigure;
+
+    private List<Figure> copySelectedFigures;
     private Point center;
     private double clickAngle;
 
@@ -16,8 +20,10 @@ public class RotateTool extends SelectTool  implements ITool{
 
     @Override
     public void mousePressed(MouseEvent event) {
-        copyCurrentFigure = mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().clone();
-        center = copyCurrentFigure.getCenter();
+//        copyCurrentFigure = mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().clone();
+        copySelectedFigures = mainController.getCurrentCanvasController().getSelectedFiguresList().cloneFigures();
+//        center = copyCurrentFigure.getCenter();
+        center = mainController.getCurrentCanvasController().getSelectedFiguresList().getCenter();
         clickAngle = Math.atan2(event.getY() - center.getY(), event.getX() - center.getX());
     }
 
@@ -30,9 +36,10 @@ public class RotateTool extends SelectTool  implements ITool{
         if (angle < -Math.PI) {
             angle = 2 * Math.PI + angle;
         }
-        mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().rotate(copyCurrentFigure, center, angle);
-        mainController.getPropertiesBoxController().update();
-        mainController.getCurrentCanvasController().redrawAllFigures();
+
+//        mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().rotate(copyCurrentFigure, center, angle);
+//        mainController.getPropertiesBoxController().update();
+//        mainController.getCurrentCanvasController().redrawAllFigures();
     }
 
     @Override

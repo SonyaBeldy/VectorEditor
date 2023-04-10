@@ -1,15 +1,16 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.BordersPainter;
 import com.example.vectoreditor.model.figures.Figure;
 import com.example.vectoreditor.model.Point;
 import javafx.scene.input.MouseEvent;
 
+import java.util.List;
+
 public class MoveTool extends Tool implements ITool{
 
-    BordersPainter bordersPainter;
     private final Point pressPoint;
-    Figure beforeMoveFigure;
+//    Figure beforeMoveFigure;
+    List<Figure> beforeMoveFigures;
 
     public MoveTool(MainController mainController) {
         super(mainController);
@@ -20,8 +21,11 @@ public class MoveTool extends Tool implements ITool{
     public MoveTool(MainController mainController, Point pressPoint) {
         super(mainController);
         this.pressPoint = pressPoint;
-        beforeMoveFigure = mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().clone();
-        bordersPainter = new BordersPainter(mainController.getCurrentCanvasController().getDrawCanvas().getGraphicsContext2D());
+        beforeMoveFigures = mainController.getCurrentCanvasController().getSelectedFiguresList().cloneFigures();
+//        for (int i = 0; i < mainController.getCurrentCanvasController().getSelectedFiguresList().size(); i++) {
+//            beforeMoveFigures.add(mainController.getCurrentCanvasController().getSelectedFiguresList().get(i).getFigure().clone());
+//        }
+////        beforeMoveFigure = mainController.getCurrentCanvasController().getCurrentFigureController().orElseThrow().getFigure().clone();
     }
 
     @Override
@@ -31,13 +35,14 @@ public class MoveTool extends Tool implements ITool{
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        if(mainController.getCurrentCanvasController().getCurrentFigureController().isEmpty()) {
+        if(mainController.getCurrentCanvasController().getSelectedFiguresList().isEmpty()) {
             return;
         }
         double shiftX =  event.getX() - pressPoint.getX();
         double shiftY =  event.getY() - pressPoint.getY();
 
-        mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure().move(new Point(shiftX, shiftY));
+//        mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure().move(new Point(shiftX, shiftY));
+        mainController.getCurrentCanvasController().getSelectedFiguresList().move(new Point(shiftX, shiftY));
         mainController.getCurrentCanvasController().redrawAllFigures();
 
         pressPoint.setX(event.getX());
@@ -48,7 +53,6 @@ public class MoveTool extends Tool implements ITool{
     public void mouseReleased(MouseEvent event) {
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
         currentCanvasController.redrawAllFigures();
-//        bordersPainter.drawBoards(currentCanvasController.getCurrentFigureController().orElseThrow().getFigure(), mainController.getCurrentCanvasController().getCurrentLayer().getColor());
 
         mainController.setCurrentTool(new SelectTool(mainController));
     }

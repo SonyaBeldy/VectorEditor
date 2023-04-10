@@ -1,10 +1,9 @@
 package com.example.vectoreditor.controller;
 
-import com.example.vectoreditor.model.Frame;
-import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.PointListUtils;
+import com.example.vectoreditor.model.*;
 import com.example.vectoreditor.model.figures.Figure;
 import com.example.vectoreditor.model.figures.FigureDecorationData;
+import com.example.vectoreditor.model.unused.SingleFrame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,19 +52,21 @@ public class PropertiesBoxController implements Initializable {
 
     @FXML
     void chooseStrokeColor(ActionEvent event) {
-        if(canvasViewController.getCurrentFigureController().isEmpty()) {
+        if(canvasViewController.getSelectedFiguresList().isEmpty()) {
             return;
         }
-        Figure figure = canvasViewController.getCurrentFigureController().get().getFigure();
+        ///////////пока цвет по старому
+        Figure figure = canvasViewController.getSelectedFiguresList().getLast().getFigure();
         figure.getFigureDecorationData().setStrokeColor(Optional.of(strokeColor.getValue()));
     }
 
     @FXML
     void move(ActionEvent event) {
-        if(canvasViewController.getCurrentFigureController().isEmpty()) {
+        if(canvasViewController.getSelectedFiguresList().isEmpty()) {
             return;
         }
-        Figure figure = canvasViewController.getCurrentFigureController().get().getFigure();
+        ////////////////////
+        Figure figure = canvasViewController.getSelectedFiguresList().getLast().getFigure();
 
         Point newCenter = new Point(Double.parseDouble(xPointField.getText()), Double.parseDouble(yPointField.getText()));
         Point center = figure.getCenter();
@@ -76,13 +77,14 @@ public class PropertiesBoxController implements Initializable {
 
     @FXML
     void rotate(ActionEvent event) {
-        if(canvasViewController.getCurrentFigureController().isEmpty()) {
+        if(canvasViewController.getSelectedFiguresList().isEmpty()) {
             return;
         }
 
         double angle = Double.parseDouble(rotateField.getText());
         angle = Math.toRadians(angle);
-        Figure figure = canvasViewController.getCurrentFigureController().get().getFigure();
+        /////////////////////////
+        Figure figure = canvasViewController.getSelectedFiguresList().getLast().getFigure();
 
         double angleDiff = angle - figure.getTransformProperties().getAngle();
         figure.rotate(figure, figure.getCenter(), angleDiff);
@@ -110,20 +112,20 @@ public class PropertiesBoxController implements Initializable {
     }
 
     public void update() {
-        updateRotateField(canvasViewController.getCurrentFigureController());
-        updateXPointField(canvasViewController.getCurrentFigureController());
-        updateYPointField(canvasViewController.getCurrentFigureController());
-        updateWidth(canvasViewController.getCurrentFigureController());
-        updateHeight(canvasViewController.getCurrentFigureController());
+        updateRotateField(canvasViewController.getSelectedFiguresList());
+        updateXPointField(canvasViewController.getSelectedFiguresList());
+        updateYPointField(canvasViewController.getSelectedFiguresList());
+        updateWidth(canvasViewController.getSelectedFiguresList());
+        updateHeight(canvasViewController.getSelectedFiguresList());
     }
 
-    private void updateRotateField(Optional<FigureItemController> figureItemController) {
-        if(figureItemController.isEmpty()) {
+    private void updateRotateField(SelectedFigureControllsList list) {
+        if(list.isEmpty()) {
             rotateField.setText("");
             return;
         }
-        System.out.println("figureItemController.get().getFigure().getTransformProperties().getAngle() " + figureItemController.get().getFigure().getTransformProperties().getAngle());
-        double angle = Math.round(Math.toDegrees(figureItemController.get().getFigure().getTransformProperties().getAngle()));
+        System.out.println("figureItemController.get().getFigure().getTransformProperties().getAngle() " + list.getLast().getFigure().getTransformProperties().getAngle());
+        double angle = Math.round(Math.toDegrees(list.getLast().getFigure().getTransformProperties().getAngle()));
         if (angle < 0) {
             angle+= 360;
         }
@@ -134,41 +136,55 @@ public class PropertiesBoxController implements Initializable {
        rotateField.setText(String.valueOf(angle));
     }
 
-    private void updateXPointField(Optional<FigureItemController> figureItemController) {
-        if (figureItemController.isEmpty()) {
+    private void updateXPointField(SelectedFigureControllsList list) {
+        if (list.isEmpty()) {
             xPointField.setText("");
         } else {
-            xPointField.setText(String.valueOf(figureItemController.get().getFigure().getCenter().getX()));
+            xPointField.setText(String.valueOf(list.getLast().getFigure().getCenter().getX()));
         }
     }
 
-    private void updateYPointField(Optional<FigureItemController> figureItemController) {
-        if(figureItemController.isEmpty()) {
+    private void updateYPointField(SelectedFigureControllsList list) {
+        if(list.isEmpty()) {
             yPointField.setText("");
         } else {
-           yPointField.setText(String.valueOf(figureItemController.get().getFigure().getCenter().getY()));
+           yPointField.setText(String.valueOf(list.getLast().getFigure().getCenter().getY()));
         }
     }
 
-    private void updateWidth(Optional<FigureItemController> figureItemController) {
-        if(figureItemController.isEmpty()) {
+
+    ////////////////////
+    private void updateWidth(SelectedFigureControllsList list) {
+        if(list.isEmpty()) {
             widthField.setText("");
         } else {
-            Frame frame2 = new Frame(figureItemController.orElseThrow().getFigure());
+            Frame frame;
+            if(list.isSingle()) {
+                frame = new SingleFrame(list.getLast().getFigure());
+            } else {
+                frame = new GroupFrame(list.getAllFigures());
+            }
 
-            double width = PointListUtils.calcDist(frame2.getEdgesPoints().get(0), frame2.getEdgesPoints().get(1));
+            double width = PointListUtils.calcDist(frame.getEdgesPoints().get(0), frame.getEdgesPoints().get(1));
             widthField.setText(String.valueOf(width));
         }
 
     }
 
-    private void updateHeight(Optional<FigureItemController> figureItemController) {
-        if(figureItemController.isEmpty()) {
+
+    ///////////////
+    private void updateHeight(SelectedFigureControllsList list) {
+        if(list.isEmpty()) {
             heightField.setText("");
         } else {
-            Frame frame2 = new Frame(figureItemController.orElseThrow().getFigure());
+            Frame frame;
+            if(list.isSingle()) {
+                frame = new SingleFrame(list.getLast().getFigure());
+            } else {
+                frame = new GroupFrame(list.getAllFigures());
+            }
 
-            double height = PointListUtils.calcDist(frame2.getEdgesPoints().get(0), frame2.getEdgesPoints().get(3));
+            double height = PointListUtils.calcDist(frame.getEdgesPoints().get(0), frame.getEdgesPoints().get(3));
             heightField.setText(String.valueOf(height));
         }
     }

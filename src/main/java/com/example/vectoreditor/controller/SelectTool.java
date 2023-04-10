@@ -2,6 +2,7 @@ package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.*;
 import com.example.vectoreditor.model.figures.Figure;
+import com.example.vectoreditor.model.unused.SingleFrame;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -48,7 +49,7 @@ public class SelectTool extends Tool implements ITool {
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        if (mainController.getCurrentCanvasController().getCurrentFigureController().isEmpty()) {
+        if (mainController.getCurrentCanvasController().getSelectedFiguresList().isEmpty()) {
             return;
         }
         mainController.getCurrentCanvasController().redrawAllFigures();
@@ -163,11 +164,11 @@ public class SelectTool extends Tool implements ITool {
     }
     private void bordersControlsEntered(MouseEvent event) {
         CanvasViewController currentCanvasController = mainController.getCurrentCanvasController();
-        if (currentCanvasController.getCurrentFigureController().isEmpty()) {
+        if (currentCanvasController.getSelectedFiguresList().isEmpty()) {
             return;
         }
-        Figure currentFigure = currentCanvasController.getCurrentFigureController().get().getFigure();
-        Frame frame = new Frame(currentFigure);
+        Figure currentFigure = currentCanvasController.getSelectedFiguresList().getLast().getFigure();
+        Frame frame = new SingleFrame(currentFigure);
 
         if (!hitResizePivot(frame, new Point(event.getX(), event.getY())) && !hitRotate(frame, new Point(event.getX(), event.getY()))) {
             changeCursor(Cursor.DEFAULT);
@@ -192,7 +193,10 @@ public class SelectTool extends Tool implements ITool {
 
         if (borderPointInd != -1) {
             mainController.setCurrentTool(new RotateTool(mainController));
-            scene.setCursor(CursorImage.rotateCursor(borderPointInd,  mainController.getCurrentCanvasController().getCurrentFigureController().get().getFigure().getTransformProperties().getAngle()));
+            scene.setCursor(CursorImage.rotateCursor(borderPointInd,
+                    ////////////
+                    mainController.getCurrentCanvasController().getSelectedFiguresList().getLast().getFigure().getTransformProperties().getAngle())); //может стать причиной ошибки
+                    //////////////
             return true;
         }
         return false;

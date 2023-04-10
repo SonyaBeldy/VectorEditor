@@ -1,14 +1,12 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Point;
-import com.example.vectoreditor.model.drawers.RectangleDrawer;
 import com.example.vectoreditor.model.figures.Figure;
 import com.example.vectoreditor.model.figures.FigureDecorationData;
 import com.example.vectoreditor.model.figures.Rectangle;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.StrokeLineCap;
 
 import java.util.Optional;
 
@@ -65,7 +63,7 @@ public class SelectionFrameTool extends Tool implements ITool {
             LayerItemController layer = mainController.getLayers().get(i);
             for (int j = 0; j < layer.getFiguresCount(); j++) {
                 if (isInside(layer.getFigureController(i).getFigure())) {
-                    mainController.getCurrentCanvasController().getCurrentFigures().add(layer.getFigureController(i));
+                    mainController.getCurrentCanvasController().getSelectedFiguresList().add(layer.getFigureController(i));
                 }
             }
         }

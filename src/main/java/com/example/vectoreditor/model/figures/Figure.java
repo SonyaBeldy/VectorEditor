@@ -6,6 +6,7 @@ import com.example.vectoreditor.model.Frame;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.PointListUtils;
 import com.example.vectoreditor.model.drawers.Drawer;
+import com.example.vectoreditor.model.unused.SingleFrame;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
@@ -107,8 +108,8 @@ public abstract class Figure implements Cloneable<Figure> {
     }
 
     public void calcCenter(){
-        Frame frame2 = new Frame(this);
-        Point newCenter = PointListUtils.calcCenter(frame2.getEdgesPoints());
+        Frame frame = new SingleFrame(this);
+        Point newCenter = PointListUtils.calcCenter(frame.getEdgesPoints());
 
         center.setX(newCenter.getX());
         center.setY(newCenter.getY());

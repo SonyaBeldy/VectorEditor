@@ -1,5 +1,6 @@
 package com.example.vectoreditor.model.unused;
 
+import com.example.vectoreditor.controller.FigureItemController;
 import com.example.vectoreditor.controller.FigureTransformData;
 import com.example.vectoreditor.model.Frame;
 import com.example.vectoreditor.model.Point;
@@ -26,6 +27,10 @@ public class FrameDrawer extends Drawer {
         drawEdges(frame.getEdgesPoints(), layerColor);
         drawPivots(frame.getPivotsPoints(), layerColor);
         drawCenter(frame.getCenter(), layerColor);
+    }
+
+    public void draw(List<FigureItemController> currentFigures) {
+
     }
 
     private void drawPivots(List<Point> points, Color layerColor) {

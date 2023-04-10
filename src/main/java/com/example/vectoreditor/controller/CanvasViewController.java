@@ -1,23 +1,23 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.Frame;
+import com.example.vectoreditor.model.GroupFrame;
+import com.example.vectoreditor.model.SelectedFigureControllsList;
 import com.example.vectoreditor.model.figures.Figure;
 import com.example.vectoreditor.model.unused.FrameDrawer;
+import com.example.vectoreditor.model.unused.SingleFrame;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class CanvasViewController extends ScrollPane {
 
-    private Optional<FigureItemController> currentFigureController = Optional.empty();
-    private List<FigureItemController> currentFigures;
+//    private Optional<FigureItemController> currentFigureController = Optional.empty();
+    private SelectedFigureControllsList selectedFiguresList;
     private LayerBox layerBox;
 
     private FrameDrawer frameDrawer;
@@ -28,7 +28,7 @@ public class CanvasViewController extends ScrollPane {
 
     public void init(MainController mainController) {
         this.mainController = mainController;
-        currentFigures = new ArrayList<>();
+        selectedFiguresList = new SelectedFigureControllsList();
 
         layerBox = new LayerBox(mainController);
         frameDrawer = new FrameDrawer(drawCanvas.getGraphicsContext2D());
@@ -57,7 +57,11 @@ public class CanvasViewController extends ScrollPane {
     }
 
     private Frame createFrame(Figure figure) {
-        return new Frame(figure);
+        return new SingleFrame(figure);
+    }
+
+    private Frame createFrame(List<Figure> figures) {
+        return new GroupFrame(figures);
     }
     public void redrawAllFigures() {
         drawCanvas.getGraphicsContext2D().clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
@@ -75,7 +79,22 @@ public class CanvasViewController extends ScrollPane {
 
             }
         }
-        currentFigureController.ifPresent(figureController -> frameDrawer.draw(createFrame(figureController.getFigure()), figureController.getLayerController().getColor()));
+        redrawFrame();
+//        currentFigureController.ifPresent(figureController -> frameDrawer.draw(createFrame(figureController.getFigure()), figureController.getLayerController().getColor()));
+    }
+
+    public void redrawFrame() {
+        int size = selectedFiguresList.size();
+
+        if (size < 1) {
+            return;
+        }
+        if (size == 1) {
+//            currentFigureController.ifPresent(figureController -> frameDrawer.draw(createFrame(figureController.getFigure()), figureController.getLayerController().getColor()));
+            frameDrawer.draw(createFrame(selectedFiguresList.get(0).getFigure()), selectedFiguresList.get(0).getLayerController().getColor());
+            return;
+        }
+        frameDrawer.draw(createFrame(selectedFiguresList.getAllFigures()), selectedFiguresList.get(size - 1).getLayerController().getColor());
     }
 
 
@@ -96,25 +115,30 @@ public class CanvasViewController extends ScrollPane {
         return drawCanvas;
     }
 
-    public Optional<FigureItemController> getCurrentFigureController() {
-        return currentFigureController;
-    }
+//    public FigureItemController getCurrentFigureController() {
+//        return selectedFiguresList.getLast();
+//    }
 
     public void setCurrentFigureController(Optional<FigureItemController> currentFigureController) {
-        this.currentFigureController = currentFigureController;
+//        this.currentFigureController = currentFigureController;
+        selectedFiguresList.clear();
         if (currentFigureController.isEmpty()) {
             return;
         }
+        selectedFiguresList.add(currentFigureController.get());
         redrawAllFigures();
     }
 
     public void selectFigure(LayerItemController layerItemController, FigureItemController figureController) {
-        currentFigureController = Optional.of(figureController);
+//        currentFigureController = Optional.of(figureController);
+
+        selectedFiguresList.setSelected(figureController);
         layerBox.setCurrentLayer(layerItemController);
     }
 
     public void removeFigureSelection() {
-        currentFigureController = Optional.empty();
+//        currentFigureController = Optional.empty();
+        selectedFiguresList.clear();
     }
 
     public LayerItemController getCurrentLayer() {
@@ -122,10 +146,10 @@ public class CanvasViewController extends ScrollPane {
     }
 
     public void addCurrentFigure(FigureItemController figure) {
-        currentFigures.add(figure);
+        selectedFiguresList.add(figure);
     }
-    public List<FigureItemController> getCurrentFigures() {
-        return currentFigures;
+    public SelectedFigureControllsList getSelectedFiguresList() {
+        return selectedFiguresList;
     }
 
 }

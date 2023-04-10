@@ -123,7 +123,12 @@ public class MainController {
             if (newValue) {
                 currentCanvasController = canvasViewController;
                 swapLayerBox(canvasViewController.getLayerBox());
-                updatePropertiesBox(canvasViewController.getCurrentFigureController());
+
+                if(canvasViewController.getSelectedFiguresList().isEmpty()) {
+                    updatePropertiesBox(Optional.empty());
+                } else {
+                    updatePropertiesBox(Optional.of(canvasViewController.getSelectedFiguresList().getLast()));
+                }
             }
         });
     }
