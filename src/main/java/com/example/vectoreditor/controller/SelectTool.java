@@ -2,7 +2,7 @@ package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.*;
 import com.example.vectoreditor.model.figures.Figure;
-import com.example.vectoreditor.model.unused.SingleFrame;
+import com.example.vectoreditor.model.SingleFrame;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +28,12 @@ public class SelectTool extends Tool implements ITool {
 
     @Override
     public void mousePressed(MouseEvent event) {
+
+//        if (mainController.getCurrentCanvasController().getSelectedFiguresList().size() > 1) {
+//            mainController.setCurrentTool(new MoveTool(mainController, new Point(event.getX(), event.getY())));
+//            return;
+//        }
+
         Optional <FigureItemController> figureController = selectFigure(event);
 
         if (figureController.isEmpty()) {
@@ -35,9 +41,11 @@ public class SelectTool extends Tool implements ITool {
             mainController.getCurrentTool().mousePressed(event);
             return;
         }
+
+        System.out.println("s size " + mainController.getCurrentCanvasController().getSelectedFiguresList().size());
+
         //нашли фигуру
         //выделили ее
-        mainController.getPropertiesBoxController().update();
         mainController.getCurrentCanvasController().redrawAllFigures(); //убрать перерисовку
         mainController.setCurrentTool(new MoveTool(mainController, new Point(event.getX(), event.getY())));
     }
@@ -66,6 +74,13 @@ public class SelectTool extends Tool implements ITool {
                 FigureItemController figureController = layer.getFigureController(j);
                 if(figureController.getFigure().isClickedOn(new Point(x, y))) {
                     mainController.getCurrentCanvasController().selectFigure(layerBox.getLayers().get(i), figureController);
+
+                    /////////////////удалить
+//                    for (int k = 0; k < layer.getFiguresCount(); k++) {
+//                        mainController.getCurrentCanvasController().getSelectedFiguresList().add(layer.getFigureController(k));
+//                    }
+                    ////////////////
+
                     layer.layerItemClick();//сделать ли это в методе контроллера или мейна? Или оставить тут?
                     figureController.figureItemClick(); //сделать ли это в методе контроллера или мейна? Или оставить тут?
                     return Optional.of(figureController);

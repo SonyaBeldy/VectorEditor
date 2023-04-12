@@ -4,8 +4,8 @@ import com.example.vectoreditor.model.Frame;
 import com.example.vectoreditor.model.GroupFrame;
 import com.example.vectoreditor.model.SelectedFigureControllsList;
 import com.example.vectoreditor.model.figures.Figure;
-import com.example.vectoreditor.model.unused.FrameDrawer;
-import com.example.vectoreditor.model.unused.SingleFrame;
+import com.example.vectoreditor.model.FrameDrawer;
+import com.example.vectoreditor.model.SingleFrame;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
@@ -91,7 +91,7 @@ public class CanvasViewController extends ScrollPane {
         }
         if (size == 1) {
 //            currentFigureController.ifPresent(figureController -> frameDrawer.draw(createFrame(figureController.getFigure()), figureController.getLayerController().getColor()));
-            frameDrawer.draw(createFrame(selectedFiguresList.get(0).getFigure()), selectedFiguresList.get(0).getLayerController().getColor());
+            frameDrawer.draw(createFrame(selectedFiguresList.getLast().getFigure()), selectedFiguresList.get(0).getLayerController().getColor());
             return;
         }
         frameDrawer.draw(createFrame(selectedFiguresList.getAllFigures()), selectedFiguresList.get(size - 1).getLayerController().getColor());

@@ -1,4 +1,4 @@
-package com.example.vectoreditor.model.unused;
+package com.example.vectoreditor.model;
 
 import com.example.vectoreditor.model.Frame;
 import com.example.vectoreditor.model.Point;

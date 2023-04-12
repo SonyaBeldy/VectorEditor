@@ -6,7 +6,7 @@ import com.example.vectoreditor.model.Frame;
 import com.example.vectoreditor.model.Point;
 import com.example.vectoreditor.model.PointListUtils;
 import com.example.vectoreditor.model.drawers.Drawer;
-import com.example.vectoreditor.model.unused.SingleFrame;
+import com.example.vectoreditor.model.SingleFrame;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;

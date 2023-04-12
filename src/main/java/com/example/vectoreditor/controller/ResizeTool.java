@@ -67,6 +67,7 @@ public class ResizeTool extends SelectTool implements ITool {
     }
 
     private void resizeBorders() {
+
         for (int i = 0; i < selectedFigures.size(); i++) {
             Figure copyCurrentFigure = selectedFigureControllsList.getFigure(i).clone();
             double angle = copyCurrentFigure.getTransformProperties().getAngle();
@@ -133,7 +134,7 @@ public class ResizeTool extends SelectTool implements ITool {
             double ratioY = (e.getY() - oppositeY) / (dragY - oppositeY);
 
             Figure copyCurrentFigure = copyOfSelectedFigures.get(i);
-            for (int j = 0; j < currentFigure.getPoints().size(); i++) {
+            for (int j = 0; j < currentFigure.getPoints().size(); j++) {
 
                 copyCurrentFigure.getPoints().get(j).rotate(copyCurrentFigure.getCenter(), -angle);
                 double lengthY = copyCurrentFigure.getPoints().get(j).getY() - oppositeY;

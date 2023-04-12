@@ -3,7 +3,7 @@ package com.example.vectoreditor.controller;
 import com.example.vectoreditor.model.*;
 import com.example.vectoreditor.model.figures.Figure;
 import com.example.vectoreditor.model.figures.FigureDecorationData;
-import com.example.vectoreditor.model.unused.SingleFrame;
+import com.example.vectoreditor.model.SingleFrame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -1,4 +1,4 @@
-package com.example.vectoreditor.model.unused;
+package com.example.vectoreditor.model;
 
 import com.example.vectoreditor.controller.FigureItemController;
 import com.example.vectoreditor.controller.FigureTransformData;
